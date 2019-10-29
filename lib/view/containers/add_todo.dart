@@ -25,7 +25,7 @@ class AddTodo extends StatelessWidget {
         };
       },
       builder: (BuildContext context, OnSaveCallback onSave) {
-        return AddEditScreen(
+        return AddFunctionScreen(
           key: ArchSampleKeys.addTodoScreen,
           onSave: onSave,
           isEditing: false,

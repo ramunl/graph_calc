@@ -17,7 +17,7 @@ class ReduxLocalizations {
     );
   }
 
-  String get appTitle => "Redux Example";
+  String get appTitle => "Graph calculator";
 }
 
 class ReduxLocalizationsDelegate
@@ -113,9 +113,9 @@ class ArchSampleLocalizations {
     locale: locale.toString(),
   );
 
-  String get addTodo => Intl.message(
-    'Add Todo',
-    name: 'addTodo',
+  String get addFunction => Intl.message(
+    'Add Function',
+    name: 'addFunction',
     args: [],
     locale: locale.toString(),
   );

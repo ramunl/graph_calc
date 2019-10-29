@@ -109,7 +109,7 @@ main() {
     test('should update the AppTab', () {
       final store = Store<AppState>(
         appReducer,
-        initialState: AppState(activeTab: AppTab.todos),
+        initialState: AppState(activeTab: AppTab.history),
       );
 
       store.dispatch(UpdateTabAction(AppTab.stats));

@@ -18,18 +18,18 @@ class TabInfo {
   static getTabInfo(BuildContext context, AppTab tab) {
     var res;
     switch (tab) {
-      case AppTab.todos:
+      case AppTab.history:
         res = TabInfo(
             title: ArchSampleLocalizations.of(context).todos,
             key: ArchSampleKeys.todoTab,
             icon: Icons.list);
         break;
-      case AppTab.calculator:
+      /*case AppTab.calculator:
         res = TabInfo(
             title: ArchSampleLocalizations.of(context).calculator,
             key: ArchSampleKeys.calcTab,
             icon: Icons.functions);
-        break;
+        break;*/
       case AppTab.stats:
         res = TabInfo(
             title: ArchSampleLocalizations.of(context).stats,

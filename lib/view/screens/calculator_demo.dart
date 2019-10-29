@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'сalculator.dart';
+import 'calculator/сalculator.dart';
 
 
 

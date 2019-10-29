@@ -13,19 +13,19 @@ import '../localization.dart';
 
 typedef OnSaveCallback = Function(String task, String note);
 
-class AddEditScreen extends StatefulWidget {
+class AddFunctionScreen extends StatefulWidget {
   final bool isEditing;
   final OnSaveCallback onSave;
   final Todo todo;
 
-  AddEditScreen(
+  AddFunctionScreen(
       {Key key, @required this.onSave, @required this.isEditing, this.todo})
       : super(key: key ?? ArchSampleKeys.addTodoScreen);
   @override
-  _AddEditScreenState createState() => _AddEditScreenState();
+  _AddFunctionScreenState createState() => _AddFunctionScreenState();
 }
 
-class _AddEditScreenState extends State<AddEditScreen> {
+class _AddFunctionScreenState extends State<AddFunctionScreen> {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _task;
@@ -41,7 +41,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          isEditing ? localizations.editTodo : localizations.addTodo,
+          isEditing ? localizations.editTodo : localizations.addFunction,
         ),
       ),
       body: Padding(
@@ -82,7 +82,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
       floatingActionButton: FloatingActionButton(
         key:
             isEditing ? ArchSampleKeys.saveTodoFab : ArchSampleKeys.saveNewTodo,
-        tooltip: isEditing ? localizations.saveChanges : localizations.addTodo,
+        tooltip: isEditing ? localizations.saveChanges : localizations.addFunction,
         child: Icon(isEditing ? Icons.check : Icons.add),
         onPressed: () {
           if (_formKey.currentState.validate()) {
