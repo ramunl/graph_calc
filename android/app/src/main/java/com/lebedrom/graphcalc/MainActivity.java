@@ -1,4 +1,4 @@
-package com.yourcompany.redux;
+package com.lebedrom.graphcalc;
 
 import android.os.Bundle;
 

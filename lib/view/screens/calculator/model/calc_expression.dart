@@ -2,109 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// A token that composes an expression. There are several kinds of tokens
-/// that represent arithmetic operation symbols, numbers and pieces of numbers.
-/// We need to represent pieces of numbers because the user may have only
-/// entered a partial expression so far.
-class ExpressionToken {
-  ExpressionToken(this.stringRep);
+import 'package:graph_calc/mapper/expression_entity_mapper.dart';
+import 'package:graph_calc/store/expression_entity.dart';
+import 'package:graph_calc/view/screens/calculator/model/tokens/expression_token.dart';
+import 'package:graph_calc/view/screens/calculator/model/tokens/float_token.dart';
+import 'package:graph_calc/view/screens/calculator/model/tokens/int_token.dart';
+import 'package:graph_calc/view/screens/calculator/model/tokens/leading_neg_token.dart';
+import 'package:graph_calc/view/screens/calculator/model/tokens/number_token.dart';
+import 'package:graph_calc/view/screens/calculator/model/tokens/operation_token.dart';
+import 'package:graph_calc/view/screens/calculator/model/tokens/result_token.dart';
 
-  final String stringRep;
-
-  @override
-  String toString() => stringRep;
-}
-
-/// A token that represents a number.
-class NumberToken extends ExpressionToken {
-  NumberToken(String stringRep, this.number) : super(stringRep);
-
-  NumberToken.fromNumber(num number) : this('$number', number);
-
-  final num number;
-}
-
-/// A token that represents an integer.
-class IntToken extends NumberToken {
-  IntToken(String stringRep) : super(stringRep, int.parse(stringRep));
-}
-
-/// A token that represents a floating point number.
-class FloatToken extends NumberToken {
-  FloatToken(String stringRep) : super(stringRep, _parse(stringRep));
-
-  static double _parse(String stringRep) {
-    String toParse = stringRep;
-    if (toParse.startsWith('.')) toParse = '0' + toParse;
-    if (toParse.endsWith('.')) toParse = toParse + '0';
-    return double.parse(toParse);
-  }
-}
-
-/// A token that represents a number that is the result of a computation.
-class ResultToken extends NumberToken {
-  ResultToken(num number) : super.fromNumber(round(number));
-
-  /// rounds `number` to 14 digits of precision. A double precision
-  /// floating point number is guaranteed to have at least this many
-  /// decimal digits of precision.
-  static num round(num number) {
-    if (number is int) return number;
-    return double.parse(number.toStringAsPrecision(14));
-  }
-}
-
-/// A token that represents the unary minus prefix.
-class LeadingNegToken extends ExpressionToken {
-  LeadingNegToken() : super('-');
-}
-
-enum Operation { Addition, Subtraction, Multiplication, Division }
-
-/// A token that represents an arithmetic operation symbol.
-class OperationToken extends ExpressionToken {
-  OperationToken(this.operation) : super(opString(operation));
-
-  Operation operation;
-
-  static String opString(Operation operation) {
-    switch (operation) {
-      case Operation.Addition:
-        return ' + ';
-      case Operation.Subtraction:
-        return ' - ';
-      case Operation.Multiplication:
-        return '  \u00D7  ';
-      case Operation.Division:
-        return '  \u00F7  ';
-    }
-    assert(operation != null);
-    return null;
-  }
-}
-
-/// As the user taps different keys the current expression can be in one
-/// of several states.
-enum ExpressionState {
-  /// The expression is empty or an operation symbol was just entered.
-  /// A new number must be started now.
-  Start,
-
-  /// A minus sign was entered as a leading negative prefix.
-  LeadingNeg,
-
-  /// We are in the midst of a number without a point.
-  Number,
-
-  /// A point was just entered.
-  Point,
-
-  /// We are in the midst of a number with a point.
-  NumberWithPoint,
-
-  /// A result is being displayed
-  Result,
-}
+import 'calc_operation.dart';
+import 'expression_state.dart';
 
 /// An expression that can be displayed in a calculator. It is the result
 /// of a sequence of user entries. It is represented by a sequence of tokens.
@@ -114,28 +23,53 @@ enum ExpressionState {
 /// immutable. The `append*` methods return a new [CalcExpression] that
 /// represents the appropriate expression when one additional key tap occurs.
 class CalcExpression {
-  CalcExpression(this._list, this.state);
+  CalcExpression(this.expressionTokenList, this.state)
+      : id = generateEntityId();
+
+  CalcExpression.withDefaultId(List<ExpressionToken> expressionTokenList)
+      : this.id = generateEntityId(),
+        this.expressionTokenList = expressionTokenList,
+        this.state = ExpressionState.Result;
+
+  CalcExpression.expression(
+      String id, List<ExpressionToken> expressionTokenList)
+      : this.id = id,
+        this.expressionTokenList = expressionTokenList,
+        this.state = ExpressionState.Result;
 
   CalcExpression.empty() : this(<ExpressionToken>[], ExpressionState.Start);
 
   CalcExpression.result(FloatToken result)
-      : _list = <ExpressionToken>[],
+      : id = generateEntityId(),
+        expressionTokenList = <ExpressionToken>[],
         state = ExpressionState.Result {
-    _list.add(result);
+    expressionTokenList.add(result);
   }
 
+  final String id;
+
   /// The tokens comprising the expression.
-  final List<ExpressionToken> _list;
+  final List<ExpressionToken> expressionTokenList;
 
   /// The state of the expression.
   final ExpressionState state;
+
+  num maxValue;
+  num minValue;
+
+  setRange(num minValue, num maxValue) {
+    this.minValue = minValue;
+    this.maxValue = maxValue;
+  }
+
+  getRange() => [minValue, maxValue];
 
   /// The string representation of the expression. This will be displayed
   /// in the calculator's display panel.
   @override
   String toString() {
     final StringBuffer buffer = StringBuffer('');
-    buffer.writeAll(_list);
+    buffer.writeAll(expressionTokenList);
     return buffer.toString();
   }
 
@@ -145,7 +79,7 @@ class CalcExpression {
   CalcExpression appendDigit(int digit) {
     ExpressionState newState = ExpressionState.Number;
     ExpressionToken newToken;
-    final List<ExpressionToken> outList = _list.toList();
+    final List<ExpressionToken> outList = expressionTokenList.toList();
     switch (state) {
       case ExpressionState.Start:
         // Start a new number with digit.
@@ -179,7 +113,7 @@ class CalcExpression {
   /// to append a point in the current state.
   CalcExpression appendPoint() {
     ExpressionToken newToken;
-    final List<ExpressionToken> outList = _list.toList();
+    final List<ExpressionToken> outList = expressionTokenList.toList();
     switch (state) {
       case ExpressionState.Start:
         newToken = FloatToken('.');
@@ -202,7 +136,7 @@ class CalcExpression {
   /// Append an operation symbol to the current expression and return a new
   /// expression representing the result. Returns null to indicate that it is not
   /// legal to append an operation symbol in the current state.
-  CalcExpression appendOperation(Operation op) {
+  CalcExpression appendOperation(CalcOperation op) {
     switch (state) {
       case ExpressionState.Start:
       case ExpressionState.LeadingNeg:
@@ -214,7 +148,7 @@ class CalcExpression {
       case ExpressionState.Result:
         break;
     }
-    final List<ExpressionToken> outList = _list.toList();
+    final List<ExpressionToken> outList = expressionTokenList.toList();
     outList.add(OperationToken(op));
     return CalcExpression(outList, ExpressionState.Start);
   }
@@ -234,7 +168,7 @@ class CalcExpression {
         // Cannot enter leading neg now.
         return null;
     }
-    final List<ExpressionToken> outList = _list.toList();
+    final List<ExpressionToken> outList = expressionTokenList.toList();
     outList.add(LeadingNegToken());
     return CalcExpression(outList, ExpressionState.LeadingNeg);
   }
@@ -253,7 +187,7 @@ class CalcExpression {
       case ExpressionState.Number:
       case ExpressionState.NumberWithPoint:
       case ExpressionState.Result:
-        return appendOperation(Operation.Subtraction);
+        return appendOperation(CalcOperation.Subtraction);
       default:
         return null;
     }
@@ -277,7 +211,7 @@ class CalcExpression {
 
     // We make a copy of _list because CalcExpressions are supposed to
     // be immutable.
-    final List<ExpressionToken> list = _list.toList();
+    final List<ExpressionToken> list = expressionTokenList.toList();
     // We obey order-of-operations by computing the sum of the 'terms',
     // where a "term" is defined to be a sequence of numbers separated by
     // multiplication or division symbols.
@@ -286,14 +220,14 @@ class CalcExpression {
       final OperationToken opToken = list.removeAt(0);
       final num nextTermValue = removeNextTerm(list);
       switch (opToken.operation) {
-        case Operation.Addition:
+        case CalcOperation.Addition:
           currentTermValue += nextTermValue;
           break;
-        case Operation.Subtraction:
+        case CalcOperation.Subtraction:
           currentTermValue -= nextTermValue;
           break;
-        case Operation.Multiplication:
-        case Operation.Division:
+        case CalcOperation.Multiplication:
+        case CalcOperation.Division:
           // Logic error.
           assert(false);
       }
@@ -315,13 +249,13 @@ class CalcExpression {
       bool isDivision = false;
       final OperationToken nextOpToken = list.first;
       switch (nextOpToken.operation) {
-        case Operation.Addition:
-        case Operation.Subtraction:
+        case CalcOperation.Addition:
+        case CalcOperation.Subtraction:
           // We have reached the end of the current term
           return currentValue;
-        case Operation.Multiplication:
+        case CalcOperation.Multiplication:
           break;
-        case Operation.Division:
+        case CalcOperation.Division:
           isDivision = true;
       }
       // Remove the operation token.

@@ -3,10 +3,11 @@
 // in the LICENSE file.
 
 import 'package:graph_calc/models/models.dart';
+import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 
 import '../optional.dart';
 
-List<Todo> todosSelector(AppState state) => state.todos;
+List<CalcExpression> todosSelector(AppState state) => state.todos;
 
 VisibilityFilter activeFilterSelector(AppState state) => state.activeFilter;
 
@@ -14,33 +15,35 @@ AppTab activeTabSelector(AppState state) => state.activeTab;
 
 bool isLoadingSelector(AppState state) => state.isLoading;
 
-bool allCompleteSelector(List<Todo> todos) =>
-    todos.every((todo) => todo.complete);
+/*
+bool allCompleteSelector(List<CalcExpression> todos) =>
+    todos.every((calcExpression) => calcExpression.complete);
 
-int numActiveSelector(List<Todo> todos) =>
-    todos.fold(0, (sum, todo) => !todo.complete ? ++sum : sum);
+int numActiveSelector(List<CalcExpression> todos) =>
+    todos.fold(0, (sum, calcExpression) => !calcExpression.complete ? ++sum : sum);
 
-int numCompletedSelector(List<Todo> todos) =>
-    todos.fold(0, (sum, todo) => todo.complete ? ++sum : sum);
+int numCompletedSelector(List<CalcExpression> todos) =>
+    todos.fold(0, (sum, calcExpression) => calcExpression.complete ? ++sum : sum);
+*/
 
-List<Todo> filteredTodosSelector(
-  List<Todo> todos,
+List<CalcExpression> filteredTodosSelector(
+  List<CalcExpression> todos,
   VisibilityFilter activeFilter,
 ) {
-  return todos.where((todo) {
+  return todos.where((calcExpression) {
     if (activeFilter == VisibilityFilter.all) {
       return true;
-    } else if (activeFilter == VisibilityFilter.active) {
-      return !todo.complete;
+    }/* else if (activeFilter == VisibilityFilter.active) {
+      return !calcExpression.complete;
     } else if (activeFilter == VisibilityFilter.completed) {
-      return todo.complete;
-    }
+      return calcExpression.complete;
+    }*/
   }).toList();
 }
 
-Optional<Todo> todoSelector(List<Todo> todos, String id) {
+Optional<CalcExpression> todoSelector(List<CalcExpression> todos, String id) {
   try {
-    return Optional.of(todos.firstWhere((todo) => todo.id == id));
+    return Optional.of(todos.firstWhere((calcExpression) => calcExpression.id == id));
   } catch (e) {
     return Optional.absent();
   }

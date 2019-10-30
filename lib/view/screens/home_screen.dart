@@ -7,12 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:graph_calc/models/ArchSampleKeys.dart';
 import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/view/containers/active_tab.dart';
-import 'package:graph_calc/view/containers/extra_actions_container.dart';
-import 'package:graph_calc/view/containers/filter_selector.dart';
 import 'package:graph_calc/view/screens/history/filtered_todos.dart';
-import 'package:graph_calc/view/containers/stats.dart';
 import 'package:graph_calc/view/containers/tab_selector.dart';
-import 'package:graph_calc/view/screens/calculator/%D1%81alculator.dart';
 
 import '../localization.dart';
 import '../routes.dart';
@@ -43,11 +39,11 @@ class HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             title: Text(ReduxLocalizations.of(context).appTitle),
             actions: [
-              FilterSelector(visible: activeTab == AppTab.history),
-              ExtraActionsContainer(),
+              //FilterSelector(visible: activeTab == AppTab.history),
+             // ExtraActionsContainer(),
             ],
           ),
-          body: getPage(activeTab),
+          body: FilteredTodos(),
           floatingActionButton: FloatingActionButton(
             key: ArchSampleKeys.addTodoFab,
             onPressed: () {
@@ -56,18 +52,8 @@ class HomeScreenState extends State<HomeScreen> {
             child: Icon(Icons.add),
             tooltip: ArchSampleLocalizations.of(context).addFunction,
           ),
-          bottomNavigationBar: TabSelector(),
         );
       },
     );
-  }
-
-  getPage(AppTab activeTab) {
-    switch (activeTab) {
-      case AppTab.history:
-        return FilteredTodos();
-      case AppTab.stats:
-        return Stats();
-    }
   }
 }

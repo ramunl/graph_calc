@@ -2,49 +2,57 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
+import 'package:graph_calc/actions/add_todo_action.dart';
+import 'package:graph_calc/actions/clear_completed_action.dart';
+import 'package:graph_calc/actions/delete_todo_action.dart';
+import 'package:graph_calc/actions/todos_loaded_action.dart';
+import 'package:graph_calc/actions/toggle_all_action.dart';
+import 'package:graph_calc/actions/update_todo_action.dart';
+import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:redux/redux.dart';
-import 'package:graph_calc/actions/actions.dart';
+import 'package:graph_calc/actions/todos_not_loaded_action.dart';
 import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/selectors/selectors.dart';
 
-final todosReducer = combineReducers<List<Todo>>([
-  TypedReducer<List<Todo>, AddTodoAction>(_addTodo),
-  TypedReducer<List<Todo>, DeleteTodoAction>(_deleteTodo),
-  TypedReducer<List<Todo>, UpdateTodoAction>(_updateTodo),
-  TypedReducer<List<Todo>, ClearCompletedAction>(_clearCompleted),
-  TypedReducer<List<Todo>, ToggleAllAction>(_toggleAll),
-  TypedReducer<List<Todo>, TodosLoadedAction>(_setLoadedTodos),
-  TypedReducer<List<Todo>, TodosNotLoadedAction>(_setNoTodos),
+final todosReducer = combineReducers<List<CalcExpression>>([
+  TypedReducer<List<CalcExpression>, AddTodoAction>(_addTodo),
+  TypedReducer<List<CalcExpression>, DeleteTodoAction>(_deleteTodo),
+  //TypedReducer<List<CalcExpression>, UpdateTodoAction>(_updateTodo),
+  //TypedReducer<List<CalcExpression>, ClearCompletedAction>(_clearCompleted),
+  //TypedReducer<List<CalcExpression>, ToggleAllAction>(_toggleAll),
+  TypedReducer<List<CalcExpression>, TodosLoadedAction>(_setLoadedTodos),
+  TypedReducer<List<CalcExpression>, TodosNotLoadedAction>(_setNoTodos),
 ]);
 
-List<Todo> _addTodo(List<Todo> todos, AddTodoAction action) {
-  return List.from(todos)..add(action.todo);
+List<CalcExpression> _addTodo(List<CalcExpression> todos, AddTodoAction action) {
+  return List.from(todos)..add(action.calcExpression);
 }
 
-List<Todo> _deleteTodo(List<Todo> todos, DeleteTodoAction action) {
-  return todos.where((todo) => todo.id != action.id).toList();
+List<CalcExpression> _deleteTodo(List<CalcExpression> todos, DeleteTodoAction action) {
+  return todos.where((calcExpression) => calcExpression.id != action.id).toList();
 }
 
-List<Todo> _updateTodo(List<Todo> todos, UpdateTodoAction action) {
+List<CalcExpression> _updateTodo(List<CalcExpression> todos, UpdateTodoAction action) {
   return todos
-      .map((todo) => todo.id == action.id ? action.updatedTodo : todo)
+      .map((calcExpression) => calcExpression.id == action.id ? action.updatedTodo : calcExpression)
       .toList();
 }
 
-List<Todo> _clearCompleted(List<Todo> todos, ClearCompletedAction action) {
-  return todos.where((todo) => !todo.complete).toList();
+/*
+List<CalcExpression> _clearCompleted(List<CalcExpression> todos, ClearCompletedAction action) {
+  return todos.where((calcExpression) => !calcExpression.complete).toList();
 }
 
-List<Todo> _toggleAll(List<Todo> todos, ToggleAllAction action) {
+List<CalcExpression> _toggleAll(List<CalcExpression> todos, ToggleAllAction action) {
   final allComplete = allCompleteSelector(todos);
 
-  return todos.map((todo) => todo.copyWith(complete: !allComplete)).toList();
-}
+  return todos.map((calcExpression) => calcExpression.copyWith(complete: !allComplete)).toList();
+}*/
 
-List<Todo> _setLoadedTodos(List<Todo> todos, TodosLoadedAction action) {
+List<CalcExpression> _setLoadedTodos(List<CalcExpression> todos, TodosLoadedAction action) {
   return action.todos;
 }
 
-List<Todo> _setNoTodos(List<Todo> todos, TodosNotLoadedAction action) {
+List<CalcExpression> _setNoTodos(List<CalcExpression> todos, TodosNotLoadedAction action) {
   return [];
 }

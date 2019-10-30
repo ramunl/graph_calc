@@ -4,8 +4,9 @@
 
 import 'dart:async';
 
-import 'todo_entity.dart';
+import 'package:graph_calc/mapper/expression_entity_mapper.dart';
 
+import 'expression_entity.dart';
 
 /// A class that is meant to represent a Client that would be used to call a Web
 /// Service. It is responsible for fetching and persisting Todos to and from the
@@ -19,46 +20,21 @@ class WebClient {
   const WebClient([this.delay = const Duration(milliseconds: 3000)]);
 
   /// Mock that "fetches" some Todos from a "web service" after a short delay
-  Future<List<TodoEntity>> fetchTodos() async {
+  Future<List<ExpressionEntity>> fetchTodos() async {
     return Future.delayed(
         delay,
         () => [
-              TodoEntity(
-                'Buy food for da kitty',
-                '1',
-                'With the chickeny bits!',
-                false,
-              ),
-              TodoEntity(
-                'Find a Red Sea dive trip',
-                '2',
-                'Echo vs MY Dream',
-                false,
-              ),
-              TodoEntity(
-                'Book flights to Egypt',
-                '3',
-                '',
-                true,
-              ),
-              TodoEntity(
-                'Decide on accommodation',
-                '4',
-                '',
-                false,
-              ),
-              TodoEntity(
-                'Sip Margaritas',
-                '5',
-                'on the beach',
-                true,
-              ),
+              ExpressionEntity(generateEntityId(), ["x", "+", "2"]),
+              ExpressionEntity(generateEntityId(), ["x", "*", "3"]),
+              ExpressionEntity(generateEntityId(), ["x", "/", "4"]),
+              ExpressionEntity(generateEntityId(), ["10", "2"]),
+              ExpressionEntity(generateEntityId(), ["10", "2"]),
             ]);
   }
 
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
-  Future<bool> postTodos(List<TodoEntity> todos) async {
+  Future<bool> postTodos(List<ExpressionEntity> todos) async {
     return Future.value(true);
   }
 }

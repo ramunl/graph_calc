@@ -2,13 +2,14 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
+import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:meta/meta.dart';
 import 'package:graph_calc/models/models.dart';
 
 @immutable
 class AppState {
   final bool isLoading;
-  final List<Todo> todos;
+  final List<CalcExpression> todos;
   final AppTab activeTab;
   final VisibilityFilter activeFilter;
 
@@ -22,7 +23,7 @@ class AppState {
 
   AppState copyWith({
     bool isLoading,
-    List<Todo> todos,
+    List<CalcExpression> todos,
     AppTab activeTab,
     VisibilityFilter activeFilter,
   }) {

@@ -4,8 +4,10 @@
 
 import 'package:graph_calc/models/models.dart';
 
-typedef TodoAdder(Todo todo);
+import 'calculator/model/calc_expression.dart';
+
+typedef TodoAdder(CalcExpression calcExpression);
 
 typedef TodoRemover(String id);
 
-typedef TodoUpdater(String id, Todo todo);
+typedef TodoUpdater(String id, CalcExpression calcExpression);

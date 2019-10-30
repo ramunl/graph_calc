@@ -8,50 +8,38 @@ import 'package:graph_calc/models/ArchSampleKeys.dart';
 
 import 'package:graph_calc/models/models.dart';
 
+import 'calculator/model/calc_expression.dart';
+
 class TodoItem extends StatelessWidget {
-  final DismissDirectionCallback onDismissed;
+  // final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
-  final ValueChanged<bool> onCheckboxChanged;
-  final Todo todo;
+
+//  final ValueChanged<bool> onCheckboxChanged;
+  final CalcExpression calcExpression;
 
   TodoItem({
-    @required this.onDismissed,
+//    @required this.onDismissed,
     @required this.onTap,
-    @required this.onCheckboxChanged,
-    @required this.todo,
+    //  @required this.onCheckboxChanged,
+    @required this.calcExpression,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: ArchSampleKeys.todoItem(todo.id),
-      onDismissed: onDismissed,
-      child: ListTile(
-        onTap: onTap,
-        leading: Checkbox(
-          key: ArchSampleKeys.todoItemCheckbox(todo.id),
-          value: todo.complete,
-          onChanged: onCheckboxChanged,
-        ),
-        title: Hero(
-          tag: '${todo.id}__heroTag',
-          child: Container(
-            width: MediaQuery.of(context).size.width,
+    return Padding(
+        padding: EdgeInsets.only(bottom: 16.0),
+        child: Card(
+          key: ArchSampleKeys.todoItem(calcExpression.id),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
             child: Text(
-              todo.task,
-              key: ArchSampleKeys.todoItemTask(todo.id),
-              style: Theme.of(context).textTheme.title,
+              calcExpression.expressionTokenList.toString(),
+              style: TextStyle(
+                fontSize: 18.0,
+                height: 1.6,
+              ),
             ),
           ),
-        ),
-        subtitle: Text(
-          todo.note,
-          key: ArchSampleKeys.todoItemNote(todo.id),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.subhead,
-        ),
-      ),
-    );
+        ));
   }
 }

@@ -6,7 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'todo_entity.dart';
+import 'expression_entity.dart';
 
 
 /// Loads and saves a List of Todos using a text file stored on the device.
@@ -23,22 +23,22 @@ class FileStorage {
     this.getDirectory,
   );
 
-  Future<List<TodoEntity>> loadTodos() async {
+  Future<List<ExpressionEntity>> loadTodos() async {
     final file = await _getLocalFile();
     final string = await file.readAsString();
     final json = JsonDecoder().convert(string);
     final todos = (json['todos'])
-        .map<TodoEntity>((todo) => TodoEntity.fromJson(todo))
+        .map<ExpressionEntity>((calcExpression) => ExpressionEntity.fromJson(calcExpression))
         .toList();
 
     return todos;
   }
 
-  Future<File> saveTodos(List<TodoEntity> todos) async {
+  Future<File> saveTodos(List<ExpressionEntity> todos) async {
     final file = await _getLocalFile();
 
     return file.writeAsString(JsonEncoder().convert({
-      'todos': todos.map((todo) => todo.toJson()).toList(),
+      'todos': todos.map((calcExpression) => calcExpression.toJson()).toList(),
     }));
   }
 

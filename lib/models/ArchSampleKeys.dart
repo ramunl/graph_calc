@@ -53,7 +53,7 @@ class ArchSampleKeys {
 
   // Add Screen
   static final addTodoScreen = const Key('__addTodoScreen__');
-  static final saveNewTodo = const Key('__saveNewTodo__');
+  static final saveNewFunction = const Key('__saveNewTodo__');
   static final taskField = const Key('__taskField__');
   static final noteField = const Key('__noteField__');
 

@@ -2,7 +2,7 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'todo_entity.dart';
+import 'expression_entity.dart';
 import 'dart:async';
 import 'dart:core';
 
@@ -19,8 +19,8 @@ import 'dart:core';
 abstract class TodosRepository {
   /// Loads todos first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the Todos from a Web Client.
-  Future<List<TodoEntity>> loadTodos();
+  Future<List<ExpressionEntity>> loadTodos();
 
   // Persists todos to local disk and the web
-  Future saveTodos(List<TodoEntity> todos);
+  Future saveTodos(List<ExpressionEntity> todos);
 }

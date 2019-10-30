@@ -5,11 +5,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:graph_calc/actions/update_tab_action.dart';
 import 'package:graph_calc/models/ArchSampleKeys.dart';
 import 'package:graph_calc/models/tab_info.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:graph_calc/actions/actions.dart';
+import 'package:graph_calc/actions/todos_not_loaded_action.dart';
 import 'package:graph_calc/models/models.dart';
 
 class TabSelector extends StatelessWidget {

@@ -3,11 +3,11 @@
 // in the LICENSE file.
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:graph_calc/store/todo_entity.dart';
+import 'package:graph_calc/store/expression_entity.dart';
 import 'package:graph_calc/store/todos_repository.dart';
 import 'package:mockito/mockito.dart';
 import 'package:redux/redux.dart';
-import 'package:graph_calc/actions/actions.dart';
+import 'package:graph_calc/actions/todos_not_loaded_action.dart';
 import 'package:graph_calc/middleware/store_todos_middleware.dart';
 import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/reducers/app_state_reducer.dart';
@@ -24,7 +24,7 @@ main() {
         middleware: createStoreTodosMiddleware(repository),
       );
       final todos = [
-        TodoEntity("Moin", "1", "Note", false),
+        ExpressionEntity("Moin", "1", "Note", false),
       ];
 
       when(repository.loadTodos()).thenAnswer((_) => Future.value(todos));
@@ -41,14 +41,14 @@ main() {
         initialState: AppState.loading(),
         middleware: createStoreTodosMiddleware(repository),
       );
-      final todo = Todo("Hallo");
+      final calcExpression = CalcExpression("Hallo");
 
-      store.dispatch(AddTodoAction(todo));
+      store.dispatch(AddTodoAction(calcExpression));
       store.dispatch(ClearCompletedAction());
       store.dispatch(ToggleAllAction());
-      store.dispatch(TodosLoadedAction([Todo("Hi")]));
+      store.dispatch(TodosLoadedAction([CalcExpression("Hi")]));
       store.dispatch(ToggleAllAction());
-      store.dispatch(UpdateTodoAction("", Todo("")));
+      store.dispatch(UpdateTodoAction("", CalcExpression("")));
       store.dispatch(DeleteTodoAction(""));
 
       verify(repository.saveTodos(any)).called(7);

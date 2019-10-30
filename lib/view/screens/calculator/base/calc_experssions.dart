@@ -1,6 +1,8 @@
 import 'dart:ui';
 
-import '../../logic.dart';
+import 'package:graph_calc/view/screens/calculator/model/calc_operation.dart';
+
+import '../model/calc_expression.dart';
 
 abstract class CalcExpressions {
   final List<CalcExpression> _expressionStack = <CalcExpression>[];
@@ -50,7 +52,7 @@ abstract class CalcExpressions {
 
   void handlePlusTap() {
     final CalcExpression expression =
-        _expression.appendOperation(Operation.Addition);
+        _expression.appendOperation(CalcOperation.Addition);
     if (expression != null) {
       setState(() {
         pushExpression(expression);
@@ -69,7 +71,7 @@ abstract class CalcExpressions {
 
   void handleMultTap() {
     final CalcExpression expression =
-        _expression.appendOperation(Operation.Multiplication);
+        _expression.appendOperation(CalcOperation.Multiplication);
     if (expression != null) {
       setState(() {
         pushExpression(expression);
@@ -79,7 +81,7 @@ abstract class CalcExpressions {
 
   void handleDivTap() {
     final CalcExpression expression =
-        _expression.appendOperation(Operation.Division);
+        _expression.appendOperation(CalcOperation.Division);
     if (expression != null) {
       setState(() {
         pushExpression(expression);

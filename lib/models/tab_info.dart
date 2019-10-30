@@ -30,12 +30,12 @@ class TabInfo {
             key: ArchSampleKeys.calcTab,
             icon: Icons.functions);
         break;*/
-      case AppTab.stats:
+     /* case AppTab.stats:
         res = TabInfo(
             title: ArchSampleLocalizations.of(context).stats,
             key: ArchSampleKeys.statsTab,
             icon: Icons.show_chart);
-        break;
+        break;*/
     }
     return res;
   }

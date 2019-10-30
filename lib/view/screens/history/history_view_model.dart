@@ -1,23 +1,25 @@
-import 'package:graph_calc/models/todo.dart';
+import 'package:graph_calc/actions/add_todo_action.dart';
+import 'package:graph_calc/actions/delete_todo_action.dart';
+import 'package:graph_calc/actions/update_todo_action.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:redux/redux.dart';
-import 'package:graph_calc/actions/actions.dart';
+import 'package:graph_calc/actions/todos_not_loaded_action.dart';
 import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/selectors/selectors.dart';
 
 class HistoryViewModel {
-  final List<Todo> todos;
+  final List<CalcExpression> todos;
   final bool loading;
-  final Function(Todo, bool) onCheckboxChanged;
-  final Function(Todo) onRemove;
-  final Function(Todo) onUndoRemove;
+  //final Function(CalcExpression, bool) onCheckboxChanged;
+  final Function(CalcExpression) onRemove;
+  final Function(CalcExpression) onUndoRemove;
 
   HistoryViewModel({
     @required this.todos,
     @required this.loading,
-    @required this.onCheckboxChanged,
     @required this.onRemove,
     @required this.onUndoRemove,
   });
@@ -29,17 +31,12 @@ class HistoryViewModel {
         activeFilterSelector(store.state),
       ),
       loading: store.state.isLoading,
-      onCheckboxChanged: (todo, complete) {
-        store.dispatch(UpdateTodoAction(
-          todo.id,
-          todo.copyWith(complete: !todo.complete),
-        ));
+
+      onRemove: (calcExpression) {
+        store.dispatch(DeleteTodoAction(calcExpression.id));
       },
-      onRemove: (todo) {
-        store.dispatch(DeleteTodoAction(todo.id));
-      },
-      onUndoRemove: (todo) {
-        store.dispatch(AddTodoAction(todo));
+      onUndoRemove: (calcExpression) {
+        store.dispatch(AddTodoAction(calcExpression));
       },
     );
   }

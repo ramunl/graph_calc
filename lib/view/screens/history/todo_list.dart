@@ -8,26 +8,25 @@ import 'package:flutter/material.dart';
 import 'package:graph_calc/models/ArchSampleKeys.dart';
 import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/view/containers/app_loading.dart';
-import 'package:graph_calc/view/containers/todo_details.dart';
+import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:graph_calc/view/screens/todo_item.dart';
 
-import '../localization.dart';
-import 'loading_indicator.dart';
+import '../../localization.dart';
+import '../loading_indicator.dart';
 
 
 class TodoList extends StatelessWidget {
-  final List<Todo> todos;
-  final Function(Todo, bool) onCheckboxChanged;
-  final Function(Todo) onRemove;
-  final Function(Todo) onUndoRemove;
+  final List<CalcExpression> todos;
+  final Function(CalcExpression) onRemove;
+  final Function(CalcExpression) onUndoRemove;
 
   TodoList({
     Key key,
     @required this.todos,
-    @required this.onCheckboxChanged,
     @required this.onRemove,
     @required this.onUndoRemove,
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,44 +42,40 @@ class TodoList extends StatelessWidget {
       key: ArchSampleKeys.todoList,
       itemCount: todos.length,
       itemBuilder: (BuildContext context, int index) {
-        final todo = todos[index];
-
+        final calcExpression = todos[index];
         return TodoItem(
-          todo: todo,
-          onDismissed: (direction) {
-            _removeTodo(context, todo);
-          },
-          onTap: () => _onTodoTap(context, todo),
-          onCheckboxChanged: (complete) {
-            onCheckboxChanged(todo, complete);
-          },
+          calcExpression: calcExpression,
+          onTap: () => _onTodoTap(context, calcExpression),
+         /* onCheckboxChanged: (complete) {
+            onCheckboxChanged(calcExpression, complete);
+          },*/
         );
       },
     );
   }
 
-  void _removeTodo(BuildContext context, Todo todo) {
-    onRemove(todo);
+  void _removeTodo(BuildContext context, CalcExpression calcExpression) {
+    onRemove(calcExpression);
 
     Scaffold.of(context).showSnackBar(SnackBar(
         duration: Duration(seconds: 2),
         backgroundColor: Theme.of(context).backgroundColor,
         content: Text(
-          ArchSampleLocalizations.of(context).todoDeleted(todo.task),
+          ArchSampleLocalizations.of(context).todoDeleted(calcExpression.id),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         action: SnackBarAction(
           label: ArchSampleLocalizations.of(context).undo,
-          onPressed: () => onUndoRemove(todo),
+          onPressed: () => onUndoRemove(calcExpression),
         )));
   }
 
-  void _onTodoTap(BuildContext context, Todo todo) {
-    Navigator
+  void _onTodoTap(BuildContext context, CalcExpression calcExpression) {
+    /*Navigator
         .of(context)
         .push(MaterialPageRoute(
-          builder: (_) => TodoDetails(id: todo.id),
+          builder: (_) => TodoDetails(id: calcExpression.id),
         ))
         .then((removedTodo) {
       if (removedTodo != null) {
@@ -89,17 +84,17 @@ class TodoList extends StatelessWidget {
             duration: Duration(seconds: 2),
             backgroundColor: Theme.of(context).backgroundColor,
             content: Text(
-              ArchSampleLocalizations.of(context).todoDeleted(todo.task),
+              ArchSampleLocalizations.of(context).todoDeleted(calcExpression.id),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
             action: SnackBarAction(
               label: ArchSampleLocalizations.of(context).undo,
               onPressed: () {
-                onUndoRemove(todo);
+                onUndoRemove(calcExpression);
               },
             )));
       }
-    });
+    });*/
   }
 }

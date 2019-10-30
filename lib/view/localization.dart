@@ -121,7 +121,7 @@ class ArchSampleLocalizations {
   );
 
   String get editTodo => Intl.message(
-    'Edit Todo',
+    'Edit CalcExpression',
     name: 'editTodo',
     args: [],
     locale: locale.toString(),
@@ -142,14 +142,14 @@ class ArchSampleLocalizations {
   );
 
   String get deleteTodo => Intl.message(
-    'Delete Todo',
+    'Delete CalcExpression',
     name: 'deleteTodo',
     args: [],
     locale: locale.toString(),
   );
 
   String get todoDetails => Intl.message(
-    'Todo Details',
+    'CalcExpression Details',
     name: 'todoDetails',
     args: [],
     locale: locale.toString(),
@@ -198,7 +198,7 @@ class ArchSampleLocalizations {
   );
 
   String get deleteTodoConfirmation => Intl.message(
-    'Delete this todo?',
+    'Delete this calcExpression?',
     name: 'deleteTodoConfirmation',
     args: [],
     locale: locale.toString(),

@@ -1,13 +1,20 @@
-
 import 'package:flutter/material.dart';
+import 'package:graph_calc/models/ArchSampleKeys.dart';
 import 'package:graph_calc/view/screens/calculator/views/%D1%81alc_display.dart';
 
-import '../logic.dart';
+import '../../localization.dart';
+import 'model/calc_expression.dart';
 import 'base/calc_experssions.dart';
 import 'views/key_pad.dart';
 
+
+typedef OnSaveCallback = Function(CalcExpression expression);
+
 class Calculator extends StatefulWidget {
-  const Calculator({Key key}) : super(key: key);
+
+  final OnSaveCallback onSave;
+
+  const Calculator({Key key, @required this.onSave}) : super(key: key);
 
   @override
   _CalculatorState createState() => _CalculatorState();
@@ -20,8 +27,21 @@ class _CalculatorState extends State<Calculator> with CalcExpressions {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = ArchSampleLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
+        title: Text(localizations.todoDetails),
+        actions: [
+          IconButton(
+            tooltip: localizations.addFunction,
+            key: ArchSampleKeys.saveNewFunction,
+            icon: Icon(Icons.save),
+            onPressed: () {
+              Navigator.pop(context);
+              widget.onSave(expression);
+            },
+          )
+        ],
         backgroundColor: Theme.of(context).canvasColor,
         elevation: 0.0,
       ),
@@ -43,4 +63,3 @@ class _CalculatorState extends State<Calculator> with CalcExpressions {
     );
   }
 }
-

@@ -5,7 +5,7 @@
 import 'dart:async';
 import 'dart:core';
 
-import 'package:graph_calc/store/todo_entity.dart';
+import 'package:graph_calc/store/expression_entity.dart';
 import 'package:meta/meta.dart';
 import 'file_storage.dart';
 import 'todos_repository.dart';
@@ -25,7 +25,7 @@ class TodosRepositoryFlutter implements TodosRepository {
   /// Loads todos first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the Todos from a Web Client.
   @override
-  Future<List<TodoEntity>> loadTodos() async {
+  Future<List<ExpressionEntity>> loadTodos() async {
     try {
       return await fileStorage.loadTodos();
     } catch (e) {
@@ -37,7 +37,7 @@ class TodosRepositoryFlutter implements TodosRepository {
 
   // Persists todos to local disk and the web
   @override
-  Future saveTodos(List<TodoEntity> todos) {
+  Future saveTodos(List<ExpressionEntity> todos) {
     return Future.wait<dynamic>([
       fileStorage.saveTodos(todos),
       webClient.postTodos(todos),

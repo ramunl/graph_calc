@@ -27,17 +27,17 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static _notInlinedMessages(_) => {
         "activeTodos": MessageLookupByLibrary.simpleMessage("Active Todos"),
-        "addTodo": MessageLookupByLibrary.simpleMessage("Add Todo"),
+        "addTodo": MessageLookupByLibrary.simpleMessage("Add CalcExpression"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clearCompleted":
             MessageLookupByLibrary.simpleMessage("Clear completed"),
         "completedTodos":
             MessageLookupByLibrary.simpleMessage("Completed Todos"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
-        "deleteTodo": MessageLookupByLibrary.simpleMessage("Delete Todo"),
+        "deleteTodo": MessageLookupByLibrary.simpleMessage("Delete CalcExpression"),
         "deleteTodoConfirmation":
-            MessageLookupByLibrary.simpleMessage("Delete this todo?"),
-        "editTodo": MessageLookupByLibrary.simpleMessage("Edit Todo"),
+            MessageLookupByLibrary.simpleMessage("Delete this calcExpression?"),
+        "editTodo": MessageLookupByLibrary.simpleMessage("Edit CalcExpression"),
         "emptyTodoError":
             MessageLookupByLibrary.simpleMessage("Please enter some text"),
         "filterTodos": MessageLookupByLibrary.simpleMessage("Filter Todos"),
@@ -55,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showCompleted": MessageLookupByLibrary.simpleMessage("Show Completed"),
         "stats": MessageLookupByLibrary.simpleMessage("Stats"),
         "todoDeleted": m0,
-        "todoDetails": MessageLookupByLibrary.simpleMessage("Todo Details"),
+        "todoDetails": MessageLookupByLibrary.simpleMessage("CalcExpression Details"),
         "todos": MessageLookupByLibrary.simpleMessage("Todos"),
         "undo": MessageLookupByLibrary.simpleMessage("Undo")
       };

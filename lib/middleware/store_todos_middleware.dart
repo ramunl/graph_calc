@@ -2,11 +2,20 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
+import 'package:graph_calc/actions/add_todo_action.dart';
+import 'package:graph_calc/actions/clear_completed_action.dart';
+import 'package:graph_calc/actions/delete_todo_action.dart';
+import 'package:graph_calc/actions/load_todos_action.dart';
+import 'package:graph_calc/actions/todos_loaded_action.dart';
+import 'package:graph_calc/actions/toggle_all_action.dart';
+import 'package:graph_calc/actions/update_todo_action.dart';
+import 'package:graph_calc/mapper/expression_entity_mapper.dart';
 import 'package:graph_calc/store/file_storage.dart';
 import 'package:graph_calc/store/todos_repository.dart';
+import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
-import 'package:graph_calc/actions/actions.dart';
+import 'package:graph_calc/actions/todos_not_loaded_action.dart';
 import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/selectors/selectors.dart';
 
@@ -36,7 +45,7 @@ Middleware<AppState> _createSaveTodos(TodosRepository repository) {
     next(action);
 
     repository.saveTodos(
-      todosSelector(store.state).map((todo) => todo.toEntity()).toList(),
+      todosSelector(store.state).map((calcExpression) => toEntity(calcExpression)).toList(),
     );
   };
 }
@@ -47,7 +56,7 @@ Middleware<AppState> _createLoadTodos(TodosRepository repository) {
       (todos) {
         store.dispatch(
           TodosLoadedAction(
-            todos.map(Todo.fromEntity).toList(),
+            todos.map(fromEntity).toList(),
           ),
         );
       },
