@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:graph_calc/mapper/expression_entity_mapper.dart';
-import 'package:graph_calc/store/expression_entity.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/expression_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/float_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/int_token.dart';
@@ -27,6 +26,8 @@ import 'expression_state.dart';
 class CalcExpression {
   CalcExpression(this.expressionTokenList, this.state)
       : id = generateEntityId();
+
+  getTitle() => "f($variableSymbol) = ${expressionTokenList.join()}";
 
   CalcExpression.withDefaultId(List<ExpressionToken> expressionTokenList)
       : this.id = generateEntityId(),

@@ -26,7 +26,7 @@ class ExpressionCreate extends StatelessWidget {
         };
       },
       builder: (BuildContext context, OnSaveCallback onSave) {
-        return Calculator(key: ArchSampleKeys.addTodoScreen, onSave: onSave);
+        return Calculator(onSave: onSave);
       },
     );
   }

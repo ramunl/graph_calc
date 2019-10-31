@@ -15,8 +15,8 @@ CalcExpression fromEntity(ExpressionEntity entity) {
       entity.id, toExprTokenList(entity.tokenList));
 }
 
-List<ExpressionToken> toExprTokenList(List<String> expressions) {
-  return expressions.map((expr) => ExpressionToken(expr)).toList();
+List<ExpressionToken> toExprTokenList(List<dynamic> expressions) {
+  return expressions.map((expr) => ExpressionToken(expr as String)).toList();
 }
 
 List<String> toStrList(List<ExpressionToken> expressionTokens) {

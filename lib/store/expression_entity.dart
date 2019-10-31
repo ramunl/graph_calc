@@ -8,7 +8,7 @@ import 'package:graph_calc/mapper/expression_entity_mapper.dart';
 
 class ExpressionEntity {
   final String id;
-  final List<String> tokenList;
+  final List<dynamic> tokenList;
 
   @override
   String toString() {

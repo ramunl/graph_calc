@@ -17,7 +17,7 @@ import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/reducers/app_state_reducer.dart';
 
 import 'actions/load_todos_action.dart';
-import 'view/screens/history/filtered_todos.dart';
+import 'view/screens/history/history_list_store_сonnector.dart';
 
 void main() {
   runApp(ReduxApp());

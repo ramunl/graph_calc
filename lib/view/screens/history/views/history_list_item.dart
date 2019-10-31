@@ -9,15 +9,16 @@ import 'package:graph_calc/models/ArchSampleKeys.dart';
 import 'package:graph_calc/models/models.dart';
 
 import '../../calculator/model/calc_expression.dart';
+import '../../ui_utils.dart';
 
-class TodoItem extends StatelessWidget {
+class HistoryListItem extends StatelessWidget {
   // final DismissDirectionCallback onDismissed;
   final GestureTapCallback onTap;
 
 //  final ValueChanged<bool> onCheckboxChanged;
   final CalcExpression calcExpression;
 
-  TodoItem({
+  HistoryListItem({
 //    @required this.onDismissed,
     @required this.onTap,
     //  @required this.onCheckboxChanged,
@@ -26,20 +27,25 @@ class TodoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(bottom: 16.0),
-        child: Card(
-          key: ArchSampleKeys.todoItem(calcExpression.id),
+    return Material(
+      child: InkWell(
+          onTap: onTap, // handle your onTap here
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
-            child: Text(
-              calcExpression.expressionTokenList.toString(),
-              style: TextStyle(
-                fontSize: 18.0,
-                height: 1.6,
-              ),
-            ),
-          ),
-        ));
+              padding: EdgeInsets.only(bottom: 8.0,top: 8.0),
+              child: Card(
+                key: ArchSampleKeys.todoItem(calcExpression.id),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+                  child: Text(
+                    calcExpression.getTitle(),
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      height: 1.6,
+                    ),
+                  ),
+                ),
+              ))
+      ),
+    );
   }
 }

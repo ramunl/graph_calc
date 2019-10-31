@@ -148,6 +148,13 @@ class ArchSampleLocalizations {
     locale: locale.toString(),
   );
 
+  String get plotFuncTitle => Intl.message(
+    'Func plotting',
+    name: 'plotFunc',
+    args: [],
+    locale: locale.toString(),
+  );
+
   String get createFuncTitle => Intl.message(
     'f(x)',
     name: 'createFunc',

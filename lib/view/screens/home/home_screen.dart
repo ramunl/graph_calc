@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:graph_calc/models/ArchSampleKeys.dart';
 import 'package:graph_calc/models/models.dart';
-import 'package:graph_calc/view/screens/history/filtered_todos.dart';
-import 'package:graph_calc/view/containers/tab_selector.dart';
+import 'package:graph_calc/view/screens/history/history_list_store_сonnector.dart';
 
 import '../../localization.dart';
 import '../../routes.dart';
@@ -40,7 +39,7 @@ class HomeScreenState extends State<HomeScreen> {
           // ExtraActionsContainer(),
         ],
       ),
-      body: FilteredTodos(),
+      body: HistoryListStoreConnector(),
       floatingActionButton: FloatingActionButton(
         key: ArchSampleKeys.addTodoFab,
         onPressed: () {
