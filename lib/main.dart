@@ -7,7 +7,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:graph_calc/view/localization.dart';
 import 'package:graph_calc/view/routes.dart';
 import 'package:graph_calc/view/screens/calculator/expression_%D1%81alculate.dart';
-import 'package:graph_calc/view/screens/home_screen.dart';
+import 'package:graph_calc/view/screens/calculator/expression_create.dart';
+import 'package:graph_calc/view/screens/home/home_screen.dart';
 import 'package:graph_calc/view/themes/theme.dart';
 import 'package:redux/redux.dart';
 import 'package:graph_calc/actions/todos_not_loaded_action.dart';
@@ -49,8 +50,7 @@ class ReduxApp extends StatelessWidget {
             );
           },
           ArchSampleRoutes.showCalculator: (context) {
-           // return AddTodo();
-            return Calculator();
+            return ExpressionCreate();
           },
         },
       ),

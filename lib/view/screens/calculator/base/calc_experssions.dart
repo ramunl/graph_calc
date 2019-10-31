@@ -104,5 +104,14 @@ abstract class CalcExpressions {
     });
   }
 
+  void handleVariableTap() {
+    final CalcExpression expression = _expression.appendVariable();
+    if (expression != null) {
+      setState(() {
+        pushExpression(expression);
+      });
+    }
+  }
+
   void setState(VoidCallback fn);
 }

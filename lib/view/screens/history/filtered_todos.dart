@@ -8,7 +8,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:graph_calc/models/ArchSampleKeys.dart';
 import 'package:graph_calc/view/screens/history/todo_list.dart';
 import 'package:graph_calc/models/models.dart';
-import 'history_view_model.dart';
+import 'model/history_view_model.dart';
 
 class FilteredTodos extends StatelessWidget {
 

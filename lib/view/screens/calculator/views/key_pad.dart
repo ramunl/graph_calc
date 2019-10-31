@@ -1,13 +1,15 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:graph_calc/view/screens/ui_utils.dart';
 
 import '../base/calc_experssions.dart';
 import 'calc_key.dart';
 import 'key_row.dart';
+import 'number_input_field.dart';
 import 'number_key.dart';
 
 class KeyPad extends StatelessWidget {
-  const KeyPad({ this.calcState });
+  const KeyPad({this.calcState});
 
   final CalcExpressions calcState;
 
@@ -30,6 +32,13 @@ class KeyPad extends StatelessWidget {
               flex: 3,
               child: Column(
                 children: <Widget>[
+                  KeyRow(<Widget>[
+                    NumberInputField(),
+                    Text(" < "),
+                    CalcKey(variableSymbol, calcState.handleVariableTap),
+                    Text(" < "),
+                    NumberInputField(),
+                  ]),
                   KeyRow(<Widget>[
                     NumberKey(7, calcState),
                     NumberKey(8, calcState),

@@ -30,11 +30,11 @@ class _CalculatorState extends State<Calculator> with CalcExpressions {
     final localizations = ArchSampleLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations.todoDetails),
+        title: Text(localizations.createFuncTitle),
         actions: [
           IconButton(
-            tooltip: localizations.addFunction,
-            key: ArchSampleKeys.saveNewFunction,
+            tooltip: localizations.saveFunction,
+            key: ArchSampleKeys.saveFunction,
             icon: Icon(Icons.save),
             onPressed: () {
               Navigator.pop(context);

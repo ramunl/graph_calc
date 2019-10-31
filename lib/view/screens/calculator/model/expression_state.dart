@@ -17,6 +17,8 @@ enum ExpressionState {
   /// We are in the midst of a number with a point.
   NumberWithPoint,
 
+  Variable,
+
   /// A result is being displayed
   Result,
 }

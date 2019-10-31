@@ -7,6 +7,7 @@
 // messages from the main program should be duplicated here with the same
 // function name.
 
+import 'package:graph_calc/view/screens/ui_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
@@ -55,7 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showCompleted": MessageLookupByLibrary.simpleMessage("Show Completed"),
         "stats": MessageLookupByLibrary.simpleMessage("Stats"),
         "todoDeleted": m0,
-        "todoDetails": MessageLookupByLibrary.simpleMessage("CalcExpression Details"),
+        "createFunc": MessageLookupByLibrary.simpleMessage("func($variableSymbol)"),
         "todos": MessageLookupByLibrary.simpleMessage("Todos"),
         "undo": MessageLookupByLibrary.simpleMessage("Undo")
       };

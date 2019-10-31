@@ -46,14 +46,14 @@ class ArchSampleKeys {
   // Details Screen
   static final editTodoFab = const Key('__editTodoFab__');
   static final deleteTodoButton = const Key('__deleteTodoFab__');
-  static final todoDetailsScreen = const Key('__todoDetailsScreen__');
+  static final createFuncScreen = const Key('__createFuncScreen__');
   static final detailsTodoItemCheckbox = Key('DetailsTodo__Checkbox');
   static final detailsTodoItemTask = Key('DetailsTodo__Task');
   static final detailsTodoItemNote = Key('DetailsTodo__Note');
 
   // Add Screen
   static final addTodoScreen = const Key('__addTodoScreen__');
-  static final saveNewFunction = const Key('__saveNewTodo__');
+  static final saveFunction = const Key('__saveNewTodo__');
   static final taskField = const Key('__taskField__');
   static final noteField = const Key('__noteField__');
 

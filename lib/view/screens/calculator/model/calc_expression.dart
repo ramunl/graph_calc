@@ -11,7 +11,9 @@ import 'package:graph_calc/view/screens/calculator/model/tokens/leading_neg_toke
 import 'package:graph_calc/view/screens/calculator/model/tokens/number_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/operation_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/result_token.dart';
+import 'package:graph_calc/view/screens/calculator/model/tokens/variable_token.dart';
 
+import '../../ui_utils.dart';
 import 'calc_operation.dart';
 import 'expression_state.dart';
 
@@ -54,6 +56,16 @@ class CalcExpression {
   /// The state of the expression.
   final ExpressionState state;
 
+  num variableX = 0;
+
+  int get variable {
+    return variableX;
+  }
+
+  void set variable(int variable) {
+    variableX = variable;
+  }
+
   num maxValue;
   num minValue;
 
@@ -71,6 +83,38 @@ class CalcExpression {
     final StringBuffer buffer = StringBuffer('');
     buffer.writeAll(expressionTokenList);
     return buffer.toString();
+  }
+
+  CalcExpression appendVariable() {
+    ExpressionState newState = ExpressionState.Variable;
+    final List<ExpressionToken> outList = expressionTokenList.toList();
+    var canBeAdded;
+    CalcExpression res;
+    if (outList.isEmpty || outList.last is OperationToken) {
+      canBeAdded = true;
+    } else {
+      switch (state) {
+        case ExpressionState.Start:
+        case ExpressionState.LeadingNeg:
+          canBeAdded = true;
+          break;
+        case ExpressionState.Number:
+        case ExpressionState.Point:
+        case ExpressionState.NumberWithPoint:
+        case ExpressionState.Variable:
+        case ExpressionState.Result:
+          // Cannot add variable now.
+          canBeAdded = false;
+          break;
+          // TODO: Handle this case.
+          break;
+      }
+    }
+    if (canBeAdded) {
+      outList.add(VariableToken());
+      res = CalcExpression(outList, newState);
+    }
+    return res;
   }
 
   /// Append a digit to the current expression and return a new expression
@@ -100,6 +144,8 @@ class CalcExpression {
         newState = ExpressionState.NumberWithPoint;
         newToken = FloatToken('${last.stringRep}$digit');
         break;
+
+      case ExpressionState.Variable:
       case ExpressionState.Result:
         // Cannot enter a number now
         return null;
@@ -123,11 +169,14 @@ class CalcExpression {
         final ExpressionToken last = outList.removeLast();
         newToken = FloatToken(last.stringRep + '.');
         break;
+      case ExpressionState.Variable:
       case ExpressionState.Point:
       case ExpressionState.NumberWithPoint:
       case ExpressionState.Result:
         // Cannot enter a point now
         return null;
+        // TODO: Handle this case.
+        break;
     }
     outList.add(newToken);
     return CalcExpression(outList, ExpressionState.Point);
@@ -143,6 +192,7 @@ class CalcExpression {
       case ExpressionState.Point:
         // Cannot enter operation now.
         return null;
+      case ExpressionState.Variable:
       case ExpressionState.Number:
       case ExpressionState.NumberWithPoint:
       case ExpressionState.Result:
@@ -160,6 +210,7 @@ class CalcExpression {
     switch (state) {
       case ExpressionState.Start:
         break;
+      case ExpressionState.Variable:
       case ExpressionState.LeadingNeg:
       case ExpressionState.Point:
       case ExpressionState.Number:
@@ -204,6 +255,7 @@ class CalcExpression {
       case ExpressionState.Result:
         // Cannot compute result now.
         return null;
+      case ExpressionState.Variable:
       case ExpressionState.Number:
       case ExpressionState.NumberWithPoint:
         break;
@@ -230,6 +282,7 @@ class CalcExpression {
         case CalcOperation.Division:
           // Logic error.
           assert(false);
+          break;
       }
     }
     final List<ExpressionToken> outList = <ExpressionToken>[
@@ -257,6 +310,7 @@ class CalcExpression {
           break;
         case CalcOperation.Division:
           isDivision = true;
+          break;
       }
       // Remove the operation token.
       list.removeAt(0);

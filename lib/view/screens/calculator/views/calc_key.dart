@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../ui_utils.dart';
+
 class CalcKey extends StatelessWidget {
   const CalcKey(this.text, this.onTap);
 
@@ -10,7 +12,6 @@ class CalcKey extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Orientation orientation = MediaQuery.of(context).orientation;
     return Expanded(
       child: InkResponse(
         onTap: onTap,
@@ -18,7 +19,7 @@ class CalcKey extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-                fontSize: (orientation == Orientation.portrait) ? 32.0 : 24.0
+                fontSize: getFontSize(context)
             ),
           ),
         ),

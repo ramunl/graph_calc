@@ -113,7 +113,7 @@ class ArchSampleLocalizations {
     locale: locale.toString(),
   );
 
-  String get addFunction => Intl.message(
+  String get saveFunction => Intl.message(
     'Add Function',
     name: 'addFunction',
     args: [],
@@ -148,9 +148,9 @@ class ArchSampleLocalizations {
     locale: locale.toString(),
   );
 
-  String get todoDetails => Intl.message(
-    'CalcExpression Details',
-    name: 'todoDetails',
+  String get createFuncTitle => Intl.message(
+    'f(x)',
+    name: 'createFunc',
     args: [],
     locale: locale.toString(),
   );

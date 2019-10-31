@@ -8,7 +8,7 @@ import 'package:graph_calc/models/ArchSampleKeys.dart';
 
 import 'package:graph_calc/models/models.dart';
 
-import 'calculator/model/calc_expression.dart';
+import '../../calculator/model/calc_expression.dart';
 
 class TodoItem extends StatelessWidget {
   // final DismissDirectionCallback onDismissed;

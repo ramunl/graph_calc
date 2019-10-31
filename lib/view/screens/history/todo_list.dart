@@ -9,10 +9,10 @@ import 'package:graph_calc/models/ArchSampleKeys.dart';
 import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/view/containers/app_loading.dart';
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
-import 'package:graph_calc/view/screens/todo_item.dart';
+import 'package:graph_calc/view/screens/history/views/todo_item.dart';
 
 import '../../localization.dart';
-import '../loading_indicator.dart';
+import 'views/loading_indicator.dart';
 
 
 class TodoList extends StatelessWidget {
@@ -75,7 +75,7 @@ class TodoList extends StatelessWidget {
     /*Navigator
         .of(context)
         .push(MaterialPageRoute(
-          builder: (_) => TodoDetails(id: calcExpression.id),
+          builder: (_) => createFunc(id: calcExpression.id),
         ))
         .then((removedTodo) {
       if (removedTodo != null) {
