@@ -295,7 +295,7 @@ class CalcExpression {
     return ExpressionValidateResult(valid, msg);
   }
 
-  getRange() => [minValue, maxValue];
+  getRange() => ", range = ${[minValue, maxValue]}";
 
   getTitle() => "f($variableSymbol) = ${expressionTokenList.join()}";
 

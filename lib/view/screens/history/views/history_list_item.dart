@@ -25,24 +25,34 @@ class HistoryListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: InkWell(
-          onTap: onTap, // handle your onTap here
-          child: Padding(
-              padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
-              child: Card(
+      child: Padding(
+          padding: EdgeInsets.only(bottom: 16, top: 16.0),
+          child: InkWell(
+            onTap: onTap, // handle your onTap here,
+            child: Card(
                 key: ArchSampleKeys.todoItem(calcExpression.id),
                 child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
-                  child: Text(
-                    calcExpression.getTitle(),
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      height: 1.6,
-                    ),
-                  ),
-                ),
-              ))),
+                    padding: EdgeInsets.only(
+                        bottom: 16.0, top: 16.0, left: 16.0, right: 16.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          calcExpression.getTitle(),
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            height: 1.6,
+                          ),
+                        ),
+                        Text(
+                          calcExpression.getRange().toString(),
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            height: 1.6,
+                          ),
+                        ),
+                      ],
+                    ))),
+          )),
     );
   }
 }
