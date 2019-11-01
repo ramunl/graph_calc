@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,10 +11,13 @@ class NumberInputField extends StatelessWidget {
   // of the TextField.
   final controller = TextEditingController();
 
-  NumberInputField(Function(num) handleRangeMin) {
+  NumberInputField(Function(num) handleRangeMin, num initValue) {
+    print("NumberInputField init: $initValue");
+    controller.text = initValue.toString();
     controller.addListener(() => {
-        handleRangeMin(double.parse(controller.text))
-    });
+          if (controller.text.isNotEmpty)
+            {handleRangeMin(num.parse(controller.text))}
+        });
   }
 
   @override

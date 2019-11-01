@@ -33,11 +33,9 @@ class CalcExpression {
   /// The state of the expression.
   final ExpressionState state;
 
-  num variableX = 0;
-
-  num maxValue;
-
-  num minValue;
+  static num variableX = 0;
+  static num maxValue = 0;
+  static num minValue = 0;
 
   CalcExpression(this.expressionTokenList, this.state)
       : id = generateEntityId();
@@ -280,17 +278,19 @@ class CalcExpression {
     var valid = false;
     var msg;
     if (maxValue > minValue) {
-      if (expressionTokenList.contains(variableSymbol)) {
+      final variableToken = expressionTokenList
+          .firstWhere((el) => el is VariableToken, orElse: () => null);
+      if (variableToken != null) {
         if (expressionTokenList.last is OperationToken) {
           msg = "Wrong expression!";
         } else {
           valid = true;
         }
       } else {
-        msg = "$variableSymbol not added!";
+        msg = "The variable $variableSymbol is not added!";
       }
     } else {
-      msg = "Range error, max < min!";
+      msg = "$variableSymbol range error. Max must be gretter than min!";
     }
     return ExpressionValidateResult(valid, msg);
   }
@@ -298,11 +298,6 @@ class CalcExpression {
   getRange() => [minValue, maxValue];
 
   getTitle() => "f($variableSymbol) = ${expressionTokenList.join()}";
-
-  setRange(num minValue, num maxValue) {
-    this.minValue = minValue;
-    this.maxValue = maxValue;
-  }
 
   /// The string representation of the expression. This will be displayed
   /// in the calculator's display panel.

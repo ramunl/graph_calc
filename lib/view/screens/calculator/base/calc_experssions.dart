@@ -5,9 +5,9 @@ import 'package:graph_calc/view/screens/calculator/model/calc_operation.dart';
 import '../model/calc_expression.dart';
 
 abstract class CalcExpressions {
-
   final List<CalcExpression> _expressionStack = <CalcExpression>[];
   CalcExpression _expression = CalcExpression.empty();
+
   CalcExpression get expression => _expression;
 
   // Make `expression` the current expression and push the previous current
@@ -85,11 +85,13 @@ abstract class CalcExpressions {
   }
 
   void handleRangeMax(num) {
-    _expression.maxValue = num;
+    print("handleRangeMax $num");
+    CalcExpression.maxValue = num;
   }
 
   void handleRangeMin(num) {
-    _expression.minValue = num;
+    print("handleRangeMin $num");
+    CalcExpression.minValue = num;
   }
 
   void handleVariableTap() {

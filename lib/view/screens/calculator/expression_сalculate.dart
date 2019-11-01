@@ -25,8 +25,12 @@ class _CalculatorState extends State<Calculator> with CalcExpressions {
 
   @override
   Widget build(BuildContext context) {
+    print("_CalculatorState build");
     final localizations = ArchSampleLocalizations.of(context);
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(localizations.createFuncTitle),
         actions: [
@@ -35,8 +39,20 @@ class _CalculatorState extends State<Calculator> with CalcExpressions {
             key: ArchSampleKeys.saveFunction,
             icon: Icon(Icons.save),
             onPressed: () {
-              Navigator.pop(context);
-              widget.onSave(expression);
+              final res = expression.validateExpression();
+              print(res.toString());
+              if (res.isSuccess) {
+                Navigator.pop(context);
+                widget.onSave(expression);
+              } else {
+                final snackBar = SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text(res.messageInfo,
+                      style: TextStyle(fontSize: 18.0, color: Colors.white)),
+                );
+                print("showSnackBar ${res.messageInfo}");
+                _scaffoldKey.currentState.showSnackBar(snackBar);
+              }
             },
           )
         ],

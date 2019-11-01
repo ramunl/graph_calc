@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:graph_calc/models/ArchSampleKeys.dart';
+import 'package:graph_calc/view/screens/calculator/expression_create.dart';
 import 'package:graph_calc/view/screens/history/history_list_store_сonnector.dart';
 
 import '../../localization.dart';
@@ -35,7 +36,10 @@ class HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         key: ArchSampleKeys.addTodoFab,
         onPressed: () {
-          Navigator.pushNamed(context, ArchSampleRoutes.showCalculator);
+
+          final _mockPage = ExpressionCreate();
+          Navigator.push(context, MaterialPageRoute(builder: (context) => _mockPage));
+          //Navigator.pushNamed(context, ArchSampleRoutes.showCalculator);
         },
         child: Icon(Icons.add),
         tooltip: ArchSampleLocalizations.of(context).saveFunction,

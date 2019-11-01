@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:graph_calc/view/screens/ui_utils.dart';
 
 import '../base/calc_experssions.dart';
@@ -15,6 +16,7 @@ class KeyPad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Widget KeyPad build");
     final ThemeData themeData = ThemeData(
       primarySwatch: Colors.purple,
       brightness: Brightness.dark,
@@ -33,11 +35,13 @@ class KeyPad extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   KeyRow(<Widget>[
-                    NumberInputField(calcState.handleRangeMin),
+                    NumberInputField(
+                        calcState.handleRangeMin, CalcExpression.minValue),
                     Text(" < "),
                     CalcKey(variableSymbol, calcState.handleVariableTap),
                     Text(" < "),
-                    NumberInputField(calcState.handleRangeMax),
+                    NumberInputField(
+                        calcState.handleRangeMax, CalcExpression.maxValue),
                   ]),
                   KeyRow(<Widget>[
                     NumberKey(7, calcState),
