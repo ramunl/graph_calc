@@ -3,15 +3,13 @@ import 'package:graph_calc/models/ArchSampleKeys.dart';
 import 'package:graph_calc/view/screens/calculator/views/%D1%81alc_display.dart';
 
 import '../../localization.dart';
-import 'model/calc_expression.dart';
 import 'base/calc_experssions.dart';
+import 'model/calc_expression.dart';
 import 'views/key_pad.dart';
-
 
 typedef OnSaveCallback = Function(CalcExpression expression);
 
 class Calculator extends StatefulWidget {
-
   final OnSaveCallback onSave;
 
   const Calculator({Key key, @required this.onSave}) : super(key: key);

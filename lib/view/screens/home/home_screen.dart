@@ -3,9 +3,7 @@
 // in the LICENSE file.
 
 import 'package:flutter/material.dart';
-
 import 'package:graph_calc/models/ArchSampleKeys.dart';
-import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/view/screens/history/history_list_store_сonnector.dart';
 
 import '../../localization.dart';
@@ -23,12 +21,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    widget.onInit();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,5 +41,11 @@ class HomeScreenState extends State<HomeScreen> {
         tooltip: ArchSampleLocalizations.of(context).saveFunction,
       ),
     );
+  }
+
+  @override
+  void initState() {
+    widget.onInit();
+    super.initState();
   }
 }

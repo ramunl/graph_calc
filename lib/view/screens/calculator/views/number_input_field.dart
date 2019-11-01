@@ -4,13 +4,22 @@ import 'package:flutter/services.dart';
 import '../../ui_utils.dart';
 
 class NumberInputField extends StatelessWidget {
-  TextEditingController _textFieldController = TextEditingController();
+  // Create a text controller and use it to retrieve the current value
+  // of the TextField.
+  final controller = TextEditingController();
+
+  NumberInputField(Function(num) handleRangeMin) {
+    controller.addListener(() => {
+        handleRangeMin(double.parse(controller.text))
+    });
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Container(
         child: Center(
             child: TextFormField(
+                controller: controller,
                 style: TextStyle(
                     color: Colors.pinkAccent, fontSize: getFontSize(context)),
                 keyboardType: TextInputType.number,

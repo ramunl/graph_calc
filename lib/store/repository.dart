@@ -7,6 +7,7 @@ import 'dart:core';
 
 import 'package:graph_calc/store/expression_entity.dart';
 import 'package:meta/meta.dart';
+
 import 'file_storage.dart';
 import 'todos_repository.dart';
 import 'web_client.dart';
@@ -29,8 +30,8 @@ class TodosRepositoryFlutter implements TodosRepository {
     try {
       return await fileStorage.loadTodos();
     } catch (e) {
-     // final todos = await webClient.fetchTodos();
-     // fileStorage.saveTodos(todos);
+      // final todos = await webClient.fetchTodos();
+      // fileStorage.saveTodos(todos);
       return null;
     }
   }

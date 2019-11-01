@@ -8,7 +8,6 @@ import 'dart:io';
 
 import 'expression_entity.dart';
 
-
 /// Loads and saves a List of Todos using a text file stored on the device.
 ///
 /// Note: This class has no direct dependencies on any Flutter dependencies.
@@ -23,12 +22,19 @@ class FileStorage {
     this.getDirectory,
   );
 
+  Future<FileSystemEntity> clean() async {
+    final file = await _getLocalFile();
+
+    return file.delete();
+  }
+
   Future<List<ExpressionEntity>> loadTodos() async {
     final file = await _getLocalFile();
     final string = await file.readAsString();
     final json = JsonDecoder().convert(string);
     final todos = (json['todos'])
-        .map<ExpressionEntity>((calcExpression) => ExpressionEntity.fromJson(calcExpression))
+        .map<ExpressionEntity>(
+            (calcExpression) => ExpressionEntity.fromJson(calcExpression))
         .toList();
 
     return todos;
@@ -46,11 +52,5 @@ class FileStorage {
     final dir = await getDirectory();
 
     return File('${dir.path}/ArchSampleStorage__$tag.json');
-  }
-
-  Future<FileSystemEntity> clean() async {
-    final file = await _getLocalFile();
-
-    return file.delete();
   }
 }

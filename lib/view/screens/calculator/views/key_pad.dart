@@ -9,9 +9,9 @@ import 'number_input_field.dart';
 import 'number_key.dart';
 
 class KeyPad extends StatelessWidget {
-  const KeyPad({this.calcState});
-
   final CalcExpressions calcState;
+
+  const KeyPad({this.calcState});
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +33,11 @@ class KeyPad extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   KeyRow(<Widget>[
-                    NumberInputField(),
+                    NumberInputField(calcState.handleRangeMin),
                     Text(" < "),
                     CalcKey(variableSymbol, calcState.handleVariableTap),
                     Text(" < "),
-                    NumberInputField(),
+                    NumberInputField(calcState.handleRangeMax),
                   ]),
                   KeyRow(<Widget>[
                     NumberKey(7, calcState),

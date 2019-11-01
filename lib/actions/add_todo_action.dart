@@ -1,12 +1,12 @@
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 
-class AddTodoAction {
+class SaveExpressionAction {
   final CalcExpression calcExpression;
 
-  AddTodoAction(this.calcExpression);
+  SaveExpressionAction(this.calcExpression);
 
   @override
   String toString() {
-    return 'AddTodoAction{calcExpression: $calcExpression}';
+    return 'SaveExpressionAction{calcExpression: $calcExpression}';
   }
 }

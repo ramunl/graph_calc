@@ -3,8 +3,8 @@
 // in the LICENSE file.
 
 import 'package:graph_calc/actions/update_filter_action.dart';
-import 'package:redux/redux.dart';
 import 'package:graph_calc/models/models.dart';
+import 'package:redux/redux.dart';
 
 final visibilityReducer = combineReducers<VisibilityFilter>([
   TypedReducer<VisibilityFilter, UpdateFilterAction>(_activeFilterReducer),

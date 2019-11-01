@@ -20,11 +20,11 @@ final _keepAnalysisHappy = Intl.defaultLocale;
 typedef MessageIfAbsent(String message_str, List args);
 
 class MessageLookup extends MessageLookupByLibrary {
+  final messages = _notInlinedMessages(_notInlinedMessages);
+
   get localeName => 'en';
 
   static m0(task) => "Deleted \"${task}\"";
-
-  final messages = _notInlinedMessages(_notInlinedMessages);
 
   static _notInlinedMessages(_) => {
         "activeTodos": MessageLookupByLibrary.simpleMessage("Active Todos"),
@@ -35,7 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "completedTodos":
             MessageLookupByLibrary.simpleMessage("Completed Todos"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
-        "deleteTodo": MessageLookupByLibrary.simpleMessage("Delete CalcExpression"),
+        "deleteTodo":
+            MessageLookupByLibrary.simpleMessage("Delete CalcExpression"),
         "deleteTodoConfirmation":
             MessageLookupByLibrary.simpleMessage("Delete this calcExpression?"),
         "editTodo": MessageLookupByLibrary.simpleMessage("Edit CalcExpression"),
@@ -56,7 +57,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "showCompleted": MessageLookupByLibrary.simpleMessage("Show Completed"),
         "stats": MessageLookupByLibrary.simpleMessage("Stats"),
         "todoDeleted": m0,
-        "createFunc": MessageLookupByLibrary.simpleMessage("func($variableSymbol)"),
+        "createFunc":
+            MessageLookupByLibrary.simpleMessage("func($variableSymbol)"),
         "todos": MessageLookupByLibrary.simpleMessage("Todos"),
         "undo": MessageLookupByLibrary.simpleMessage("Undo")
       };

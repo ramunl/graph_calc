@@ -5,9 +5,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
 import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/selectors/selectors.dart';
+import 'package:redux/redux.dart';
 
 class AppLoading extends StatelessWidget {
   final Function(BuildContext context, bool isLoading) builder;

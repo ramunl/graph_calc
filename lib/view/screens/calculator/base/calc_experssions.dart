@@ -5,57 +5,34 @@ import 'package:graph_calc/view/screens/calculator/model/calc_operation.dart';
 import '../model/calc_expression.dart';
 
 abstract class CalcExpressions {
+
   final List<CalcExpression> _expressionStack = <CalcExpression>[];
   CalcExpression _expression = CalcExpression.empty();
-
   CalcExpression get expression => _expression;
 
   // Make `expression` the current expression and push the previous current
   // expression onto the stack.
-  void pushExpression(CalcExpression expression) {
-    _expressionStack.add(_expression);
-    _expression = expression;
+  void handleDelTap() {
+    setState(() {
+      popCalcExpression();
+    });
   }
 
-  /// Pop the top expression off of the stack and make it the current expression.
-  void popCalcExpression() {
-    if (_expressionStack.isNotEmpty) {
-      _expression = _expressionStack.removeLast();
-    } else {
-      _expression = CalcExpression.empty();
-    }
-  }
-
-  /// Set `resultExpression` to the current expression and clear the stack.
-  void setResult(CalcExpression resultExpression) {
-    _expressionStack.clear();
-    _expression = resultExpression;
-  }
-
-  void handleNumberTap(int n) {
-    final CalcExpression expression = _expression.appendDigit(n);
-    if (expression != null) {
-      setState(() {
-        pushExpression(expression);
-      });
-    }
-  }
-
-  void handlePointTap() {
-    final CalcExpression expression = _expression.appendPoint();
-    if (expression != null) {
-      setState(() {
-        pushExpression(expression);
-      });
-    }
-  }
-
-  void handlePlusTap() {
+  void handleDivTap() {
     final CalcExpression expression =
-        _expression.appendOperation(CalcOperation.Addition);
+        _expression.appendOperation(CalcOperation.Division);
     if (expression != null) {
       setState(() {
         pushExpression(expression);
+      });
+    }
+  }
+
+  void handleEqualsTap() {
+    final CalcExpression resultExpression = _expression.computeResult();
+    if (resultExpression != null) {
+      setState(() {
+        setResult(resultExpression);
       });
     }
   }
@@ -79,9 +56,8 @@ abstract class CalcExpressions {
     }
   }
 
-  void handleDivTap() {
-    final CalcExpression expression =
-        _expression.appendOperation(CalcOperation.Division);
+  void handleNumberTap(n) {
+    final CalcExpression expression = _expression.appendDigit(n);
     if (expression != null) {
       setState(() {
         pushExpression(expression);
@@ -89,19 +65,31 @@ abstract class CalcExpressions {
     }
   }
 
-  void handleEqualsTap() {
-    final CalcExpression resultExpression = _expression.computeResult();
-    if (resultExpression != null) {
+  void handlePlusTap() {
+    final CalcExpression expression =
+        _expression.appendOperation(CalcOperation.Addition);
+    if (expression != null) {
       setState(() {
-        setResult(resultExpression);
+        pushExpression(expression);
       });
     }
   }
 
-  void handleDelTap() {
-    setState(() {
-      popCalcExpression();
-    });
+  void handlePointTap() {
+    final CalcExpression expression = _expression.appendPoint();
+    if (expression != null) {
+      setState(() {
+        pushExpression(expression);
+      });
+    }
+  }
+
+  void handleRangeMax(num) {
+    _expression.maxValue = num;
+  }
+
+  void handleRangeMin(num) {
+    _expression.minValue = num;
   }
 
   void handleVariableTap() {
@@ -111,6 +99,26 @@ abstract class CalcExpressions {
         pushExpression(expression);
       });
     }
+  }
+
+  /// Pop the top expression off of the stack and make it the current expression.
+  void popCalcExpression() {
+    if (_expressionStack.isNotEmpty) {
+      _expression = _expressionStack.removeLast();
+    } else {
+      _expression = CalcExpression.empty();
+    }
+  }
+
+  void pushExpression(expression) {
+    _expressionStack.add(_expression);
+    _expression = expression;
+  }
+
+  /// Set `resultExpression` to the current expression and clear the stack.
+  void setResult(resultExpression) {
+    _expressionStack.clear();
+    _expression = resultExpression;
   }
 
   void setState(VoidCallback fn);

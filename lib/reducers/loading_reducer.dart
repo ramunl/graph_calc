@@ -3,8 +3,8 @@
 // in the LICENSE file.
 
 import 'package:graph_calc/actions/todos_loaded_action.dart';
-import 'package:redux/redux.dart';
 import 'package:graph_calc/actions/todos_not_loaded_action.dart';
+import 'package:redux/redux.dart';
 
 final loadingReducer = combineReducers<bool>([
   TypedReducer<bool, TodosLoadedAction>(_setLoaded),

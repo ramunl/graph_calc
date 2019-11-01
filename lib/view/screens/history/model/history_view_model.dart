@@ -1,14 +1,11 @@
-import 'package:graph_calc/actions/add_todo_action.dart';
-import 'package:graph_calc/actions/delete_todo_action.dart';
-import 'package:graph_calc/actions/update_todo_action.dart';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
-import 'package:redux/redux.dart';
-import 'package:graph_calc/actions/todos_not_loaded_action.dart';
+import 'package:graph_calc/actions/add_todo_action.dart';
+import 'package:graph_calc/actions/delete_todo_action.dart';
 import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/selectors/selectors.dart';
+import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
+import 'package:redux/redux.dart';
 
 class HistoryViewModel {
   final List<CalcExpression> todos;
@@ -31,12 +28,11 @@ class HistoryViewModel {
         activeFilterSelector(store.state),
       ),
       loading: store.state.isLoading,
-
       onRemove: (calcExpression) {
         store.dispatch(DeleteTodoAction(calcExpression.id));
       },
       onUndoRemove: (calcExpression) {
-        store.dispatch(AddTodoAction(calcExpression));
+        store.dispatch(SaveExpressionAction(calcExpression));
       },
     );
   }

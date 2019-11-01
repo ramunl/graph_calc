@@ -2,33 +2,24 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'dart:convert';
-
 import 'package:graph_calc/mapper/expression_entity_mapper.dart';
 
 class ExpressionEntity {
   final String id;
   final List<dynamic> tokenList;
 
-  @override
-  String toString() {
-    return 'ExpressionEntity{id: $id, tokenList: $tokenList}';
-  }
+  ExpressionEntity(this.id, this.tokenList);
 
   ExpressionEntity.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         tokenList = json['tokenList'];
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'tokenList': tokenList,
-      };
-
   ExpressionEntity.withDefaultId(List<String> tokenList)
       : this.id = generateEntityId(),
         this.tokenList = tokenList;
 
-  ExpressionEntity(this.id, this.tokenList);
+  @override
+  int get hashCode => id.hashCode ^ tokenList.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -38,6 +29,13 @@ class ExpressionEntity {
           id == other.id &&
           tokenList == other.tokenList;
 
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'tokenList': tokenList,
+      };
+
   @override
-  int get hashCode => id.hashCode ^ tokenList.hashCode;
+  String toString() {
+    return 'ExpressionEntity{id: $id, tokenList: $tokenList}';
+  }
 }

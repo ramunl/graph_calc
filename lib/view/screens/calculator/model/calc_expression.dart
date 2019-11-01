@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:graph_calc/mapper/expression_entity_mapper.dart';
+import 'package:graph_calc/view/screens/calculator/base/expression_validate_result.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/expression_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/float_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/int_token.dart';
@@ -24,31 +25,6 @@ import 'expression_state.dart';
 /// immutable. The `append*` methods return a new [CalcExpression] that
 /// represents the appropriate expression when one additional key tap occurs.
 class CalcExpression {
-  CalcExpression(this.expressionTokenList, this.state)
-      : id = generateEntityId();
-
-  getTitle() => "f($variableSymbol) = ${expressionTokenList.join()}";
-
-  CalcExpression.withDefaultId(List<ExpressionToken> expressionTokenList)
-      : this.id = generateEntityId(),
-        this.expressionTokenList = expressionTokenList,
-        this.state = ExpressionState.Result;
-
-  CalcExpression.expression(
-      String id, List<ExpressionToken> expressionTokenList)
-      : this.id = id,
-        this.expressionTokenList = expressionTokenList,
-        this.state = ExpressionState.Result;
-
-  CalcExpression.empty() : this(<ExpressionToken>[], ExpressionState.Start);
-
-  CalcExpression.result(FloatToken result)
-      : id = generateEntityId(),
-        expressionTokenList = <ExpressionToken>[],
-        state = ExpressionState.Result {
-    expressionTokenList.add(result);
-  }
-
   final String id;
 
   /// The tokens comprising the expression.
@@ -59,63 +35,39 @@ class CalcExpression {
 
   num variableX = 0;
 
+  num maxValue;
+
+  num minValue;
+
+  CalcExpression(this.expressionTokenList, this.state)
+      : id = generateEntityId();
+
+  CalcExpression.empty() : this(<ExpressionToken>[], ExpressionState.Start);
+
+  CalcExpression.expression(
+      String id, List<ExpressionToken> expressionTokenList)
+      : this.id = id,
+        this.expressionTokenList = expressionTokenList,
+        this.state = ExpressionState.Result;
+
+  CalcExpression.result(FloatToken result)
+      : id = generateEntityId(),
+        expressionTokenList = <ExpressionToken>[],
+        state = ExpressionState.Result {
+    expressionTokenList.add(result);
+  }
+
+  CalcExpression.withDefaultId(List<ExpressionToken> expressionTokenList)
+      : this.id = generateEntityId(),
+        this.expressionTokenList = expressionTokenList,
+        this.state = ExpressionState.Result;
+
   int get variable {
     return variableX;
   }
 
   void set variable(int variable) {
     variableX = variable;
-  }
-
-  num maxValue;
-  num minValue;
-
-  setRange(num minValue, num maxValue) {
-    this.minValue = minValue;
-    this.maxValue = maxValue;
-  }
-
-  getRange() => [minValue, maxValue];
-
-  /// The string representation of the expression. This will be displayed
-  /// in the calculator's display panel.
-  @override
-  String toString() {
-    final StringBuffer buffer = StringBuffer('');
-    buffer.writeAll(expressionTokenList);
-    return buffer.toString();
-  }
-
-  CalcExpression appendVariable() {
-    ExpressionState newState = ExpressionState.Variable;
-    final List<ExpressionToken> outList = expressionTokenList.toList();
-    var canBeAdded;
-    CalcExpression res;
-    if (outList.isEmpty || outList.last is OperationToken) {
-      canBeAdded = true;
-    } else {
-      switch (state) {
-        case ExpressionState.Start:
-        case ExpressionState.LeadingNeg:
-          canBeAdded = true;
-          break;
-        case ExpressionState.Number:
-        case ExpressionState.Point:
-        case ExpressionState.NumberWithPoint:
-        case ExpressionState.Variable:
-        case ExpressionState.Result:
-          // Cannot add variable now.
-          canBeAdded = false;
-          break;
-          // TODO: Handle this case.
-          break;
-      }
-    }
-    if (canBeAdded) {
-      outList.add(VariableToken());
-      res = CalcExpression(outList, newState);
-    }
-    return res;
   }
 
   /// Append a digit to the current expression and return a new expression
@@ -153,55 +105,6 @@ class CalcExpression {
     }
     outList.add(newToken);
     return CalcExpression(outList, newState);
-  }
-
-  /// Append a point to the current expression and return a new expression
-  /// representing the result. Returns null to indicate that it is not legal
-  /// to append a point in the current state.
-  CalcExpression appendPoint() {
-    ExpressionToken newToken;
-    final List<ExpressionToken> outList = expressionTokenList.toList();
-    switch (state) {
-      case ExpressionState.Start:
-        newToken = FloatToken('.');
-        break;
-      case ExpressionState.LeadingNeg:
-      case ExpressionState.Number:
-        final ExpressionToken last = outList.removeLast();
-        newToken = FloatToken(last.stringRep + '.');
-        break;
-      case ExpressionState.Variable:
-      case ExpressionState.Point:
-      case ExpressionState.NumberWithPoint:
-      case ExpressionState.Result:
-        // Cannot enter a point now
-        return null;
-        // TODO: Handle this case.
-        break;
-    }
-    outList.add(newToken);
-    return CalcExpression(outList, ExpressionState.Point);
-  }
-
-  /// Append an operation symbol to the current expression and return a new
-  /// expression representing the result. Returns null to indicate that it is not
-  /// legal to append an operation symbol in the current state.
-  CalcExpression appendOperation(CalcOperation op) {
-    switch (state) {
-      case ExpressionState.Start:
-      case ExpressionState.LeadingNeg:
-      case ExpressionState.Point:
-        // Cannot enter operation now.
-        return null;
-      case ExpressionState.Variable:
-      case ExpressionState.Number:
-      case ExpressionState.NumberWithPoint:
-      case ExpressionState.Result:
-        break;
-    }
-    final List<ExpressionToken> outList = expressionTokenList.toList();
-    outList.add(OperationToken(op));
-    return CalcExpression(outList, ExpressionState.Start);
   }
 
   /// Append a leading minus sign to the current expression and return a new
@@ -243,6 +146,87 @@ class CalcExpression {
       default:
         return null;
     }
+  }
+
+  /// Append an operation symbol to the current expression and return a new
+  /// expression representing the result. Returns null to indicate that it is not
+  /// legal to append an operation symbol in the current state.
+  CalcExpression appendOperation(CalcOperation op) {
+    switch (state) {
+      case ExpressionState.Start:
+      case ExpressionState.LeadingNeg:
+      case ExpressionState.Point:
+        // Cannot enter operation now.
+        return null;
+      case ExpressionState.Variable:
+      case ExpressionState.Number:
+      case ExpressionState.NumberWithPoint:
+      case ExpressionState.Result:
+        break;
+    }
+    final List<ExpressionToken> outList = expressionTokenList.toList();
+    outList.add(OperationToken(op));
+    return CalcExpression(outList, ExpressionState.Start);
+  }
+
+  /// Append a point to the current expression and return a new expression
+  /// representing the result. Returns null to indicate that it is not legal
+  /// to append a point in the current state.
+  CalcExpression appendPoint() {
+    ExpressionToken newToken;
+    final List<ExpressionToken> outList = expressionTokenList.toList();
+    switch (state) {
+      case ExpressionState.Start:
+        newToken = FloatToken('.');
+        break;
+      case ExpressionState.LeadingNeg:
+      case ExpressionState.Number:
+        final ExpressionToken last = outList.removeLast();
+        newToken = FloatToken(last.stringRep + '.');
+        break;
+      case ExpressionState.Variable:
+      case ExpressionState.Point:
+      case ExpressionState.NumberWithPoint:
+      case ExpressionState.Result:
+        // Cannot enter a point now
+        return null;
+        // TODO: Handle this case.
+        break;
+    }
+    outList.add(newToken);
+    return CalcExpression(outList, ExpressionState.Point);
+  }
+
+  CalcExpression appendVariable() {
+    ExpressionState newState = ExpressionState.Variable;
+    final List<ExpressionToken> outList = expressionTokenList.toList();
+    var canBeAdded;
+    CalcExpression res;
+    if (outList.isEmpty || outList.last is OperationToken) {
+      canBeAdded = true;
+    } else {
+      switch (state) {
+        case ExpressionState.Start:
+        case ExpressionState.LeadingNeg:
+          canBeAdded = true;
+          break;
+        case ExpressionState.Number:
+        case ExpressionState.Point:
+        case ExpressionState.NumberWithPoint:
+        case ExpressionState.Variable:
+        case ExpressionState.Result:
+          // Cannot add variable now.
+          canBeAdded = false;
+          break;
+          // TODO: Handle this case.
+          break;
+      }
+    }
+    if (canBeAdded) {
+      outList.add(VariableToken());
+      res = CalcExpression(outList, newState);
+    }
+    return res;
   }
 
   /// Computes the result of the current expression and returns a new
@@ -290,6 +274,43 @@ class CalcExpression {
       ResultToken(currentTermValue),
     ];
     return CalcExpression(outList, ExpressionState.Result);
+  }
+
+  validateExpression() {
+    var valid = false;
+    var msg;
+    if (maxValue > minValue) {
+      if (expressionTokenList.contains(variableSymbol)) {
+        if (expressionTokenList.last is OperationToken) {
+          msg = "Wrong expression!";
+        } else {
+          valid = true;
+        }
+      } else {
+        msg = "$variableSymbol not added!";
+      }
+    } else {
+      msg = "Range error, max < min!";
+    }
+    return ExpressionValidateResult(valid, msg);
+  }
+
+  getRange() => [minValue, maxValue];
+
+  getTitle() => "f($variableSymbol) = ${expressionTokenList.join()}";
+
+  setRange(num minValue, num maxValue) {
+    this.minValue = minValue;
+    this.maxValue = maxValue;
+  }
+
+  /// The string representation of the expression. This will be displayed
+  /// in the calculator's display panel.
+  @override
+  String toString() {
+    final StringBuffer buffer = StringBuffer('');
+    buffer.writeAll(expressionTokenList);
+    return buffer.toString();
   }
 
   /// Removes the next "term" from `list` and returns its numeric value.

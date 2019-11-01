@@ -4,15 +4,12 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:graph_calc/models/ArchSampleKeys.dart';
-import 'package:graph_calc/models/models.dart';
-import 'package:graph_calc/view/screens/history/app_loading.dart';
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
+import 'package:graph_calc/view/screens/history/app_loading.dart';
 import 'package:graph_calc/view/screens/history/views/history_list_item.dart';
 import 'package:graph_calc/view/screens/plotting/func_plotter.dart';
 
-import '../../localization.dart';
 import 'views/loading_indicator.dart';
 
 class HistoryList extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 class CalcDisplay extends StatelessWidget {
-  const CalcDisplay({ this.content });
-
   final String content;
+
+  const CalcDisplay({this.content});
 
   @override
   Widget build(BuildContext context) {

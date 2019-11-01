@@ -17,21 +17,31 @@ class Optional<T> extends IterableBase<T> {
 
   /// Constructs an Optional of the given [value].
   ///
+  /// If [value] is null, returns [absent()].
+  const Optional.fromNullable(T value) : this._value = value;
+
+  /// Constructs an Optional of the given [value].
+  ///
   /// Throws [ArgumentError] if [value] is null.
   Optional.of(T value) : this._value = value {
     if (this._value == null) throw ArgumentError('Must not be null.');
   }
 
-  /// Constructs an Optional of the given [value].
-  ///
-  /// If [value] is null, returns [absent()].
-  const Optional.fromNullable(T value) : this._value = value;
+  /// Delegates to the underlying [value] hashCode.
+  int get hashCode => _value.hashCode;
+
+  /// Whether the Optional contains a value.
+  bool get isNotPresent => _value == null;
 
   /// Whether the Optional contains a value.
   bool get isPresent => _value != null;
 
-  /// Whether the Optional contains a value.
-  bool get isNotPresent => _value == null;
+  @override
+  Iterator<T> get iterator =>
+      isPresent ? <T>[_value].iterator : Iterable<T>.empty().iterator;
+
+  /// Gets the Optional value, or [null] if there is none.
+  T get orNull => _value;
 
   /// Gets the Optional value.
   ///
@@ -43,17 +53,20 @@ class Optional<T> extends IterableBase<T> {
     return _value;
   }
 
-  /// Executes a function if the Optional value is present.
-  void ifPresent(void ifPresent(T value)) {
-    if (isPresent) {
-      ifPresent(_value);
-    }
-  }
+  /// Delegates to the underlying [value] operator==.
+  bool operator ==(o) => o is Optional && o._value == _value;
 
   /// Execution a function if the Optional value is absent.
   void ifAbsent(void ifAbsent()) {
     if (!isPresent) {
       ifAbsent();
+    }
+  }
+
+  /// Executes a function if the Optional value is present.
+  void ifPresent(void ifPresent(T value)) {
+    if (isPresent) {
+      ifPresent(_value);
     }
   }
 
@@ -69,8 +82,11 @@ class Optional<T> extends IterableBase<T> {
     return _value == null ? defaultValue : _value;
   }
 
-  /// Gets the Optional value, or [null] if there is none.
-  T get orNull => _value;
+  String toString() {
+    return _value == null
+        ? 'Optional { absent }'
+        : 'Optional { value: ${_value} }';
+  }
 
   /// Transforms the Optional value.
   ///
@@ -81,21 +97,5 @@ class Optional<T> extends IterableBase<T> {
     return _value == null
         ? Optional.absent()
         : Optional.of(transformer(_value));
-  }
-
-  @override
-  Iterator<T> get iterator =>
-      isPresent ? <T>[_value].iterator : Iterable<T>.empty().iterator;
-
-  /// Delegates to the underlying [value] hashCode.
-  int get hashCode => _value.hashCode;
-
-  /// Delegates to the underlying [value] operator==.
-  bool operator ==(o) => o is Optional && o._value == _value;
-
-  String toString() {
-    return _value == null
-        ? 'Optional { absent }'
-        : 'Optional { value: ${_value} }';
   }
 }

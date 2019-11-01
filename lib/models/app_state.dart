@@ -2,9 +2,9 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
+import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:meta/meta.dart';
-import 'package:graph_calc/models/models.dart';
 
 @immutable
 class AppState {
@@ -20,20 +20,6 @@ class AppState {
       this.activeFilter = VisibilityFilter.all});
 
   factory AppState.loading() => AppState(isLoading: true);
-
-  AppState copyWith({
-    bool isLoading,
-    List<CalcExpression> todos,
-    AppTab activeTab,
-    VisibilityFilter activeFilter,
-  }) {
-    return AppState(
-      isLoading: isLoading ?? this.isLoading,
-      todos: todos ?? this.todos,
-      activeTab: activeTab ?? this.activeTab,
-      activeFilter: activeFilter ?? this.activeFilter,
-    );
-  }
 
   @override
   int get hashCode =>
@@ -51,6 +37,20 @@ class AppState {
           todos == other.todos &&
           activeTab == other.activeTab &&
           activeFilter == other.activeFilter;
+
+  AppState copyWith({
+    bool isLoading,
+    List<CalcExpression> todos,
+    AppTab activeTab,
+    VisibilityFilter activeFilter,
+  }) {
+    return AppState(
+      isLoading: isLoading ?? this.isLoading,
+      todos: todos ?? this.todos,
+      activeTab: activeTab ?? this.activeTab,
+      activeFilter: activeFilter ?? this.activeFilter,
+    );
+  }
 
   @override
   String toString() {

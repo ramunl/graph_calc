@@ -6,10 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:graph_calc/models/ArchSampleKeys.dart';
 
-import 'package:graph_calc/models/models.dart';
-
 import '../../calculator/model/calc_expression.dart';
-import '../../ui_utils.dart';
 
 class HistoryListItem extends StatelessWidget {
   // final DismissDirectionCallback onDismissed;
@@ -31,11 +28,12 @@ class HistoryListItem extends StatelessWidget {
       child: InkWell(
           onTap: onTap, // handle your onTap here
           child: Padding(
-              padding: EdgeInsets.only(bottom: 8.0,top: 8.0),
+              padding: EdgeInsets.only(bottom: 8.0, top: 8.0),
               child: Card(
                 key: ArchSampleKeys.todoItem(calcExpression.id),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
                   child: Text(
                     calcExpression.getTitle(),
                     style: TextStyle(
@@ -44,8 +42,7 @@ class HistoryListItem extends StatelessWidget {
                     ),
                   ),
                 ),
-              ))
-      ),
+              ))),
     );
   }
 }

@@ -4,15 +4,16 @@ import 'package:graph_calc/view/screens/calculator/model/tokens/expression_token
 
 import '../uuid.dart';
 
+CalcExpression fromEntity(ExpressionEntity entity) {
+  return CalcExpression.expression(
+      entity.id, toExprTokenList(entity.tokenList));
+}
+
+generateEntityId() => Uuid().generateV4();
 
 ExpressionEntity toEntity(CalcExpression calcExpression) {
   return ExpressionEntity(
       calcExpression.id, toStrList(calcExpression.expressionTokenList));
-}
-
-CalcExpression fromEntity(ExpressionEntity entity) {
-  return CalcExpression.expression(
-      entity.id, toExprTokenList(entity.tokenList));
 }
 
 List<ExpressionToken> toExprTokenList(List<dynamic> expressions) {
@@ -22,5 +23,3 @@ List<ExpressionToken> toExprTokenList(List<dynamic> expressions) {
 List<String> toStrList(List<ExpressionToken> expressionTokens) {
   return expressionTokens.map((expr) => expr.toString()).toList();
 }
-
-generateEntityId() => Uuid().generateV4();

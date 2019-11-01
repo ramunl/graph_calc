@@ -1,14 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../ui_utils.dart';
 
 class CalcKey extends StatelessWidget {
-  const CalcKey(this.text, this.onTap);
-
   final String text;
+
   final GestureTapCallback onTap;
+  const CalcKey(this.text, this.onTap);
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +17,7 @@ class CalcKey extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: TextStyle(
-                fontSize: getFontSize(context)
-            ),
+            style: TextStyle(fontSize: getFontSize(context)),
           ),
         ),
       ),

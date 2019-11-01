@@ -1,12 +1,11 @@
-
 import '../calc_operation.dart';
 import 'expression_token.dart';
 
 /// A token that represents an arithmetic operation symbol.
 class OperationToken extends ExpressionToken {
-  OperationToken(this.operation) : super(opString(operation));
-
   CalcOperation operation;
+
+  OperationToken(this.operation) : super(opString(operation));
 
   static String opString(CalcOperation operation) {
     switch (operation) {

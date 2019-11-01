@@ -2,11 +2,10 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'expression_entity.dart';
 import 'dart:async';
 import 'dart:core';
 
-
+import 'expression_entity.dart';
 
 /// A class that Loads and Persists todos. The data layer of the app.
 ///
