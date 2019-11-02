@@ -9,9 +9,7 @@ class AdaptivePlot {
   final Function f;
   final double minX;
   final double maxX;
-  final _plot = OrderedSet<Point>(Comparing.on((p) => p.x));
-
-  OrderedSet get plot => _plot;
+  final plot = OrderedSet<Point>(Comparing.on((p) => p.x));
   
   static double testFun(double x) =>  x*x;
 
@@ -28,11 +26,11 @@ class AdaptivePlot {
   }
 
   AdaptivePlot computePlot() {
-    _plot.clear();
+    plot.clear();
     Point pa = pointAt(minX);
     Point pc = pointAt(maxX);
-    _plot.add(pa);
-    _plot.add(pc);
+    plot.add(pa);
+    plot.add(pc);
     doComputePlot(pa, pc, depth, eps);
     return this;
   }
@@ -41,15 +39,15 @@ class AdaptivePlot {
     Point pb = pointAt(0.5 * (pa.x + pc.x));
     Point pa1 = pointAt(0.5 * (pa.x + pb.x));
     Point pb1 = pointAt(0.5 * (pb.x + pc.x));
-    _plot.add(pb);
+    plot.add(pb);
     if (depth > 0 &&
         (oscillates(pa.y, pa1.y, pb.y, pb1.y, pc.y) ||
             unsmooth(pa.y, pa1.y, pb.y, pb1.y, pc.y, eps))) {
       doComputePlot(pa, pb, depth - 1, 2 * eps);
       doComputePlot(pb, pc, depth - 1, 2 * eps);
     }
-    _plot.add(pa1);
-    _plot.add(pb1);
+    plot.add(pa1);
+    plot.add(pb1);
   }
 
   bool oscillates(double ya, double ya1, double yb, double yb1, double yc) {

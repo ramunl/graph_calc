@@ -13,7 +13,10 @@ generateEntityId() => Uuid().generateV4();
 
 ExpressionEntity toEntity(CalcExpression calcExpression) {
   return ExpressionEntity(
-      calcExpression.id, toStrList(calcExpression.expressionTokenList));
+      calcExpression.id,
+      toStrList(calcExpression.expressionTokenList),
+      calcExpression.minValue,
+      calcExpression.maxValue);
 }
 
 List<ExpressionToken> toExprTokenList(List<dynamic> expressions) {

@@ -13,7 +13,7 @@ class NumberInputField extends StatelessWidget {
 
   NumberInputField(Function(num) handleRangeMin, num initValue) {
     print("NumberInputField init: $initValue");
-    controller.text = initValue.toString();
+    if (initValue != 0) controller.text = initValue.toString();
     controller.addListener(() => {
           if (controller.text.isNotEmpty)
             {handleRangeMin(num.parse(controller.text))}

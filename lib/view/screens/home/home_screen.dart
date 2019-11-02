@@ -25,13 +25,6 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(ReduxLocalizations.of(context).appTitle),
-        actions: [
-          //FilterSelector(visible: activeTab == AppTab.history),
-          // ExtraActionsContainer(),
-        ],
-      ),
       body: HistoryListStoreConnector(),
       floatingActionButton: FloatingActionButton(
         key: ArchSampleKeys.addTodoFab,

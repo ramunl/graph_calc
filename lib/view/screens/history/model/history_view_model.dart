@@ -11,7 +11,7 @@ class HistoryViewModel {
   final List<CalcExpression> todos;
   final bool loading;
   //final Function(CalcExpression, bool) onCheckboxChanged;
-  final Function(CalcExpression) onRemove;
+  final Function() onRemove;
   final Function(CalcExpression) onUndoRemove;
 
   HistoryViewModel({
@@ -28,8 +28,8 @@ class HistoryViewModel {
         activeFilterSelector(store.state),
       ),
       loading: store.state.isLoading,
-      onRemove: (calcExpression) {
-        store.dispatch(DeleteTodoAction(calcExpression.id));
+      onRemove: () {
+        store.dispatch(DeleteTodoAction());
       },
       onUndoRemove: (calcExpression) {
         store.dispatch(SaveExpressionAction(calcExpression));

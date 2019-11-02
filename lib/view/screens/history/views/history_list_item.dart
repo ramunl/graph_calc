@@ -44,7 +44,7 @@ class HistoryListItem extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          calcExpression.getRange().toString(),
+                          calcExpression.rangeAsStr(),
                           style: TextStyle(
                             fontSize: 18.0,
                             height: 1.6,

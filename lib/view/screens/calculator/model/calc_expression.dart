@@ -33,14 +33,16 @@ class CalcExpression {
   /// The state of the expression.
   final ExpressionState state;
 
-  static num variableX = 0;
-  static num maxValue = 0;
-  static num minValue = 0;
+  num variableX = 0;
+  num maxValue;
+  num minValue;
 
-  CalcExpression(this.expressionTokenList, this.state)
+  CalcExpression(
+      this.expressionTokenList, this.state, this.minValue, this.maxValue)
       : id = generateEntityId();
 
-  CalcExpression.empty() : this(<ExpressionToken>[], ExpressionState.Start);
+  CalcExpression.empty()
+      : this(<ExpressionToken>[], ExpressionState.Start, 0, 0);
 
   CalcExpression.expression(
       String id, List<ExpressionToken> expressionTokenList)
@@ -59,14 +61,6 @@ class CalcExpression {
       : this.id = generateEntityId(),
         this.expressionTokenList = expressionTokenList,
         this.state = ExpressionState.Result;
-
-  int get variable {
-    return variableX;
-  }
-
-  void set variable(int variable) {
-    variableX = variable;
-  }
 
   /// Append a digit to the current expression and return a new expression
   /// representing the result. Returns null to indicate that it is not legal
@@ -102,7 +96,7 @@ class CalcExpression {
         return null;
     }
     outList.add(newToken);
-    return CalcExpression(outList, newState);
+    return CalcExpression(outList, newState, minValue, maxValue);
   }
 
   /// Append a leading minus sign to the current expression and return a new
@@ -123,7 +117,8 @@ class CalcExpression {
     }
     final List<ExpressionToken> outList = expressionTokenList.toList();
     outList.add(LeadingNegToken());
-    return CalcExpression(outList, ExpressionState.LeadingNeg);
+    return CalcExpression(
+        outList, ExpressionState.LeadingNeg, minValue, maxValue);
   }
 
   /// Append a minus sign to the current expression and return a new expression
@@ -164,7 +159,7 @@ class CalcExpression {
     }
     final List<ExpressionToken> outList = expressionTokenList.toList();
     outList.add(OperationToken(op));
-    return CalcExpression(outList, ExpressionState.Start);
+    return CalcExpression(outList, ExpressionState.Start, minValue, maxValue);
   }
 
   /// Append a point to the current expression and return a new expression
@@ -192,7 +187,7 @@ class CalcExpression {
         break;
     }
     outList.add(newToken);
-    return CalcExpression(outList, ExpressionState.Point);
+    return CalcExpression(outList, ExpressionState.Point, minValue, maxValue);
   }
 
   CalcExpression appendVariable() {
@@ -222,57 +217,12 @@ class CalcExpression {
     }
     if (canBeAdded) {
       outList.add(VariableToken());
-      res = CalcExpression(outList, newState);
+      res = CalcExpression(outList, newState, minValue, maxValue);
     }
     return res;
   }
 
-  /// Computes the result of the current expression and returns a new
-  /// ResultExpression containing the result. Returns null to indicate that
-  /// it is not legal to compute a result in the current state.
-  CalcExpression computeResult() {
-    switch (state) {
-      case ExpressionState.Start:
-      case ExpressionState.LeadingNeg:
-      case ExpressionState.Point:
-      case ExpressionState.Result:
-        // Cannot compute result now.
-        return null;
-      case ExpressionState.Variable:
-      case ExpressionState.Number:
-      case ExpressionState.NumberWithPoint:
-        break;
-    }
 
-    // We make a copy of _list because CalcExpressions are supposed to
-    // be immutable.
-    final List<ExpressionToken> list = expressionTokenList.toList();
-    // We obey order-of-operations by computing the sum of the 'terms',
-    // where a "term" is defined to be a sequence of numbers separated by
-    // multiplication or division symbols.
-    num currentTermValue = removeNextTerm(list);
-    while (list.isNotEmpty) {
-      final OperationToken opToken = list.removeAt(0);
-      final num nextTermValue = removeNextTerm(list);
-      switch (opToken.operation) {
-        case CalcOperation.Addition:
-          currentTermValue += nextTermValue;
-          break;
-        case CalcOperation.Subtraction:
-          currentTermValue -= nextTermValue;
-          break;
-        case CalcOperation.Multiplication:
-        case CalcOperation.Division:
-          // Logic error.
-          assert(false);
-          break;
-      }
-    }
-    final List<ExpressionToken> outList = <ExpressionToken>[
-      ResultToken(currentTermValue),
-    ];
-    return CalcExpression(outList, ExpressionState.Result);
-  }
 
   validateExpression() {
     var valid = false;
@@ -295,7 +245,8 @@ class CalcExpression {
     return ExpressionValidateResult(valid, msg);
   }
 
-  getRange() => ", range = ${[minValue, maxValue]}";
+  getRange() => [minValue, maxValue];
+  rangeAsStr() => ", range = ${getRange()}";
 
   getTitle() => "f($variableSymbol) = ${expressionTokenList.join()}";
 
@@ -308,37 +259,5 @@ class CalcExpression {
     return buffer.toString();
   }
 
-  /// Removes the next "term" from `list` and returns its numeric value.
-  /// A "term" is a sequence of number tokens separated by multiplication
-  /// and division symbols.
-  static num removeNextTerm(List<ExpressionToken> list) {
-    assert(list != null && list.isNotEmpty);
-    final NumberToken firstNumToken = list.removeAt(0);
-    num currentValue = firstNumToken.number;
-    while (list.isNotEmpty) {
-      bool isDivision = false;
-      final OperationToken nextOpToken = list.first;
-      switch (nextOpToken.operation) {
-        case CalcOperation.Addition:
-        case CalcOperation.Subtraction:
-          // We have reached the end of the current term
-          return currentValue;
-        case CalcOperation.Multiplication:
-          break;
-        case CalcOperation.Division:
-          isDivision = true;
-          break;
-      }
-      // Remove the operation token.
-      list.removeAt(0);
-      // Remove the next number token.
-      final NumberToken nextNumToken = list.removeAt(0);
-      final num nextNumber = nextNumToken.number;
-      if (isDivision)
-        currentValue /= nextNumber;
-      else
-        currentValue *= nextNumber;
-    }
-    return currentValue;
-  }
+
 }

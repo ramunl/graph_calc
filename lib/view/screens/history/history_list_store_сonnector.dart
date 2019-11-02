@@ -21,8 +21,7 @@ class HistoryListStoreConnector extends StatelessWidget {
         return HistoryList(
           calcExpressions: vm.todos,
           //onCheckboxChanged: vm.onCheckboxChanged,
-          onRemove: vm.onRemove,
-          onUndoRemove: vm.onUndoRemove,
+          onRemove: vm.onRemove
         );
       },
     );

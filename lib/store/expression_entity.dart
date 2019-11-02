@@ -7,35 +7,44 @@ import 'package:graph_calc/mapper/expression_entity_mapper.dart';
 class ExpressionEntity {
   final String id;
   final List<dynamic> tokenList;
+  final num maxVal;
+  final num minVal;
 
-  ExpressionEntity(this.id, this.tokenList);
+  ExpressionEntity(this.id, this.tokenList, this.minVal, this.maxVal);
 
   ExpressionEntity.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        tokenList = json['tokenList'];
+        tokenList = json['tokenList'],
+        minVal = json['minVal'],
+        maxVal = json['maxVal'];
 
-  ExpressionEntity.withDefaultId(List<String> tokenList)
-      : this.id = generateEntityId(),
-        this.tokenList = tokenList;
-
-  @override
-  int get hashCode => id.hashCode ^ tokenList.hashCode;
+  ExpressionEntity.withDefaultId(
+      this.tokenList, this.minVal, this.maxVal)
+      : this.id = generateEntityId();
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ExpressionEntity &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          tokenList == other.tokenList;
+          other is ExpressionEntity &&
+              runtimeType == other.runtimeType &&
+              id == other.id &&
+              tokenList == other.tokenList &&
+              maxVal == other.maxVal &&
+              minVal == other.minVal;
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'id': id,
         'tokenList': tokenList,
+        'maxVal': maxVal,
+        'minVal': minVal,
       };
 
   @override
-  String toString() {
-    return 'ExpressionEntity{id: $id, tokenList: $tokenList}';
-  }
+  int get hashCode =>
+      id.hashCode ^
+      tokenList.hashCode ^
+      maxVal.hashCode ^
+      minVal.hashCode;
+
 }

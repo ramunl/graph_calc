@@ -28,7 +28,6 @@ List<CalcExpression> _addTodo(
 List<CalcExpression> _deleteTodo(
     List<CalcExpression> todos, DeleteTodoAction action) {
   return todos
-      .where((calcExpression) => calcExpression.id != action.id)
       .toList();
 }
 

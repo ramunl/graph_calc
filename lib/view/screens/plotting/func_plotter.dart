@@ -24,7 +24,7 @@ class FuncPlotter extends StatelessWidget {
           elevation: 0.0,
         ),
         body: Padding(
-          padding: EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(40.0),
           child: CustomPaint(
             size: Size(double.infinity, double.infinity),
             painter: GraphPainter(calcExpression),

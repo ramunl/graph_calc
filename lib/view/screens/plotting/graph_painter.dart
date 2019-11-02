@@ -13,17 +13,17 @@ class GraphPainter extends CustomPainter {
   final graphPaint = Paint()
     ..color = Colors.white
     ..strokeWidth = 2;
+  final textStyle = ui.TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+  );
 
   GraphPainter(this.calcExpression) {
     adaptivePlot = AdaptivePlot.test();
     adaptivePlot.computePlot();
   }
 
-  void draAxisTitle(canvas, offset, width, title) {
-    final textStyle = ui.TextStyle(
-      color: Colors.white,
-      fontSize: 20,
-    );
+  void draText(canvas, offset, width, title) {
     final paragraphStyle = ui.ParagraphStyle(
       textDirection: TextDirection.ltr,
     );
@@ -36,31 +36,69 @@ class GraphPainter extends CustomPainter {
     canvas.drawParagraph(paragraph, offset);
   }
 
-  void drawAxis(Canvas canvas, zeroOffset) {
-    drawAxisX(canvas, zeroOffset);
-    drawAxisY(canvas, zeroOffset);
+  void drawAxis(Canvas canvas, Offset zeroOffset) {
 
-    const titleShift = 30.0;
+    drawAxisX(canvas, zeroOffset, calcExpression.getRange());
 
-    var offset = Offset(zeroOffset.dx, -titleShift);
+    drawAxisY(canvas, zeroOffset, calcExpression.getRange());
+
+
+    var textPos = Offset(0, 0);
     final rightBorder = zeroOffset.dx * 2;
 
-    draAxisTitle(canvas, offset, rightBorder, calcExpression.getTitle());
+    draText(canvas, textPos, rightBorder, calcExpression.getTitle());
 
-    offset = Offset(rightBorder, zeroOffset.dy - titleShift);
-    draAxisTitle(canvas, offset, rightBorder, variableSymbol);
+    textPos = Offset(rightBorder, zeroOffset.dy-30);
 
-    offset = Offset(zeroOffset.dx, zeroOffset.dy);
-    draAxisTitle(canvas, offset, rightBorder, "0");
+    draText(canvas, textPos, rightBorder, variableSymbol);
+
+    //textPos = Offset(zeroOffset.dx, zeroOffset.dy);
+    //draText(canvas, textPos, rightBorder, "0");
   }
 
-  void drawAxisX(canvas, Offset zeroOffset) {
+  //          |
+  //          |
+  //          |
+  //----------------------
+  //0         |w/2       w
+  //          |
+  //          |
+  //          |
+  //          |
+  // w - maxVal
+  // x - ?
+  // 0 - minVal
+
+  void drawAxisX(canvas, Offset zeroOffset, range) {
+    print("range = $range");
     final p1 = Offset(zeroOffset.dx, 0);
     final p2 = Offset(zeroOffset.dx, zeroOffset.dy * 2);
     canvas.drawLine(p1, p2, graphPaint);
+    var textPos = Offset(0, zeroOffset.dy);
+
+    final screenW = zeroOffset.dx*2;
+
+    draText(canvas, textPos, screenW, range[0].toString());
+
+    textPos = Offset(screenW, zeroOffset.dy);
+
+    draText(canvas, textPos, screenW, range[1].toString());
   }
 
-  void drawAxisY(canvas, Offset zeroOffset) {
+  //          |
+  //          |
+  //          |
+  //----------------------
+  //0         |w/2       w
+  //          |
+  //          |
+  //          |
+  //          |
+  // w - maxVal
+  // x - ?
+  // 0 - minVal
+
+  void drawAxisY(canvas, Offset zeroOffset, range) {
     final p1 = Offset(0, zeroOffset.dy);
     final p2 = Offset(zeroOffset.dx * 2, zeroOffset.dy);
     canvas.drawLine(p1, p2, graphPaint);
@@ -79,14 +117,22 @@ class GraphPainter extends CustomPainter {
     return false;
   }
 
-  void plotFunc(canvas, zeroOffset) {
+  void plotFunc(canvas, Offset zeroOffset) {
     final points = adaptivePlot.plot.toList(growable: true);
     var p1, p2;
     print("points.length = ${points.length}");
     print("points = ${points.join(",").toString()}");
+
+    final range = calcExpression.getRange();
+    print("plotFunc range $range");
+    //zeroOffset.x*2  - maxVal
+    //x             - points[i].x
+    final maxW = zeroOffset.dx*2.0;
+    final maxVal = range[1];
+
     for (var i = 0; i < points.length - 1; i++) {
-      p1 = zeroOffset + Offset(points[i].x, -points[i].y);
-      p2 = zeroOffset + Offset(points[i + 1].x, -points[i + 1].y);
+      p1 = zeroOffset + Offset(points[i].x * maxW / maxVal, -points[i].y);
+      p2 = zeroOffset + Offset(points[i + 1].x* maxW / maxVal, -points[i + 1].y);
       canvas.drawLine(p1, p2, graphPaint);
     }
   }

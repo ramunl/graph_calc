@@ -36,12 +36,12 @@ class KeyPad extends StatelessWidget {
                 children: <Widget>[
                   KeyRow(<Widget>[
                     NumberInputField(
-                        calcState.handleRangeMin, CalcExpression.minValue),
+                        calcState.handleRangeMin, calcState.expression.minValue),
                     Text(" < "),
                     CalcKey(variableSymbol, calcState.handleVariableTap),
                     Text(" < "),
                     NumberInputField(
-                        calcState.handleRangeMax, CalcExpression.maxValue),
+                        calcState.handleRangeMax, calcState.expression.maxValue),
                   ]),
                   KeyRow(<Widget>[
                     NumberKey(7, calcState),

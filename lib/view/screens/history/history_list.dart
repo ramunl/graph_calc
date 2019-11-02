@@ -10,28 +10,49 @@ import 'package:graph_calc/view/screens/history/app_loading.dart';
 import 'package:graph_calc/view/screens/history/views/history_list_item.dart';
 import 'package:graph_calc/view/screens/plotting/func_plotter.dart';
 
+import '../../localization.dart';
 import 'views/loading_indicator.dart';
 
 class HistoryList extends StatelessWidget {
   final List<CalcExpression> calcExpressions;
-  final Function(CalcExpression) onRemove;
-  final Function(CalcExpression) onUndoRemove;
-
+  final Function() onRemove;
   HistoryList({
     Key key,
-    @required this.calcExpressions,
     @required this.onRemove,
-    @required this.onUndoRemove,
+    @required this.calcExpressions
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AppLoading(builder: (context, loading) {
-      return loading
-          ? LoadingIndicator(key: ArchSampleKeys.todosLoading)
-          : _buildListView();
-    });
+    print("_CalculatorState build");
+    final localizations = ArchSampleLocalizations.of(context);
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text(localizations.createFuncTitle),
+        actions: [
+          IconButton(
+            tooltip: localizations.saveFunction,
+            key: ArchSampleKeys.saveFunction,
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              onRemove();
+            },
+          )
+        ],
+        backgroundColor: Theme.of(context).canvasColor,
+        elevation: 0.0,
+      ),
+      body: AppLoading(builder: (context, loading) {
+        return loading
+            ? LoadingIndicator(key: ArchSampleKeys.todosLoading)
+            : _buildListView();
+      })
+    );
   }
+
 
   ListView _buildListView() {
     return ListView.builder(
@@ -50,22 +71,9 @@ class HistoryList extends StatelessWidget {
     );
   }
 
-  /* void _removeTodo(BuildContext context, CalcExpression calcExpression) {
-    onRemove(calcExpression);
+   void _removeTodo(BuildContext context) {
 
-    Scaffold.of(context).showSnackBar(SnackBar(
-        duration: Duration(seconds: 2),
-        backgroundColor: Theme.of(context).backgroundColor,
-        content: Text(
-          ArchSampleLocalizations.of(context).todoDeleted(calcExpression.id),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        action: SnackBarAction(
-          label: ArchSampleLocalizations.of(context).undo,
-          onPressed: () => onUndoRemove(calcExpression),
-        )));
-  }*/
+  }
 
   void _onHistoryItemClicked(
       BuildContext context, CalcExpression calcExpression) {

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:graph_calc/view/screens/calculator/model/calc_operation.dart';
+import 'package:graph_calc/view/screens/calculator/model/expression_parser.dart';
 
 import '../model/calc_expression.dart';
 
@@ -29,7 +30,7 @@ abstract class CalcExpressions {
   }
 
   void handleEqualsTap() {
-    final CalcExpression resultExpression = _expression.computeResult();
+    final CalcExpression resultExpression = computeResult(_expression);
     if (resultExpression != null) {
       setState(() {
         setResult(resultExpression);
@@ -86,12 +87,12 @@ abstract class CalcExpressions {
 
   void handleRangeMax(num) {
     print("handleRangeMax $num");
-    CalcExpression.maxValue = num;
+    _expression.maxValue = num;
   }
 
   void handleRangeMin(num) {
     print("handleRangeMin $num");
-    CalcExpression.minValue = num;
+    _expression.minValue = num;
   }
 
   void handleVariableTap() {
