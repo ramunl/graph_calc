@@ -56,6 +56,13 @@ class ArchSampleLocalizations {
         locale: locale.toString(),
       );
 
+  String get historyTitle => Intl.message(
+    'History',
+    name: 'history',
+    args: [],
+    locale: locale.toString(),
+  );
+
   String get delete => Intl.message(
         'Delete',
         name: 'delete',

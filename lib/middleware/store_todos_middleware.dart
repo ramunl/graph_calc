@@ -29,6 +29,7 @@ List<Middleware<AppState>> createStoreTodosMiddleware([
 ]) {
   final saveTodos = _createSaveTodos(repository);
   final loadTodos = _createLoadTodos(repository);
+  final deleteTodos = _deleteTodos(repository);
 
   return [
     TypedMiddleware<AppState, LoadTodosAction>(loadTodos),
@@ -37,7 +38,7 @@ List<Middleware<AppState>> createStoreTodosMiddleware([
     TypedMiddleware<AppState, ToggleAllAction>(saveTodos),
     TypedMiddleware<AppState, UpdateTodoAction>(saveTodos),
     TypedMiddleware<AppState, TodosLoadedAction>(saveTodos),
-    TypedMiddleware<AppState, DeleteTodoAction>(saveTodos),
+    TypedMiddleware<AppState, DeleteTodoAction>(deleteTodos),
   ];
 }
 
@@ -52,15 +53,20 @@ Middleware<AppState> _createLoadTodos(TodosRepository repository) {
         );
       },
     ).catchError((_) => store.dispatch(TodosNotLoadedAction()));
-
     next(action);
+  };
+}
+
+Middleware<AppState> _deleteTodos(TodosRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    next(action);
+    repository.deleteTodos();
   };
 }
 
 Middleware<AppState> _createSaveTodos(TodosRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     next(action);
-
     repository.saveTodos(
       todosSelector(store.state)
           .map((calcExpression) => toEntity(calcExpression))

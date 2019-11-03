@@ -31,7 +31,7 @@ class HistoryList extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(localizations.createFuncTitle),
+        title: Text(localizations.historyTitle),
         actions: [
           IconButton(
             tooltip: localizations.saveFunction,
@@ -63,9 +63,6 @@ class HistoryList extends StatelessWidget {
         return HistoryListItem(
           calcExpression: calcExpression,
           onTap: () => _onHistoryItemClicked(context, calcExpression),
-          /* onCheckboxChanged: (complete) {
-            onCheckboxChanged(calcExpression, complete);
-          },*/
         );
       },
     );

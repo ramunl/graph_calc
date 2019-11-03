@@ -30,9 +30,9 @@ class TodosRepositoryFlutter implements TodosRepository {
     try {
       return await fileStorage.loadTodos();
     } catch (e) {
-      final todos = await webClient.fetchTodos();
-       fileStorage.saveTodos(todos);
-      return todos;
+  //    final todos = await webClient.fetchTodos();
+    //   fileStorage.saveToFdos(todos);
+      return null;
     }
   }
 
@@ -42,6 +42,13 @@ class TodosRepositoryFlutter implements TodosRepository {
     return Future.wait<dynamic>([
       fileStorage.saveTodos(todos),
       webClient.postTodos(todos),
+    ]);
+  }
+
+  @override
+  Future deleteTodos() {
+    return Future.wait<dynamic>([
+      fileStorage.clean(),
     ]);
   }
 }

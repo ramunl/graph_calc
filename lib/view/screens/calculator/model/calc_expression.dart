@@ -45,21 +45,17 @@ class CalcExpression {
       : this(<ExpressionToken>[], ExpressionState.Start, 0, 0);
 
   CalcExpression.expression(
-      String id, List<ExpressionToken> expressionTokenList)
-      : this.id = id,
-        this.expressionTokenList = expressionTokenList,
-        this.state = ExpressionState.Result;
+      this.id, this.expressionTokenList, this.minValue, this.maxValue)
+      : this.state = ExpressionState.Result;
 
-  CalcExpression.result(FloatToken result)
+  CalcExpression.result(this.expressionTokenList, FloatToken result)
       : id = generateEntityId(),
-        expressionTokenList = <ExpressionToken>[],
         state = ExpressionState.Result {
     expressionTokenList.add(result);
   }
 
-  CalcExpression.withDefaultId(List<ExpressionToken> expressionTokenList)
+  CalcExpression.withDefaultId(this.expressionTokenList)
       : this.id = generateEntityId(),
-        this.expressionTokenList = expressionTokenList,
         this.state = ExpressionState.Result;
 
   /// Append a digit to the current expression and return a new expression
@@ -222,8 +218,6 @@ class CalcExpression {
     return res;
   }
 
-
-
   validateExpression() {
     var valid = false;
     var msg;
@@ -246,6 +240,7 @@ class CalcExpression {
   }
 
   getRange() => [minValue, maxValue];
+
   rangeAsStr() => ", range = ${getRange()}";
 
   getTitle() => "f($variableSymbol) = ${expressionTokenList.join()}";
@@ -258,6 +253,4 @@ class CalcExpression {
     buffer.writeAll(expressionTokenList);
     return buffer.toString();
   }
-
-
 }

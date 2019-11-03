@@ -22,4 +22,6 @@ abstract class TodosRepository {
 
   // Persists todos to local disk and the web
   Future saveTodos(List<ExpressionEntity> todos);
+  // Persists todos to local disk and the web
+  Future deleteTodos();
 }

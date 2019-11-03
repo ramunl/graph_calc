@@ -6,7 +6,7 @@ import '../uuid.dart';
 
 CalcExpression fromEntity(ExpressionEntity entity) {
   return CalcExpression.expression(
-      entity.id, toExprTokenList(entity.tokenList));
+      entity.id, toExprTokenList(entity.tokenList), entity.minVal, entity.maxVal);
 }
 
 generateEntityId() => Uuid().generateV4();

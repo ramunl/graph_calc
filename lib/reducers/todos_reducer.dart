@@ -13,9 +13,6 @@ import 'package:redux/redux.dart';
 final todosReducer = combineReducers<List<CalcExpression>>([
   TypedReducer<List<CalcExpression>, SaveExpressionAction>(_addTodo),
   TypedReducer<List<CalcExpression>, DeleteTodoAction>(_deleteTodo),
-  //TypedReducer<List<CalcExpression>, UpdateTodoAction>(_updateTodo),
-  //TypedReducer<List<CalcExpression>, ClearCompletedAction>(_clearCompleted),
-  //TypedReducer<List<CalcExpression>, ToggleAllAction>(_toggleAll),
   TypedReducer<List<CalcExpression>, TodosLoadedAction>(_setLoadedTodos),
   TypedReducer<List<CalcExpression>, TodosNotLoadedAction>(_setNoTodos),
 ]);
@@ -25,10 +22,8 @@ List<CalcExpression> _addTodo(
   return List.from(todos)..add(action.calcExpression);
 }
 
-List<CalcExpression> _deleteTodo(
-    List<CalcExpression> todos, DeleteTodoAction action) {
-  return todos
-      .toList();
+List<CalcExpression> _deleteTodo(List<CalcExpression> todos, DeleteTodoAction action) {
+  return [];
 }
 
 List<CalcExpression> _setLoadedTodos(
@@ -36,26 +31,8 @@ List<CalcExpression> _setLoadedTodos(
   return action.todos;
 }
 
-/*
-List<CalcExpression> _clearCompleted(List<CalcExpression> todos, ClearCompletedAction action) {
-  return todos.where((calcExpression) => !calcExpression.complete).toList();
-}
-
-List<CalcExpression> _toggleAll(List<CalcExpression> todos, ToggleAllAction action) {
-  final allComplete = allCompleteSelector(todos);
-
-  return todos.map((calcExpression) => calcExpression.copyWith(complete: !allComplete)).toList();
-}*/
-
 List<CalcExpression> _setNoTodos(
     List<CalcExpression> todos, TodosNotLoadedAction action) {
   return [];
 }
 
-List<CalcExpression> _updateTodo(
-    List<CalcExpression> todos, UpdateTodoAction action) {
-  return todos
-      .map((calcExpression) =>
-          calcExpression.id == action.id ? action.updatedTodo : calcExpression)
-      .toList();
-}
