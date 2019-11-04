@@ -29,7 +29,6 @@ List<Middleware<AppState>> createStoreItemsMiddleware([
   return [
     TypedMiddleware<AppState, ItemsLoadAction>(loadItems),
     TypedMiddleware<AppState, ItemAddAction>(saveItems),
-    TypedMiddleware<AppState, ItemsLoadedAction>(saveItems),
     TypedMiddleware<AppState, ItemsDeleteAction>(deleteItems),
   ];
 }

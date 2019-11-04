@@ -16,11 +16,11 @@ import 'web_client.dart';
 /// clear responsibility: Load Items and Persist items.
 class ItemsRepositoryFlutter implements ItemsRepository {
   final FileStorage fileStorage;
-  final WebClient webClient;
+  //final WebClient webClient;
 
   const ItemsRepositoryFlutter({
     @required this.fileStorage,
-    this.webClient = const WebClient(),
+  //  this.webClient = const WebClient(),
   });
 
   /// Loads items first from File storage. If they don't exist or encounter an
@@ -41,7 +41,7 @@ class ItemsRepositoryFlutter implements ItemsRepository {
   Future saveItems(List<ExpressionEntity> items) {
     return Future.wait<dynamic>([
       fileStorage.saveItems(items),
-      webClient.postItems(items),
+     // webClient.postItems(items),
     ]);
   }
 
