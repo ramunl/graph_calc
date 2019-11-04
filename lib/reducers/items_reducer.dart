@@ -10,18 +10,18 @@ import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:redux/redux.dart';
 
 final itemsReducer = combineReducers<List<CalcExpression>>([
-  TypedReducer<List<CalcExpression>, ItemAddAction>(_addTodo),
-  TypedReducer<List<CalcExpression>, ItemsDeleteAction>(_deleteTodo),
+  TypedReducer<List<CalcExpression>, ItemAddAction>(_addItem),
+  TypedReducer<List<CalcExpression>, ItemsDeleteAction>(_deleteItem),
   TypedReducer<List<CalcExpression>, ItemsLoadedAction>(_setLoadedItems),
   TypedReducer<List<CalcExpression>, ItemsNotLoadedAction>(_setNoItems),
 ]);
 
-List<CalcExpression> _addTodo(
+List<CalcExpression> _addItem(
     List<CalcExpression> items, ItemAddAction action) {
   return List.from(items)..insert(0, action.calcExpression);
 }
 
-List<CalcExpression> _deleteTodo(List<CalcExpression> items, ItemsDeleteAction action) {
+List<CalcExpression> _deleteItem(List<CalcExpression> items, ItemsDeleteAction action) {
   return [];
 }
 

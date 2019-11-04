@@ -10,13 +10,11 @@ class HistoryViewModel {
   final List<CalcExpression> items;
   final bool loading;
   final Function() onRemove;
-  final Function(CalcExpression) onUndoRemove;
 
   HistoryViewModel({
     @required this.items,
     @required this.loading,
-    @required this.onRemove,
-    @required this.onUndoRemove,
+    @required this.onRemove
   });
 
   static HistoryViewModel fromStore(Store<AppState> store) {
@@ -25,9 +23,6 @@ class HistoryViewModel {
       loading: store.state.isLoading,
       onRemove: () {
         store.dispatch(ItemsDeleteAction());
-      },
-      onUndoRemove: (calcExpression) {
-        store.dispatch(ItemAddAction(calcExpression));
       },
     );
   }
