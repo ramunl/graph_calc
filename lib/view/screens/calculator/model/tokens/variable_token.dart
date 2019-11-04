@@ -7,6 +7,6 @@ class VariableToken extends ExpressionToken {
   VariableToken() : super(opString());
 
   static String opString() {
-    return variableSymbol;
+    return codeVariable;
   }
 }

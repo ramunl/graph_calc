@@ -11,7 +11,7 @@ class ArchSampleKeys {
   static final snackbar = const Key('__snackbar__');
   static final todoList = const Key('__todoList__');
 
-  // Todos
+  static final listEmpty = const Key('__listEmpty__');
   static final todosLoading = const Key('__todosLoading__');
   static final todoItem = (String id) => Key('TodoItem__${id}');
   static final todoItemCheckbox =

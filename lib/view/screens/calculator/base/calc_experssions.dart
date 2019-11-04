@@ -1,7 +1,8 @@
 import 'dart:ui';
 
 import 'package:graph_calc/view/screens/calculator/model/calc_operation.dart';
-import 'package:graph_calc/view/screens/calculator/model/expression_parser.dart';
+import 'package:graph_calc/view/screens/calculator/model/expr_parser.dart';
+import 'package:graph_calc/view/screens/ui_utils.dart';
 
 import '../model/calc_expression.dart';
 
@@ -9,7 +10,10 @@ abstract class CalcExpressions {
   final List<CalcExpression> _expressionStack = <CalcExpression>[];
   CalcExpression _expression = CalcExpression.empty();
 
-  CalcExpression get expression => _expression;
+  num maxValue() => expression.expressionState.maxValue;
+  num minValue() => expression.expressionState.minValue;
+
+  get expression => _expression;
 
   // Make `expression` the current expression and push the previous current
   // expression onto the stack.
@@ -19,87 +23,77 @@ abstract class CalcExpressions {
     });
   }
 
-  void handleDivTap() {
-    final CalcExpression expression =
-        _expression.appendOperation(CalcOperation.Division);
-    if (expression != null) {
-      setState(() {
-        pushExpression(expression);
-      });
-    }
-  }
-
   void handleEqualsTap() {
-    final CalcExpression resultExpression = computeResult(_expression);
-    if (resultExpression != null) {
+    final exprParser = ExprParser();
+    final res = exprParser.parse(_expression);
+    print("_expression res = $res");
+    /*final CalcExpression resultExpression = computeResult(_expression);
+    /if (resultExpression != null) {
       setState(() {
         setResult(resultExpression);
       });
-    }
+    }*/
+  }
+
+  void handleDivTap() {
+    appendOperation(CalcOperation.Division);
   }
 
   void handleMinusTap() {
-    final CalcExpression expression = _expression.appendMinus();
-    if (expression != null) {
-      setState(() {
-        pushExpression(expression);
-      });
-    }
+    pushExpression(_expression.appendMinus());
   }
 
   void handleMultTap() {
-    final CalcExpression expression =
-        _expression.appendOperation(CalcOperation.Multiplication);
-    if (expression != null) {
-      setState(() {
-        pushExpression(expression);
-      });
-    }
+    appendOperation(CalcOperation.Multiplication);
   }
 
-  void handleNumberTap(n) {
-    final CalcExpression expression = _expression.appendDigit(n);
-    if (expression != null) {
-      setState(() {
-        pushExpression(expression);
-      });
-    }
+  void handleBracketOpenTap() {
+    pushExpression(_expression.appendBracketOpen());
+  }
+
+  void handleBracketCloseTap() {
+    pushExpression(_expression.appendBracketClose());
+  }
+
+  void handleSqrtTap() {
+    appendOperation(CalcOperation.Sqrt);
   }
 
   void handlePlusTap() {
-    final CalcExpression expression =
-        _expression.appendOperation(CalcOperation.Addition);
-    if (expression != null) {
-      setState(() {
-        pushExpression(expression);
-      });
-    }
+    appendOperation(CalcOperation.Addition);
+  }
+
+  void handleNumberTap(n) {
+    pushExpression(_expression.appendDigit(n));
   }
 
   void handlePointTap() {
-    final CalcExpression expression = _expression.appendPoint();
-    if (expression != null) {
-      setState(() {
-        pushExpression(expression);
-      });
-    }
+    pushExpression(_expression.appendPoint());
   }
 
   void handleRangeMax(num) {
     print("handleRangeMax $num");
-    _expression.maxValue = num;
+    _expression.expressionState.maxValue = num;
   }
 
   void handleRangeMin(num) {
     print("handleRangeMin $num");
-    _expression.minValue = num;
+    _expression.expressionState.minValue = num;
   }
 
   void handleVariableTap() {
-    final CalcExpression expression = _expression.appendVariable();
-    if (expression != null) {
+    pushExpression(_expression.appendVariable());
+  }
+
+  void appendOperation(CalcOperation calcOperation) {
+    pushExpression(_expression.appendOperation(calcOperation));
+  }
+
+  void pushExpression(CalcExpression expressionTemp) {
+    if (expressionTemp != null) {
       setState(() {
-        pushExpression(expression);
+        _expressionStack.add(_expression.copy());
+        _expression = expressionTemp;
       });
     }
   }
@@ -111,11 +105,6 @@ abstract class CalcExpressions {
     } else {
       _expression = CalcExpression.empty();
     }
-  }
-
-  void pushExpression(expression) {
-    _expressionStack.add(_expression);
-    _expression = expression;
   }
 
   /// Set `resultExpression` to the current expression and clear the stack.

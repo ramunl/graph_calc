@@ -8,6 +8,7 @@ import 'package:graph_calc/models/ArchSampleKeys.dart';
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:graph_calc/view/screens/history/app_loading.dart';
 import 'package:graph_calc/view/screens/history/views/history_list_item.dart';
+import 'package:graph_calc/view/screens/history/views/view_list_empty.dart';
 import 'package:graph_calc/view/screens/plotting/func_plotter.dart';
 
 import '../../localization.dart';
@@ -16,11 +17,10 @@ import 'views/loading_indicator.dart';
 class HistoryList extends StatelessWidget {
   final List<CalcExpression> calcExpressions;
   final Function() onRemove;
-  HistoryList({
-    Key key,
-    @required this.onRemove,
-    @required this.calcExpressions
-  }) : super(key: key);
+
+  HistoryList(
+      {Key key, @required this.onRemove, @required this.calcExpressions})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,30 +29,34 @@ class HistoryList extends StatelessWidget {
     final _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text(localizations.historyTitle),
-        actions: [
-          IconButton(
-            tooltip: localizations.saveFunction,
-            key: ArchSampleKeys.saveFunction,
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              onRemove();
-            },
-          )
-        ],
-        backgroundColor: Theme.of(context).canvasColor,
-        elevation: 0.0,
-      ),
-      body: AppLoading(builder: (context, loading) {
-        return loading
-            ? LoadingIndicator(key: ArchSampleKeys.todosLoading)
-            : _buildListView();
-      })
-    );
+        key: _scaffoldKey,
+        appBar: AppBar(
+          title: Text(localizations.historyTitle),
+          actions: [
+            IconButton(
+              tooltip: localizations.saveFunction,
+              key: ArchSampleKeys.saveFunction,
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                onRemove();
+              },
+            )
+          ],
+          backgroundColor: Theme.of(context).canvasColor,
+          elevation: 0.0,
+        ),
+        body: AppLoading(builder: (context, loading) {
+          if (loading) {
+            return LoadingIndicator(key: ArchSampleKeys.todosLoading);
+          } else {
+            if (calcExpressions.isNotEmpty) {
+              return _buildListView();
+            } else {
+              return ListEmpty(key: ArchSampleKeys.listEmpty);
+            }
+          }
+        }));
   }
-
 
   ListView _buildListView() {
     return ListView.builder(
@@ -68,9 +72,7 @@ class HistoryList extends StatelessWidget {
     );
   }
 
-   void _removeTodo(BuildContext context) {
-
-  }
+  void _removeTodo(BuildContext context) {}
 
   void _onHistoryItemClicked(
       BuildContext context, CalcExpression calcExpression) {

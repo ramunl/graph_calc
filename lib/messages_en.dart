@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "stats": MessageLookupByLibrary.simpleMessage("Stats"),
         "todoDeleted": m0,
         "createFunc":
-            MessageLookupByLibrary.simpleMessage("func($variableSymbol)"),
+            MessageLookupByLibrary.simpleMessage("func($codeVariable)"),
         "todos": MessageLookupByLibrary.simpleMessage("Todos"),
         "undo": MessageLookupByLibrary.simpleMessage("Undo")
       };

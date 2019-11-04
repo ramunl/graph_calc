@@ -10,7 +10,6 @@ import 'package:redux/redux.dart';
 class HistoryViewModel {
   final List<CalcExpression> todos;
   final bool loading;
-  //final Function(CalcExpression, bool) onCheckboxChanged;
   final Function() onRemove;
   final Function(CalcExpression) onUndoRemove;
 

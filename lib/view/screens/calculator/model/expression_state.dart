@@ -1,24 +1,23 @@
+import 'expression_last_added.dart';
+
 /// As the user taps different keys the current expression can be in one
 /// of several states.
-enum ExpressionState {
+class ExpressionState {
   /// The expression is empty or an operation symbol was just entered.
   /// A new number must be started now.
-  Start,
+  ExpressionLastSymbAdded lastAdded;
+  //bool isBracketOpen = false;
+  bool isVariableAdded = false;
+  num maxValue = 0;
+  num minValue = 0;
 
-  /// A minus sign was entered as a leading negative prefix.
-  LeadingNeg,
+  ExpressionState(this.lastAdded, this.minValue, this.maxValue);
 
-  /// We are in the midst of a number without a point.
-  Number,
+  ExpressionState.start() : this.lastAdded = ExpressionLastSymbAdded.Start;
+  ExpressionState.result() : this.lastAdded = ExpressionLastSymbAdded.Result;
 
-  /// A point was just entered.
-  Point,
-
-  /// We are in the midst of a number with a point.
-  NumberWithPoint,
-
-  Variable,
-
-  /// A result is being displayed
-  Result,
+  ExpressionState.copy(ExpressionState baseState)
+      : this.lastAdded = baseState.lastAdded,
+        this.maxValue = baseState.maxValue,
+        this.minValue = baseState.minValue;
 }

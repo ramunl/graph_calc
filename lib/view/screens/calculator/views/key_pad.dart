@@ -36,12 +36,17 @@ class KeyPad extends StatelessWidget {
                 children: <Widget>[
                   KeyRow(<Widget>[
                     NumberInputField(
-                        calcState.handleRangeMin, calcState.expression.minValue),
+                        calcState.handleRangeMin, calcState.minValue()),
                     Text(" < "),
-                    CalcKey(variableSymbol, calcState.handleVariableTap),
+                    CalcKey(codeVariable, calcState.handleVariableTap),
                     Text(" < "),
                     NumberInputField(
-                        calcState.handleRangeMax, calcState.expression.maxValue),
+                        calcState.handleRangeMax, calcState.maxValue()),
+                  ]),
+                  KeyRow(<Widget>[
+                    CalcKey(codeBrackerO, calcState.handleBracketOpenTap),
+                    CalcKey(codeBrackerC, calcState.handleBracketCloseTap),
+                    //CalcKey(codeSqrt, calcState.handleSqrtTap),
                   ]),
                   KeyRow(<Widget>[
                     NumberKey(7, calcState),
@@ -68,12 +73,12 @@ class KeyPad extends StatelessWidget {
             ),
             Expanded(
               child: Material(
-                color: themeData.backgroundColor,
+                // color: themeData.backgroundColor,
                 child: Column(
                   children: <Widget>[
-                    CalcKey('\u232B', calcState.handleDelTap),
-                    CalcKey('\u00F7', calcState.handleDivTap),
-                    CalcKey('\u00D7', calcState.handleMultTap),
+                    CalcKey(codeDel, calcState.handleDelTap),
+                    CalcKey(codeDiv, calcState.handleDivTap),
+                    CalcKey(codeMult, calcState.handleMultTap),
                     CalcKey('-', calcState.handleMinusTap),
                     CalcKey('+', calcState.handlePlusTap),
                   ],

@@ -10,6 +10,8 @@ dependencies:
   flutter_redux: ^0.5.3
   path_provider: ^1.4.0
   ordered_set: ^1.1.2
+  stack: ^0.1.0
+
   flutter:
     sdk: flutter
 

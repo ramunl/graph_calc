@@ -1,12 +1,17 @@
 import 'package:graph_calc/store/expression_entity.dart';
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
+import 'package:graph_calc/view/screens/calculator/model/expression_last_added.dart';
+import 'package:graph_calc/view/screens/calculator/model/expression_state.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/expression_token.dart';
 
 import '../uuid.dart';
 
 CalcExpression fromEntity(ExpressionEntity entity) {
   return CalcExpression.expression(
-      entity.id, toExprTokenList(entity.tokenList), entity.minVal, entity.maxVal);
+      entity.id,
+      toExprTokenList(entity.tokenList),
+      ExpressionState(ExpressionLastSymbAdded.Result,
+          entity.minVal, entity.maxVal));
 }
 
 generateEntityId() => Uuid().generateV4();
@@ -15,8 +20,8 @@ ExpressionEntity toEntity(CalcExpression calcExpression) {
   return ExpressionEntity(
       calcExpression.id,
       toStrList(calcExpression.expressionTokenList),
-      calcExpression.minValue,
-      calcExpression.maxValue);
+      calcExpression.expressionState.minValue,
+      calcExpression.expressionState.maxValue);
 }
 
 List<ExpressionToken> toExprTokenList(List<dynamic> expressions) {

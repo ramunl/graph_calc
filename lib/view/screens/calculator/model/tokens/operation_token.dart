@@ -1,3 +1,4 @@
+import '../../../ui_utils.dart';
 import '../calc_operation.dart';
 import 'expression_token.dart';
 
@@ -7,18 +8,28 @@ class OperationToken extends ExpressionToken {
 
   OperationToken(this.operation) : super(opString(operation));
 
-  static String opString(CalcOperation operation) {
+   static String getCode(CalcOperation operation) {
     switch (operation) {
       case CalcOperation.Addition:
-        return ' + ';
+        return codePlus;
       case CalcOperation.Subtraction:
-        return ' - ';
+        return codeMinus;
       case CalcOperation.Multiplication:
-        return '  \u00D7  ';
+        return codeMult;
       case CalcOperation.Division:
-        return '  \u00F7  ';
+        return codeDiv;
+      case CalcOperation.BracketOpen:
+        return codeBrackerO;
+      case CalcOperation.BracketClose:
+        return codeBrackerC;
+      case CalcOperation.Sqrt:
+        return codeSqrt;
     }
     assert(operation != null);
     return null;
+  }
+
+  static String opString(CalcOperation operation) {
+    return getCode(operation);
   }
 }

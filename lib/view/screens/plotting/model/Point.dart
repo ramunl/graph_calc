@@ -1,4 +1,4 @@
 class Point {
-  final double x, y;
+  final num x, y;
   Point(this.x, this.y);
 }

@@ -7,21 +7,23 @@ class AdaptivePlot {
   final depth = 6;
   final eps = 0.005;
   final Function f;
-  final double minX;
-  final double maxX;
+  final num minX;
+  final num maxX;
   final plot = OrderedSet<Point>(Comparing.on((p) => p.x));
-  
-  static double testFun(double x) =>  x*x;
+
+  /*
+  static num testFun(num x) =>  x*x;
 
   AdaptivePlot.test()
       : this.f = testFun,
         this.minX = -100,
         this.maxX = 100;
+  */
 
   AdaptivePlot(this.f, this.minX, this.maxX);
 
 
-  Point pointAt(double x) {
+  Point pointAt(num x) {
     return new Point(x, f(x));
   }
 
@@ -35,7 +37,7 @@ class AdaptivePlot {
     return this;
   }
 
-  void doComputePlot(Point pa, Point pc, int depth, double eps) {
+  void doComputePlot(Point pa, Point pc, int depth, num eps) {
     Point pb = pointAt(0.5 * (pa.x + pc.x));
     Point pa1 = pointAt(0.5 * (pa.x + pb.x));
     Point pb1 = pointAt(0.5 * (pb.x + pc.x));
@@ -50,13 +52,13 @@ class AdaptivePlot {
     plot.add(pb1);
   }
 
-  bool oscillates(double ya, double ya1, double yb, double yb1, double yc) {
+  bool oscillates(num ya, num ya1, num yb, num yb1, num yc) {
     return isOscillation(ya, ya1, yb) &&
         isOscillation(ya1, yb, yb1) &&
         isOscillation(yb, yb1, yc);
   }
 
-  bool isOscillation(double ya, double yb, double yc) {
+  bool isOscillation(num ya, num yb, num yc) {
     return !ya.isFinite ||
         !yb.isFinite ||
         !yc.isFinite ||
@@ -64,7 +66,7 @@ class AdaptivePlot {
         (yb < ya && yb < yc);
   }
 
-  double quadrature(double y0, double y1, double y2, {double y3}) {
+  num quadrature(num y0, num y1, num y2, {num y3}) {
     if (y3 != null) {
       return 3.0 / 8.0 * y0 +
           19.0 / 24.0 * y1 -
@@ -76,13 +78,13 @@ class AdaptivePlot {
   }
 
   bool unsmooth(
-      double ya, double ya1, double yb, double yb1, double yc, double eps) {
+      num ya, num ya1, num yb, num yb1, num yc, num eps) {
     var y0 = [ya, ya1, yb, yb1, yc]
         .reduce((curr, next) => curr < next ? curr : next);
     var yg = [ya, ya1, yb, yb1, yc].map((y) => y - y0).toList();
 
-    double q4 = quadrature(yg[0], yg[1], yg[2], y3: yg[3]);
-    double q3 = quadrature(yg[2], yg[3], yg[4]);
+    num q4 = quadrature(yg[0], yg[1], yg[2], y3: yg[3]);
+    num q3 = quadrature(yg[2], yg[3], yg[4]);
     return (q4 - q3).abs() > eps * q3;
   }
 }

@@ -29,10 +29,8 @@ class HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         key: ArchSampleKeys.addTodoFab,
         onPressed: () {
-
           final _mockPage = ExpressionCreate();
           Navigator.push(context, MaterialPageRoute(builder: (context) => _mockPage));
-          //Navigator.pushNamed(context, ArchSampleRoutes.showCalculator);
         },
         child: Icon(Icons.add),
         tooltip: ArchSampleLocalizations.of(context).saveFunction,
