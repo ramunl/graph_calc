@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../messages_all.dart';
+import 'messages_all.dart';
 
 class ArchSampleLocalizations {
   final Locale locale;

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 
-import '../../localization.dart';
+import '../../../res/localization.dart';
 import 'graph_painter.dart';
 
 class FuncPlotter extends StatelessWidget {

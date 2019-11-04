@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:graph_calc/view/screens/calculator/model/calc_operation.dart';
 import 'package:graph_calc/view/screens/calculator/model/expr_parser.dart';
-import 'package:graph_calc/view/screens/ui_utils.dart';
+import 'package:graph_calc/helper/ui_utils.dart';
 
 import '../model/calc_expression.dart';
 

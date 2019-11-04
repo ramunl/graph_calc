@@ -7,7 +7,7 @@ import 'package:graph_calc/models/ArchKeys.dart';
 import 'package:graph_calc/view/screens/calculator/expression_create.dart';
 import 'package:graph_calc/view/screens/history/history_list_store_сonnector.dart';
 
-import '../../localization.dart';
+import '../../../res/localization.dart';
 import '../../routes.dart';
 
 class HomeScreen extends StatefulWidget {

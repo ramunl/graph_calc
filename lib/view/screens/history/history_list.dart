@@ -11,7 +11,7 @@ import 'package:graph_calc/view/screens/history/views/history_list_item.dart';
 import 'package:graph_calc/view/screens/history/views/view_list_empty.dart';
 import 'package:graph_calc/view/screens/plotting/func_plotter.dart';
 
-import '../../localization.dart';
+import '../../../res/localization.dart';
 import 'views/loading_indicator.dart';
 
 class HistoryList extends StatelessWidget {

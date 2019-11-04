@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:graph_calc/view/screens/ui_utils.dart';
+import 'package:graph_calc/helper/ui_utils.dart';
 import 'package:stack/stack.dart';
 
 import 'calc_expression.dart';

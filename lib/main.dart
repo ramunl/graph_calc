@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:graph_calc/reducers/app_state_reducer.dart';
-import 'package:graph_calc/view/localization.dart';
+import 'package:graph_calc/res/localization.dart';
 import 'package:graph_calc/view/routes.dart';
 import 'package:graph_calc/view/screens/calculator/expression_create.dart';
 import 'package:graph_calc/view/screens/home/home_screen.dart';
@@ -17,10 +17,10 @@ import 'middleware/store_todos_middleware.dart';
 import 'models/app_state.dart';
 
 void main() {
-  runApp(ReduxApp());
+  runApp(CalcApp());
 }
 
-class ReduxApp extends StatelessWidget {
+class CalcApp extends StatelessWidget {
   final store = Store<AppState>(
     appReducer,
     initialState: AppState.loading(),
@@ -39,7 +39,7 @@ class ReduxApp extends StatelessWidget {
           ReduxLocalizationsDelegate(),
         ],
         routes: {
-          ArchSampleRoutes.home: (context) {
+          ArchRoutes.home: (context) {
             return HomeScreen(
               onInit: () {
                 StoreProvider.of<AppState>(context).dispatch(ItemsLoadAction());

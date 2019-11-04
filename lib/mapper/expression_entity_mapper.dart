@@ -4,7 +4,7 @@ import 'package:graph_calc/view/screens/calculator/model/expression_last_added.d
 import 'package:graph_calc/view/screens/calculator/model/expression_state.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/expression_token.dart';
 
-import '../uuid.dart';
+import '../helper/uuid.dart';
 
 CalcExpression fromEntity(ExpressionEntity entity) {
   return CalcExpression.expression(

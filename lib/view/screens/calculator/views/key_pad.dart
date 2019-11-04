@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
-import 'package:graph_calc/view/screens/ui_utils.dart';
+import 'package:graph_calc/helper/ui_utils.dart';
 
 import '../base/calc_experssions.dart';
 import 'calc_key.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graph_calc/models/ArchKeys.dart';
 import 'package:graph_calc/view/screens/calculator/views/%D1%81alc_display.dart';
 
-import '../../localization.dart';
+import '../../../res/localization.dart';
 import 'base/calc_experssions.dart';
 import 'model/calc_expression.dart';
 import 'views/key_pad.dart';

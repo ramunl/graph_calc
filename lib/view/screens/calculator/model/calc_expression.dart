@@ -13,7 +13,7 @@ import 'package:graph_calc/view/screens/calculator/model/tokens/operation_token.
 import 'package:graph_calc/view/screens/calculator/model/tokens/result_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/variable_token.dart';
 
-import '../../ui_utils.dart';
+import '../../../../helper/ui_utils.dart';
 import 'calc_operation.dart';
 import 'expression_state.dart';
 import 'expression_last_added.dart';
@@ -129,6 +129,7 @@ class CalcExpression {
       case ExpressionLastSymbAdded.NumberWithPoint:
       case ExpressionLastSymbAdded.Result:
       case ExpressionLastSymbAdded.BracketClosed:
+      case ExpressionLastSymbAdded.Variable:
         return appendOperation(CalcOperation.Subtraction);
       default:
         return null;
