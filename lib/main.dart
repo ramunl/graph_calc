@@ -4,8 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:graph_calc/middleware/store_todos_middleware.dart';
-import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/reducers/app_state_reducer.dart';
 import 'package:graph_calc/view/localization.dart';
 import 'package:graph_calc/view/routes.dart';
@@ -14,7 +12,9 @@ import 'package:graph_calc/view/screens/home/home_screen.dart';
 import 'package:graph_calc/view/themes/theme.dart';
 import 'package:redux/redux.dart';
 
-import 'actions/load_todos_action.dart';
+import 'actions/items_load_action.dart';
+import 'middleware/store_todos_middleware.dart';
+import 'models/app_state.dart';
 
 void main() {
   runApp(ReduxApp());
@@ -24,7 +24,7 @@ class ReduxApp extends StatelessWidget {
   final store = Store<AppState>(
     appReducer,
     initialState: AppState.loading(),
-    middleware: createStoreTodosMiddleware(),
+    middleware: createStoreItemsMiddleware(),
   );
 
   @override
@@ -42,13 +42,10 @@ class ReduxApp extends StatelessWidget {
           ArchSampleRoutes.home: (context) {
             return HomeScreen(
               onInit: () {
-                StoreProvider.of<AppState>(context).dispatch(LoadTodosAction());
+                StoreProvider.of<AppState>(context).dispatch(ItemsLoadAction());
               },
             );
-          },
-          ArchSampleRoutes.showCalculator: (context) {
-            return ExpressionCreate();
-          },
+          }
         },
       ),
     );

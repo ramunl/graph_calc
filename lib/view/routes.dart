@@ -4,5 +4,4 @@
 
 class ArchSampleRoutes {
   static final home = "/";
-  static final showCalculator = "/addTodo";
 }

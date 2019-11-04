@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graph_calc/models/ArchSampleKeys.dart';
+import 'package:graph_calc/models/ArchKeys.dart';
 import 'package:graph_calc/view/screens/calculator/views/%D1%81alc_display.dart';
 
 import '../../localization.dart';
@@ -32,11 +32,10 @@ class _CalculatorState extends State<Calculator> with CalcExpressions {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text(localizations.createFuncTitle),
+        title: Text(localizations.screenTitleAddFunction),
         actions: [
           IconButton(
-            tooltip: localizations.saveFunction,
-            key: ArchSampleKeys.saveFunction,
+            tooltip: localizations.commandAddFunc,
             icon: Icon(Icons.save),
             onPressed: () {
               final res = expression.validateExpression();

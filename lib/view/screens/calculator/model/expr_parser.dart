@@ -1,7 +1,5 @@
 import 'dart:collection';
-import 'dart:ffi';
 
-import 'package:graph_calc/view/screens/calculator/model/tokens/expression_token.dart';
 import 'package:graph_calc/view/screens/ui_utils.dart';
 import 'package:stack/stack.dart';
 

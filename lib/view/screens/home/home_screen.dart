@@ -3,7 +3,7 @@
 // in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:graph_calc/models/ArchSampleKeys.dart';
+import 'package:graph_calc/models/ArchKeys.dart';
 import 'package:graph_calc/view/screens/calculator/expression_create.dart';
 import 'package:graph_calc/view/screens/history/history_list_store_сonnector.dart';
 
@@ -13,7 +13,7 @@ import '../../routes.dart';
 class HomeScreen extends StatefulWidget {
   final void Function() onInit;
 
-  HomeScreen({@required this.onInit}) : super(key: ArchSampleKeys.homeScreen);
+  HomeScreen({@required this.onInit}) : super(key: ArchKeys.homeScreen);
 
   @override
   HomeScreenState createState() {
@@ -27,13 +27,12 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: HistoryListStoreConnector(),
       floatingActionButton: FloatingActionButton(
-        key: ArchSampleKeys.addTodoFab,
         onPressed: () {
-          final _mockPage = ExpressionCreate();
+          final _mockPage = ExpressionCreate(); //workaround for focus lost bug
           Navigator.push(context, MaterialPageRoute(builder: (context) => _mockPage));
         },
         child: Icon(Icons.add),
-        tooltip: ArchSampleLocalizations.of(context).saveFunction,
+        tooltip: ArchSampleLocalizations.of(context).commandAddFunc,
       ),
     );
   }

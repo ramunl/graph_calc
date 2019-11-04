@@ -19,7 +19,7 @@ class FuncPlotter extends StatelessWidget {
     final localizations = ArchSampleLocalizations.of(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text(localizations.plotFuncTitle),
+          title: Text(localizations.screenTitlePlotFunc),
           backgroundColor: Theme.of(context).canvasColor,
           elevation: 0.0,
         ),

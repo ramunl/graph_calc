@@ -4,14 +4,14 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:graph_calc/models/ArchSampleKeys.dart';
-import 'package:graph_calc/models/models.dart';
+import 'package:graph_calc/models/ArchKeys.dart';
+import 'package:graph_calc/models/app_state.dart';
 import 'package:graph_calc/view/screens/history/history_list.dart';
 
 import 'model/history_view_model.dart';
 
 class HistoryListStoreConnector extends StatelessWidget {
-  HistoryListStoreConnector() : super(key: ArchSampleKeys.homeScreen);
+  HistoryListStoreConnector() : super();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class HistoryListStoreConnector extends StatelessWidget {
       converter: HistoryViewModel.fromStore,
       builder: (context, vm) {
         return HistoryList(
-          calcExpressions: vm.todos,
+          calcExpressions: vm.items,
           onRemove: vm.onRemove
         );
       },

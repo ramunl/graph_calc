@@ -11,15 +11,6 @@ class AdaptivePlot {
   final num maxX;
   final plot = OrderedSet<Point>(Comparing.on((p) => p.x));
 
-  /*
-  static num testFun(num x) =>  x*x;
-
-  AdaptivePlot.test()
-      : this.f = testFun,
-        this.minX = -100,
-        this.maxX = 100;
-  */
-
   AdaptivePlot(this.f, this.minX, this.maxX);
 
 

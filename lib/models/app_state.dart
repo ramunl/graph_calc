@@ -2,31 +2,24 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:graph_calc/models/models.dart';
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class AppState {
   final bool isLoading;
-  final List<CalcExpression> todos;
-  final AppTab activeTab;
-  final VisibilityFilter activeFilter;
+  final List<CalcExpression> items;
 
   AppState(
       {this.isLoading = false,
-      this.todos = const [],
-      this.activeTab = AppTab.history,
-      this.activeFilter = VisibilityFilter.all});
+      this.items = const []});
 
   factory AppState.loading() => AppState(isLoading: true);
 
   @override
   int get hashCode =>
       isLoading.hashCode ^
-      todos.hashCode ^
-      activeTab.hashCode ^
-      activeFilter.hashCode;
+      items.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -34,26 +27,20 @@ class AppState {
       other is AppState &&
           runtimeType == other.runtimeType &&
           isLoading == other.isLoading &&
-          todos == other.todos &&
-          activeTab == other.activeTab &&
-          activeFilter == other.activeFilter;
+          items == other.items;
 
   AppState copyWith({
     bool isLoading,
-    List<CalcExpression> todos,
-    AppTab activeTab,
-    VisibilityFilter activeFilter,
+    List<CalcExpression> items,
   }) {
     return AppState(
       isLoading: isLoading ?? this.isLoading,
-      todos: todos ?? this.todos,
-      activeTab: activeTab ?? this.activeTab,
-      activeFilter: activeFilter ?? this.activeFilter,
+      items: items ?? this.items,
     );
   }
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, todos: $todos, activeTab: $activeTab, activeFilter: $activeFilter}';
+    return 'AppState{isLoading: $isLoading, items: $items}';
   }
 }

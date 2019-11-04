@@ -69,11 +69,11 @@ It also allows you to reuse `container` Widgets. For an example, please look at 
 
 ## Fetching and Storing Data using Middleware
 
-In order to fetch our Todos from the Web or a Database, we need to make an async call. Since `Reducer` functions are pure, we must instead use a `Middleware`.
+In order to fetch our Items from the Web or a Database, we need to make an async call. Since `Reducer` functions are pure, we must instead use a `Middleware`.
 
 `Middleware` are run in response to `Actions` that are dispatched, and execute before the `Reducer`. This allows you to intercept an `Action` and fetch data in response!
 
-In this app, we have a "Store Todos Middleware". It responds to `LoadTodos` and `SaveTodos` type of actions by either fetching the todos or persisting them to a Database or Web Service.   
+In this app, we have a "Store Items Middleware". It responds to `LoadItems` and `SaveItems` type of actions by either fetching the items or persisting them to a Database or Web Service.
 
 ## Testing
 

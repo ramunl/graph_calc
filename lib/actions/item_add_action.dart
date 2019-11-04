@@ -1,9 +1,9 @@
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 
-class SaveExpressionAction {
+class ItemAddAction {
   final CalcExpression calcExpression;
 
-  SaveExpressionAction(this.calcExpression);
+  ItemAddAction(this.calcExpression);
 
   @override
   String toString() {

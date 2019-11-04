@@ -9,44 +9,44 @@ import 'package:graph_calc/store/expression_entity.dart';
 import 'package:meta/meta.dart';
 
 import 'file_storage.dart';
-import 'todos_repository.dart';
+import 'items_repository.dart';
 import 'web_client.dart';
 
 /// A class that glues together our local file storage and web client. It has a
-/// clear responsibility: Load Todos and Persist todos.
-class TodosRepositoryFlutter implements TodosRepository {
+/// clear responsibility: Load Items and Persist items.
+class ItemsRepositoryFlutter implements ItemsRepository {
   final FileStorage fileStorage;
   final WebClient webClient;
 
-  const TodosRepositoryFlutter({
+  const ItemsRepositoryFlutter({
     @required this.fileStorage,
     this.webClient = const WebClient(),
   });
 
-  /// Loads todos first from File storage. If they don't exist or encounter an
-  /// error, it attempts to load the Todos from a Web Client.
+  /// Loads items first from File storage. If they don't exist or encounter an
+  /// error, it attempts to load the Items from a Web Client.
   @override
-  Future<List<ExpressionEntity>> loadTodos() async {
+  Future<List<ExpressionEntity>> loadItems() async {
     try {
-      return await fileStorage.loadTodos();
+      return await fileStorage.loadItems();
     } catch (e) {
-  //    final todos = await webClient.fetchTodos();
-    //   fileStorage.saveToFdos(todos);
+  //    final items = await webClient.fetchItems();
+    //   fileStorage.saveToFdos(items);
       return null;
     }
   }
 
-  // Persists todos to local disk and the web
+  // Persists items to local disk and the web
   @override
-  Future saveTodos(List<ExpressionEntity> todos) {
+  Future saveItems(List<ExpressionEntity> items) {
     return Future.wait<dynamic>([
-      fileStorage.saveTodos(todos),
-      webClient.postTodos(todos),
+      fileStorage.saveItems(items),
+      webClient.postItems(items),
     ]);
   }
 
   @override
-  Future deleteTodos() {
+  Future deleteItems() {
     return Future.wait<dynamic>([
       fileStorage.clean(),
     ]);

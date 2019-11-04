@@ -4,7 +4,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:graph_calc/models/ArchSampleKeys.dart';
+import 'package:graph_calc/models/ArchKeys.dart';
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
 import 'package:graph_calc/view/screens/history/app_loading.dart';
 import 'package:graph_calc/view/screens/history/views/history_list_item.dart';
@@ -31,11 +31,10 @@ class HistoryList extends StatelessWidget {
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text(localizations.historyTitle),
+          title: Text(localizations.screenTitleHistory),
           actions: [
             IconButton(
-              tooltip: localizations.saveFunction,
-              key: ArchSampleKeys.saveFunction,
+              tooltip: localizations.commandAddFunc,
               icon: Icon(Icons.delete),
               onPressed: () {
                 onRemove();
@@ -47,12 +46,12 @@ class HistoryList extends StatelessWidget {
         ),
         body: AppLoading(builder: (context, loading) {
           if (loading) {
-            return LoadingIndicator(key: ArchSampleKeys.todosLoading);
+            return LoadingIndicator();
           } else {
             if (calcExpressions.isNotEmpty) {
               return _buildListView();
             } else {
-              return ListEmpty(key: ArchSampleKeys.listEmpty);
+              return ListEmpty();
             }
           }
         }));
@@ -60,7 +59,6 @@ class HistoryList extends StatelessWidget {
 
   ListView _buildListView() {
     return ListView.builder(
-      key: ArchSampleKeys.todoList,
       itemCount: calcExpressions.length,
       itemBuilder: (BuildContext context, int index) {
         final calcExpression = calcExpressions[index];

@@ -2,73 +2,65 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-
+import 'package:graph_calc/actions/items_load_action.dart';
+import 'package:graph_calc/models/app_state.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:graph_calc/actions/add_todo_action.dart';
-import 'package:graph_calc/actions/clear_completed_action.dart';
-import 'package:graph_calc/actions/delete_todo_action.dart';
-import 'package:graph_calc/actions/load_todos_action.dart';
-import 'package:graph_calc/actions/todos_loaded_action.dart';
-import 'package:graph_calc/actions/todos_not_loaded_action.dart';
-import 'package:graph_calc/actions/toggle_all_action.dart';
-import 'package:graph_calc/actions/update_todo_action.dart';
+import 'package:graph_calc/actions/item_add_action.dart';
+import 'package:graph_calc/actions/items_delete_action.dart';
+import 'package:graph_calc/actions/items_loaded_action.dart';
+import 'package:graph_calc/actions/items_not_loaded_action.dart';
 import 'package:graph_calc/mapper/expression_entity_mapper.dart';
-import 'package:graph_calc/models/models.dart';
-import 'package:graph_calc/selectors/selectors.dart';
 import 'package:graph_calc/store/file_storage.dart';
-import 'package:graph_calc/store/todos_repository.dart';
+import 'package:graph_calc/store/items_repository.dart';
 import 'package:redux/redux.dart';
 
 import '../store/repository.dart';
 
-List<Middleware<AppState>> createStoreTodosMiddleware([
-  TodosRepository repository = const TodosRepositoryFlutter(
+List<Middleware<AppState>> createStoreItemsMiddleware([
+  ItemsRepository repository = const ItemsRepositoryFlutter(
     fileStorage:
         const FileStorage('graph_store', getApplicationDocumentsDirectory),
   ),
 ]) {
-  final saveTodos = _createSaveTodos(repository);
-  final loadTodos = _createLoadTodos(repository);
-  final deleteTodos = _deleteTodos(repository);
+  final saveItems = _saveItems(repository);
+  final loadItems = _loadItems(repository);
+  final deleteItems = _deleteItems(repository);
 
   return [
-    TypedMiddleware<AppState, LoadTodosAction>(loadTodos),
-    TypedMiddleware<AppState, SaveExpressionAction>(saveTodos),
-    TypedMiddleware<AppState, ClearCompletedAction>(saveTodos),
-    TypedMiddleware<AppState, ToggleAllAction>(saveTodos),
-    TypedMiddleware<AppState, UpdateTodoAction>(saveTodos),
-    TypedMiddleware<AppState, TodosLoadedAction>(saveTodos),
-    TypedMiddleware<AppState, DeleteTodoAction>(deleteTodos),
+    TypedMiddleware<AppState, ItemsLoadAction>(loadItems),
+    TypedMiddleware<AppState, ItemAddAction>(saveItems),
+    TypedMiddleware<AppState, ItemsLoadedAction>(saveItems),
+    TypedMiddleware<AppState, ItemsDeleteAction>(deleteItems),
   ];
 }
 
-Middleware<AppState> _createLoadTodos(TodosRepository repository) {
+Middleware<AppState> _loadItems(ItemsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    repository.loadTodos().then(
-      (todos) {
+    repository.loadItems().then(
+      (items) {
         store.dispatch(
-          TodosLoadedAction(
-            todos.map(fromEntity).toList(),
+          ItemsLoadedAction(
+            items.map(fromEntity).toList(),
           ),
         );
       },
-    ).catchError((_) => store.dispatch(TodosNotLoadedAction()));
+    ).catchError((_) => store.dispatch(ItemsNotLoadedAction()));
     next(action);
   };
 }
 
-Middleware<AppState> _deleteTodos(TodosRepository repository) {
+Middleware<AppState> _deleteItems(ItemsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     next(action);
-    repository.deleteTodos();
+    repository.deleteItems();
   };
 }
 
-Middleware<AppState> _createSaveTodos(TodosRepository repository) {
+Middleware<AppState> _saveItems(ItemsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     next(action);
-    repository.saveTodos(
-      todosSelector(store.state)
+    repository.saveItems(
+      store.state.items
           .map((calcExpression) => toEntity(calcExpression))
           .toList(),
     );

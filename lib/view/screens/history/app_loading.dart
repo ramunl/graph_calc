@@ -5,8 +5,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:graph_calc/models/models.dart';
-import 'package:graph_calc/selectors/selectors.dart';
+import 'package:graph_calc/models/app_state.dart';
 import 'package:redux/redux.dart';
 
 class AppLoading extends StatelessWidget {
@@ -18,7 +17,7 @@ class AppLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, bool>(
       distinct: true,
-      converter: (Store<AppState> store) => isLoadingSelector(store.state),
+      converter: (Store<AppState> store) => store.state.isLoading,
       builder: builder,
     );
   }
