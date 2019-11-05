@@ -256,7 +256,8 @@ class CalcExpression {
     var valid = false;
     var msg;
     if (expressionState.maxValue > expressionState.minValue) {
-      if (expressionTokenList.last is OperationToken) {
+      if (expressionTokenList.last.toString() != codeBrackerC && // special case
+      expressionTokenList.last is OperationToken) {
         msg = "Wrong expression!";
       } else {
         valid = true;

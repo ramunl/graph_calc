@@ -13,7 +13,7 @@ import 'package:graph_calc/view/themes/theme.dart';
 import 'package:redux/redux.dart';
 
 import 'actions/items_load_action.dart';
-import 'middleware/store_items_middleware.dart';
+import 'middleware/middleware_items_repo.dart';
 import 'models/app_state.dart';
 
 void main() {
