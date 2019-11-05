@@ -59,8 +59,8 @@ class GraphPainter extends CustomPainter {
     textPos = Offset(rightBorder, zeroOffset.dy - 30);
     draText(canvas, textPos, rightBorder, codeVariable);
 
-    textPos = Offset(zeroOffset.dx, zeroOffset.dy);
-    draText(canvas, textPos, rightBorder, "0");
+    //textPos = Offset(zeroOffset.dx, zeroOffset.dy);
+   // draText(canvas, textPos, rightBorder, "0");
   }
 
   //          |
@@ -114,7 +114,7 @@ class GraphPainter extends CustomPainter {
 
     final screenW = zeroOffset.dx * 2;
 
-    //draText(canvas, textPos, screenW, range[0].toString());
+    draText(canvas, textPos, screenW, range[0].toString());
 
     textPos = Offset(screenW, zeroOffset.dy);
 
