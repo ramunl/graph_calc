@@ -21,17 +21,20 @@ List<CalcExpression> _addItem(
   return List.from(items)..insert(0, action.calcExpression);
 }
 
-List<CalcExpression> _deleteItem(List<CalcExpression> items, ItemsDeleteAction action) {
+List<CalcExpression> _deleteItem(
+    List<CalcExpression> items, ItemsDeleteAction action) {
+  print("reducer: _deleteItem");
   return [];
 }
 
 List<CalcExpression> _setLoadedItems(
     List<CalcExpression> items, ItemsLoadedAction action) {
+  print("reducer: _setLoadedItems");
   return action.items;
 }
 
 List<CalcExpression> _setNoItems(
     List<CalcExpression> items, ItemsNotLoadedAction action) {
+  print("reducer: _setNoItems");
   return [];
 }
-

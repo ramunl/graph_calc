@@ -4,15 +4,14 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:graph_calc/models/ArchKeys.dart';
 import 'package:graph_calc/view/screens/calculator/model/calc_expression.dart';
-import 'package:graph_calc/view/screens/history/app_loading.dart';
 import 'package:graph_calc/view/screens/history/views/history_list_item.dart';
+import 'package:graph_calc/view/screens/history/views/history_loading.dart';
 import 'package:graph_calc/view/screens/history/views/view_list_empty.dart';
 import 'package:graph_calc/view/screens/plotting/func_plotter.dart';
 
-import '../../../res/localization.dart';
-import 'views/loading_indicator.dart';
+import '../../../../res/localization.dart';
+import 'loading_indicator.dart';
 
 class HistoryList extends StatelessWidget {
   final List<CalcExpression> calcExpressions;
@@ -24,8 +23,7 @@ class HistoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("_CalculatorState build");
-    final localizations = ArchSampleLocalizations.of(context);
+    final localizations = GraphLocalizations.of(context);
     final _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
@@ -34,7 +32,7 @@ class HistoryList extends StatelessWidget {
           title: Text(localizations.screenTitleHistory),
           actions: [
             IconButton(
-              tooltip: localizations.commandAddFunc,
+              tooltip: localizations.commandCleanAll,
               icon: Icon(Icons.delete),
               onPressed: () {
                 onRemove();
@@ -44,7 +42,7 @@ class HistoryList extends StatelessWidget {
           backgroundColor: Theme.of(context).canvasColor,
           elevation: 0.0,
         ),
-        body: AppLoading(builder: (context, loading) {
+        body: HistoryLoading(builder: (context, loading) {
           if (loading) {
             return LoadingIndicator();
           } else {

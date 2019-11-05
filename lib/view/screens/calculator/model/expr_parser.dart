@@ -29,8 +29,7 @@ class ExprParser {
         numTokens.add(token);
       }
     }
-    final res =  _tokensTonum(numTokens);
-    print("testFun($x) $res");
+    final res = _tokensTonum(numTokens);
     return res;
   }
 

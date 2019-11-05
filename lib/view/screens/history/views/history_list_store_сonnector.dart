@@ -4,11 +4,10 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:graph_calc/models/ArchKeys.dart';
-import 'package:graph_calc/models/app_state.dart';
-import 'package:graph_calc/view/screens/history/history_list.dart';
+import 'package:graph_calc/store/app_state.dart';
+import 'package:graph_calc/view/screens/history/views/history_list.dart';
 
-import 'model/history_view_model.dart';
+import '../viewmodel/history_view_model.dart';
 
 class HistoryListStoreConnector extends StatelessWidget {
   HistoryListStoreConnector() : super();
@@ -18,10 +17,7 @@ class HistoryListStoreConnector extends StatelessWidget {
     return StoreConnector<AppState, HistoryViewModel>(
       converter: HistoryViewModel.fromStore,
       builder: (context, vm) {
-        return HistoryList(
-          calcExpressions: vm.items,
-          onRemove: vm.onRemove
-        );
+        return HistoryList(calcExpressions: vm.items, onRemove: vm.onRemove);
       },
     );
   }

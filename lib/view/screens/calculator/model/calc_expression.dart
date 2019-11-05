@@ -8,15 +8,13 @@ import 'package:graph_calc/view/screens/calculator/model/tokens/expression_token
 import 'package:graph_calc/view/screens/calculator/model/tokens/float_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/int_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/leading_neg_token.dart';
-import 'package:graph_calc/view/screens/calculator/model/tokens/number_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/operation_token.dart';
-import 'package:graph_calc/view/screens/calculator/model/tokens/result_token.dart';
 import 'package:graph_calc/view/screens/calculator/model/tokens/variable_token.dart';
 
 import '../../../../helper/ui_utils.dart';
 import 'calc_operation.dart';
-import 'expression_state.dart';
 import 'expression_last_added.dart';
+import 'expression_state.dart';
 
 /// An expression that can be displayed in a calculator. It is the result
 /// of a sequence of user entries. It is represented by a sequence of tokens.
@@ -257,7 +255,7 @@ class CalcExpression {
     var msg;
     if (expressionState.maxValue > expressionState.minValue) {
       if (expressionTokenList.last.toString() != codeBrackerC && // special case
-      expressionTokenList.last is OperationToken) {
+          expressionTokenList.last is OperationToken) {
         msg = "Wrong expression!";
       } else {
         valid = true;

@@ -22,6 +22,7 @@ abstract class ItemsRepository {
 
   // Persists items to local disk and the web
   Future saveItems(List<ExpressionEntity> items);
+
   // Persists items to local disk and the web
   Future deleteItems();
 }

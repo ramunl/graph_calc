@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:graph_calc/view/screens/calculator/model/calc_operation.dart';
 import 'package:graph_calc/view/screens/calculator/model/expr_parser.dart';
-import 'package:graph_calc/helper/ui_utils.dart';
 
 import '../model/calc_expression.dart';
 
@@ -11,6 +10,7 @@ abstract class CalcExpressions {
   CalcExpression _expression = CalcExpression.empty();
 
   num maxValue() => expression.expressionState.maxValue;
+
   num minValue() => expression.expressionState.minValue;
 
   get expression => _expression;

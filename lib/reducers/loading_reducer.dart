@@ -12,5 +12,6 @@ final loadingReducer = combineReducers<bool>([
 ]);
 
 bool _setLoaded(bool state, action) {
+  print("_setLoaded $state, $action");
   return false;
 }

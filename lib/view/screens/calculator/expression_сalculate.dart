@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graph_calc/models/ArchKeys.dart';
 import 'package:graph_calc/view/screens/calculator/views/%D1%81alc_display.dart';
 
 import '../../../res/localization.dart';
@@ -25,8 +24,7 @@ class _CalculatorState extends State<Calculator> with CalcExpressions {
 
   @override
   Widget build(BuildContext context) {
-    print("_CalculatorState build");
-    final localizations = ArchSampleLocalizations.of(context);
+    final localizations = GraphLocalizations.of(context);
     final _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(

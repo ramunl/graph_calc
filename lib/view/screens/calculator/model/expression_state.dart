@@ -6,6 +6,7 @@ class ExpressionState {
   /// The expression is empty or an operation symbol was just entered.
   /// A new number must be started now.
   ExpressionLastSymbAdded lastAdded;
+
   //bool isBracketOpen = false;
   bool isVariableAdded = false;
   num maxValue = 0;
@@ -14,6 +15,7 @@ class ExpressionState {
   ExpressionState(this.lastAdded, this.minValue, this.maxValue);
 
   ExpressionState.start() : this.lastAdded = ExpressionLastSymbAdded.Start;
+
   ExpressionState.result() : this.lastAdded = ExpressionLastSymbAdded.Result;
 
   ExpressionState.copy(ExpressionState baseState)

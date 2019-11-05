@@ -1,2 +1,1 @@
-class ItemsDeleteAction {
-}
+class ItemsDeleteAction {}

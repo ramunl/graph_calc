@@ -8,5 +8,4 @@ class ExpressionValidateResult {
   String toString() {
     return 'ExpressionValidateResult{isSuccess: $isSuccess, messageInfo: $messageInfo}';
   }
-
 }

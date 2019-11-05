@@ -15,12 +15,12 @@ import 'package:intl/src/intl_helpers.dart';
 Map<String, LibraryLoader> _deferredLibraries = {
   'en': () => Future.value(null),
 };
+
 /// User programs should call this before using [localeName] for messages.
 Future initializeMessages(String localeName) async {
   var lib = _deferredLibraries[Intl.canonicalizedLocale(localeName)];
   await (lib == null ? Future.value(false) : lib());
   initializeInternalMessageLookup(() => CompositeMessageLookup());
 }
-
 
 typedef Future<dynamic> LibraryLoader();

@@ -137,10 +137,7 @@ class GraphPainter extends CustomPainter {
     final points = adaptivePlot.plot.toList(growable: true);
     var p1, p2;
     print("points.length = ${points.length}");
-    print("points = ${points.join(",").toString()}");
-
     final range = calcExpression.getRange();
-    print("plotFunc range $range");
     //zeroOffset.x*2  - maxVal
     //x             - points[i].x
     final maxW = zeroOffset.dx * 2.0;

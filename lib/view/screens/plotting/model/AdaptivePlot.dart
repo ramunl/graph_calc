@@ -1,7 +1,7 @@
 import 'package:ordered_set/comparing.dart';
+import 'package:ordered_set/ordered_set.dart';
 
 import 'Point.dart';
-import 'package:ordered_set/ordered_set.dart';
 
 class AdaptivePlot {
   final depth = 6;
@@ -12,7 +12,6 @@ class AdaptivePlot {
   final plot = OrderedSet<Point>(Comparing.on((p) => p.x));
 
   AdaptivePlot(this.f, this.minX, this.maxX);
-
 
   Point pointAt(num x) {
     return new Point(x, f(x));
@@ -68,8 +67,7 @@ class AdaptivePlot {
     }
   }
 
-  bool unsmooth(
-      num ya, num ya1, num yb, num yb1, num yc, num eps) {
+  bool unsmooth(num ya, num ya1, num yb, num yb1, num yc, num eps) {
     var y0 = [ya, ya1, yb, yb1, yc]
         .reduce((curr, next) => curr < next ? curr : next);
     var yg = [ya, ya1, yb, yb1, yc].map((y) => y - y0).toList();

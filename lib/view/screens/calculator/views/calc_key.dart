@@ -7,6 +7,7 @@ class CalcKey extends StatelessWidget {
   final String text;
 
   final GestureTapCallback onTap;
+
   const CalcKey(this.text, this.onTap);
 
   @override

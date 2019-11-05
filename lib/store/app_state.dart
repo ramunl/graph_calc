@@ -10,16 +10,17 @@ class AppState {
   final bool isLoading;
   final List<CalcExpression> items;
 
-  AppState(
-      {this.isLoading = false,
-      this.items = const []});
+  AppState({this.isLoading = false, this.items = const []}) {
+    print("AppState: loading = $isLoading, ${this.items.length}");
+  }
 
-  factory AppState.loading() => AppState(isLoading: true);
+  factory AppState.loading() {
+    print("AppState: loading = true");
+    return AppState(isLoading: true);
+  }
 
   @override
-  int get hashCode =>
-      isLoading.hashCode ^
-      items.hashCode;
+  int get hashCode => isLoading.hashCode ^ items.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -29,7 +30,7 @@ class AppState {
           isLoading == other.isLoading &&
           items == other.items;
 
-  AppState copyWith({
+  /*AppState copyWith({
     bool isLoading,
     List<CalcExpression> items,
   }) {
@@ -37,7 +38,7 @@ class AppState {
       isLoading: isLoading ?? this.isLoading,
       items: items ?? this.items,
     );
-  }
+  }*/
 
   @override
   String toString() {

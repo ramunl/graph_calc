@@ -5,7 +5,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:graph_calc/actions/item_add_action.dart';
-import 'package:graph_calc/models/app_state.dart';
+import 'package:graph_calc/store/app_state.dart';
 import 'package:redux/redux.dart';
 
 import 'expression_сalculate.dart';

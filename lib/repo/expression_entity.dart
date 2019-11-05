@@ -18,22 +18,20 @@ class ExpressionEntity {
         minVal = json['minVal'],
         maxVal = json['maxVal'];
 
-  ExpressionEntity.withDefaultId(
-      this.tokenList, this.minVal, this.maxVal)
+  ExpressionEntity.withDefaultId(this.tokenList, this.minVal, this.maxVal)
       : this.id = generateEntityId();
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is ExpressionEntity &&
-              runtimeType == other.runtimeType &&
-              id == other.id &&
-              tokenList == other.tokenList &&
-              maxVal == other.maxVal &&
-              minVal == other.minVal;
+      other is ExpressionEntity &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          tokenList == other.tokenList &&
+          maxVal == other.maxVal &&
+          minVal == other.minVal;
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'id': id,
         'tokenList': tokenList,
         'maxVal': maxVal,
@@ -42,9 +40,5 @@ class ExpressionEntity {
 
   @override
   int get hashCode =>
-      id.hashCode ^
-      tokenList.hashCode ^
-      maxVal.hashCode ^
-      minVal.hashCode;
-
+      id.hashCode ^ tokenList.hashCode ^ maxVal.hashCode ^ minVal.hashCode;
 }

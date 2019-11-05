@@ -24,11 +24,11 @@ class WebClient {
     return Future.delayed(
         delay,
         () => [
-              ExpressionEntity(generateEntityId(), ["x", "+", "2"],10,100),
-              ExpressionEntity(generateEntityId(), ["x", "*", "3"],-100,100),
-              ExpressionEntity(generateEntityId(), ["x", "/", "4"],-1,1),
-              ExpressionEntity(generateEntityId(), ["10", "2"],0,1000),
-              ExpressionEntity(generateEntityId(), ["10", "2"],-100,0),
+              ExpressionEntity(generateEntityId(), ["x", "+", "2"], 10, 100),
+              ExpressionEntity(generateEntityId(), ["x", "*", "3"], -100, 100),
+              ExpressionEntity(generateEntityId(), ["x", "/", "4"], -1, 1),
+              ExpressionEntity(generateEntityId(), ["10", "2"], 0, 1000),
+              ExpressionEntity(generateEntityId(), ["10", "2"], -100, 0),
             ]);
   }
 

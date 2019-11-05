@@ -8,7 +8,7 @@ class OperationToken extends ExpressionToken {
 
   OperationToken(this.operation) : super(opString(operation));
 
-   static String getCode(CalcOperation operation) {
+  static String getCode(CalcOperation operation) {
     switch (operation) {
       case CalcOperation.Addition:
         return codePlus;

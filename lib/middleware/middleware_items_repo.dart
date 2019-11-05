@@ -2,19 +2,18 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'package:graph_calc/actions/items_load_action.dart';
-import 'package:graph_calc/models/app_state.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:graph_calc/actions/item_add_action.dart';
 import 'package:graph_calc/actions/items_delete_action.dart';
+import 'package:graph_calc/actions/items_load_action.dart';
 import 'package:graph_calc/actions/items_loaded_action.dart';
 import 'package:graph_calc/actions/items_not_loaded_action.dart';
 import 'package:graph_calc/mapper/expression_entity_mapper.dart';
-import 'package:graph_calc/store/file_storage.dart';
-import 'package:graph_calc/store/items_repository.dart';
+import 'package:graph_calc/repo/file_storage.dart';
+import 'package:graph_calc/repo/items_repository.dart';
+import 'package:graph_calc/repo/repository.dart';
+import 'package:graph_calc/store/app_state.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
-
-import '../store/repository.dart';
 
 List<Middleware<AppState>> createStoreItemsMiddleware([
   ItemsRepository repository = const ItemsRepositoryFlutter(
@@ -35,6 +34,7 @@ List<Middleware<AppState>> createStoreItemsMiddleware([
 
 Middleware<AppState> _loadItems(ItemsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
+    print("Middleware _loadItems");
     repository.loadItems().then(
       (items) {
         store.dispatch(
@@ -50,6 +50,7 @@ Middleware<AppState> _loadItems(ItemsRepository repository) {
 
 Middleware<AppState> _deleteItems(ItemsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
+    print("middleware: deleteItems");
     next(action);
     repository.deleteItems();
   };
@@ -58,6 +59,7 @@ Middleware<AppState> _deleteItems(ItemsRepository repository) {
 Middleware<AppState> _saveItems(ItemsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     next(action);
+    print("Middleware _saveItems");
     repository.saveItems(
       store.state.items
           .map((calcExpression) => toEntity(calcExpression))

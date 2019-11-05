@@ -14,6 +14,8 @@ import 'expression_entity.dart';
 /// Instead, the `getDirectory` method should be injected. This allows for
 /// testing.
 class FileStorage {
+  final Duration debugDelay = const Duration(milliseconds: 3000);
+
   final String tag;
   final Future<Directory> Function() getDirectory;
 
@@ -36,8 +38,7 @@ class FileStorage {
         .map<ExpressionEntity>(
             (calcExpression) => ExpressionEntity.fromJson(calcExpression))
         .toList();
-
-    return items;
+    return Future.delayed(debugDelay, () => items);
   }
 
   Future<File> saveItems(List<ExpressionEntity> items) async {

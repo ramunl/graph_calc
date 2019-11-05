@@ -7,14 +7,13 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:graph_calc/reducers/app_state_reducer.dart';
 import 'package:graph_calc/res/localization.dart';
 import 'package:graph_calc/view/routes.dart';
-import 'package:graph_calc/view/screens/calculator/expression_create.dart';
 import 'package:graph_calc/view/screens/home/home_screen.dart';
 import 'package:graph_calc/view/themes/theme.dart';
 import 'package:redux/redux.dart';
 
 import 'actions/items_load_action.dart';
 import 'middleware/middleware_items_repo.dart';
-import 'models/app_state.dart';
+import 'store/app_state.dart';
 
 void main() {
   runApp(CalcApp());

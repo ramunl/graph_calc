@@ -9,61 +9,66 @@ import 'package:intl/intl.dart';
 
 import 'messages_all.dart';
 
-class ArchSampleLocalizations {
+class GraphLocalizations {
   final Locale locale;
 
-  ArchSampleLocalizations(this.locale);
+  GraphLocalizations(this.locale);
 
   String get screenTitleHistory => Intl.message(
-    'History',
-    name: 'history',
-    args: [],
-    locale: locale.toString(),
-  );
+        'History',
+        name: 'history',
+        args: [],
+        locale: locale.toString(),
+      );
 
   String get screenTitleAddFunction => Intl.message(
-    'Add function',
-    name: 'addFunction',
-    args: [],
-    locale: locale.toString(),
-  );
+        'Add function',
+        name: 'addFunction',
+        args: [],
+        locale: locale.toString(),
+      );
 
   String get screenTitlePlotFunc => Intl.message(
-    'Func plotting',
-    name: 'plotFunc',
-    args: [],
-    locale: locale.toString(),
-  );
+        'Func plotting',
+        name: 'plotFunc',
+        args: [],
+        locale: locale.toString(),
+      );
 
   String get commandAddFunc => Intl.message(
-    'Add Function',
-    name: 'addFunction',
-    args: [],
-    locale: locale.toString(),
-  );
+        'Add Function',
+        name: 'addFunction',
+        args: [],
+        locale: locale.toString(),
+      );
 
+  String get commandCleanAll => Intl.message(
+        'Clean all',
+        name: 'cleanAll',
+        args: [],
+        locale: locale.toString(),
+      );
 
-  static Future<ArchSampleLocalizations> load(Locale locale) {
+  static Future<GraphLocalizations> load(Locale locale) {
     return initializeMessages(locale.toString()).then((_) {
-      return ArchSampleLocalizations(locale);
+      return GraphLocalizations(locale);
     });
   }
 
-  static ArchSampleLocalizations of(BuildContext context) {
-    return Localizations.of<ArchSampleLocalizations>(
-        context, ArchSampleLocalizations);
+  static GraphLocalizations of(BuildContext context) {
+    return Localizations.of<GraphLocalizations>(context, GraphLocalizations);
   }
 }
 
 class ArchSampleLocalizationsDelegate
-    extends LocalizationsDelegate<ArchSampleLocalizations> {
+    extends LocalizationsDelegate<GraphLocalizations> {
   @override
   bool isSupported(Locale locale) =>
       locale.languageCode.toLowerCase().contains("en");
 
   @override
-  Future<ArchSampleLocalizations> load(Locale locale) =>
-      ArchSampleLocalizations.load(locale);
+  Future<GraphLocalizations> load(Locale locale) =>
+      GraphLocalizations.load(locale);
 
   @override
   bool shouldReload(ArchSampleLocalizationsDelegate old) => false;

@@ -16,7 +16,7 @@ class FuncPlotter extends StatelessWidget {
 
   @override
   Widget build(context) {
-    final localizations = ArchSampleLocalizations.of(context);
+    final localizations = GraphLocalizations.of(context);
     return Scaffold(
         appBar: AppBar(
           title: Text(localizations.screenTitlePlotFunc),

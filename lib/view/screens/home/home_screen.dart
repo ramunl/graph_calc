@@ -3,12 +3,11 @@
 // in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:graph_calc/models/ArchKeys.dart';
+import 'package:graph_calc/helper/ArchKeys.dart';
 import 'package:graph_calc/view/screens/calculator/expression_create.dart';
-import 'package:graph_calc/view/screens/history/history_list_store_сonnector.dart';
+import 'package:graph_calc/view/screens/history/views/history_list_store_%D1%81onnector.dart';
 
 import '../../../res/localization.dart';
-import '../../routes.dart';
 
 class HomeScreen extends StatefulWidget {
   final void Function() onInit;
@@ -29,10 +28,11 @@ class HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           final _mockPage = ExpressionCreate(); //workaround for focus lost bug
-          Navigator.push(context, MaterialPageRoute(builder: (context) => _mockPage));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => _mockPage));
         },
         child: Icon(Icons.add),
-        tooltip: ArchSampleLocalizations.of(context).commandAddFunc,
+        tooltip: GraphLocalizations.of(context).commandAddFunc,
       ),
     );
   }
