@@ -13,7 +13,7 @@ class HistoryListStoreConnector extends StatelessWidget {
   HistoryListStoreConnector() : super();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext cFontext) {
     return StoreConnector<AppState, HistoryViewModel>(
       converter: HistoryViewModel.fromStore,
       builder: (context, vm) {

@@ -15,8 +15,8 @@ class GraphLocalizations {
   GraphLocalizations(this.locale);
 
   String get screenTitleHistory => Intl.message(
-        'History',
-        name: 'history',
+        'List of expressions',
+        name: 'expressions',
         args: [],
         locale: locale.toString(),
       );
@@ -24,6 +24,13 @@ class GraphLocalizations {
   String get screenTitleAddFunction => Intl.message(
         'Add function',
         name: 'addFunction',
+        args: [],
+        locale: locale.toString(),
+      );
+
+  String get screenTitleSettings => Intl.message(
+        'Settings',
+        name: 'settings',
         args: [],
         locale: locale.toString(),
       );
@@ -38,6 +45,13 @@ class GraphLocalizations {
   String get commandAddFunc => Intl.message(
         'Add Function',
         name: 'addFunction',
+        args: [],
+        locale: locale.toString(),
+      );
+
+  String get commandSettings => Intl.message(
+        'Settings',
+        name: 'Settings',
         args: [],
         locale: locale.toString(),
       );

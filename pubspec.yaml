@@ -11,7 +11,8 @@ dependencies:
   path_provider: ^1.4.0
   ordered_set: ^1.1.2
   stack: ^0.1.0
-
+  webview_flutter: ^0.3.15+1
+  shared_preferences: ^0.5.4+3
   flutter:
     sdk: flutter
 
