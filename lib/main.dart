@@ -4,26 +4,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:graph_calc/view/containers/add_todo.dart';
-import 'package:graph_calc/view/localization.dart';
+import 'package:graph_calc/reducers/app_state_reducer.dart';
+import 'package:graph_calc/res/localization.dart';
 import 'package:graph_calc/view/routes.dart';
-import 'package:graph_calc/view/screens/home_screen.dart';
+import 'package:graph_calc/view/screens/home/home_screen.dart';
 import 'package:graph_calc/view/themes/theme.dart';
 import 'package:redux/redux.dart';
-import 'package:graph_calc/actions/actions.dart';
-import 'package:graph_calc/middleware/store_todos_middleware.dart';
-import 'package:graph_calc/models/models.dart';
-import 'package:graph_calc/reducers/app_state_reducer.dart';
+
+import 'actions/items_load_action.dart';
+import 'middleware/middleware_items_repo.dart';
+import 'store/app_state.dart';
 
 void main() {
-  runApp(ReduxApp());
+  runApp(CalcApp());
 }
 
-class ReduxApp extends StatelessWidget {
+class CalcApp extends StatelessWidget {
   final store = Store<AppState>(
     appReducer,
     initialState: AppState.loading(),
-    middleware: createStoreTodosMiddleware(),
+    middleware: createStoreItemsMiddleware(),
   );
 
   @override
@@ -38,16 +38,13 @@ class ReduxApp extends StatelessWidget {
           ReduxLocalizationsDelegate(),
         ],
         routes: {
-          ArchSampleRoutes.home: (context) {
+          ArchRoutes.home: (context) {
             return HomeScreen(
               onInit: () {
-                StoreProvider.of<AppState>(context).dispatch(LoadTodosAction());
+                StoreProvider.of<AppState>(context).dispatch(ItemsLoadAction());
               },
             );
-          },
-          ArchSampleRoutes.addTodo: (context) {
-            return AddTodo();
-          },
+          }
         },
       ),
     );

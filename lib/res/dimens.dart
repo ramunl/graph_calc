@@ -1,0 +1,2 @@
+
+const HORIZONTAL_PADDING = 22.0;
