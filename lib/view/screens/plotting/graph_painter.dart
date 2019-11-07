@@ -10,9 +10,9 @@ import '../../../helper/ui_utils.dart';
 
 class GraphPainter extends CustomPainter {
   final exprParser = ExprParser();
-
   final CalcExpression calcExpression;
   AdaptivePlot adaptivePlot;
+
   final axisPaint = Paint()
     ..color = Colors.grey
     ..strokeWidth = 1;
@@ -28,13 +28,6 @@ class GraphPainter extends CustomPainter {
 
   GraphPainter(this.calcExpression) {
     print("GraphPainter");
-    exprParser.parse(calcExpression);
-    adaptivePlot = AdaptivePlot(
-        exprParser.testFun,
-        calcExpression.expressionState.minValue,
-        calcExpression.expressionState.maxValue);
-
-    adaptivePlot.computePlot();
   }
 
   void draText(canvas, offset, width, title) {
@@ -134,24 +127,39 @@ class GraphPainter extends CustomPainter {
   }
 
   void plotFunc(canvas, Offset zeroOffset) {
-    final points = adaptivePlot.plot.toList(growable: true);
-    var p1, p2;
-    print("points.length = ${points.length}");
-    final range = calcExpression.getRange();
+
+    final exprState= calcExpression.expressionState;
     //zeroOffset.x*2  - maxVal
     //x             - points[i].x
     final maxW = zeroOffset.dx * 2.0;
     final maxH = zeroOffset.dy * 2.0;
 
+    final step = maxW / (exprState.maxValue - exprState.minValue);
+   // maxVal  - maxW
+    //      -
+    exprParser.parse(calcExpression);
+    adaptivePlot = AdaptivePlot(
+        exprParser.testFun,
+        exprState.minValue * step,
+        exprState.maxValue * step,
+        maxW);
+
+    adaptivePlot.computePlot();
+
+    final points = adaptivePlot.plot.toList(growable: true);
+    var p1, p2;
+    print("points.length = ${points.length}");
+    final range = calcExpression.getRange();
+
+
     final maxVal = range[1];
 
     for (var i = 0; i < points.length - 1; i++) {
       p1 = zeroOffset +
-          Offset((points[i].x.toDouble() * maxW.toDouble() / maxVal),
-              -points[i].y.toDouble());
+          Offset(points[i].x.toDouble(),  -points[i].y.toDouble());
       p2 = zeroOffset +
-          Offset(points[i + 1].x.toDouble() * maxW.toDouble() / maxVal,
-              -points[i + 1].y.toDouble());
+          Offset(points[i + 1].x.toDouble(),  -points[i + 1].y.toDouble());
+
       if (p2.dx > 0 && p1.dx < maxW && p1.dy < maxH && p2.dy < maxH) {
         canvas.drawLine(p1, p2, graphPaint);
       }

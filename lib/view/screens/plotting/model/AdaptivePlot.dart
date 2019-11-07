@@ -6,15 +6,17 @@ import 'Point.dart';
 class AdaptivePlot {
   final depth = 6;
   final eps = 0.005;
-  final Function f;
+  final Function funcToCompute;
   final num minX;
   final num maxX;
+  final num canvasWidth;
   final plot = OrderedSet<Point>(Comparing.on((p) => p.x));
 
-  AdaptivePlot(this.f, this.minX, this.maxX);
+  AdaptivePlot(this.funcToCompute, this.minX, this.maxX, this.canvasWidth);
 
   Point pointAt(num x) {
-    return new Point(x, f(x));
+    final scaledX = x;//.toDouble() * canvasWidth.toDouble() /( (maxX.abs().toDouble() + minX.abs().toDouble())/2);
+    return new Point(scaledX, funcToCompute(scaledX));
   }
 
   AdaptivePlot computePlot() {
