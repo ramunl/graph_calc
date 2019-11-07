@@ -14,9 +14,17 @@ class AdaptivePlot {
 
   AdaptivePlot(this.funcToCompute, this.minX, this.maxX, this.canvasWidth);
 
+  num maxY = double.negativeInfinity;
+  num minY = double.infinity;
+
   Point pointAt(num x) {
-    final scaledX = x;//.toDouble() * canvasWidth.toDouble() /( (maxX.abs().toDouble() + minX.abs().toDouble())/2);
-    return new Point(scaledX, funcToCompute(scaledX));
+    num y = funcToCompute(x);
+    if (y < minY ) {
+      minY = y;
+    } else if (y > maxY) {
+      maxY = y;
+    }
+    return new Point(x, y);
   }
 
   AdaptivePlot computePlot() {

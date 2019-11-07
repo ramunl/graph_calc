@@ -53,7 +53,7 @@ class GraphPainter extends CustomPainter {
     draText(canvas, textPos, rightBorder, codeVariable);
 
     //textPos = Offset(zeroOffset.dx, zeroOffset.dy);
-   // draText(canvas, textPos, rightBorder, "0");
+    // draText(canvas, textPos, rightBorder, "0");
   }
 
   //          |
@@ -127,38 +127,37 @@ class GraphPainter extends CustomPainter {
   }
 
   void plotFunc(canvas, Offset zeroOffset) {
-
-    final exprState= calcExpression.expressionState;
+    final exprState = calcExpression.expressionState;
     //zeroOffset.x*2  - maxVal
     //x             - points[i].x
     final maxW = zeroOffset.dx * 2.0;
     final maxH = zeroOffset.dy * 2.0;
 
-    final step = maxW / (exprState.maxValue - exprState.minValue);
-   // maxVal  - maxW
+    final stepX = maxW / (exprState.maxValue - exprState.minValue);
+    // maxVal  - maxW
     //      -
     exprParser.parse(calcExpression);
-    adaptivePlot = AdaptivePlot(
-        exprParser.testFun,
-        exprState.minValue * step,
-        exprState.maxValue * step,
-        maxW);
+    adaptivePlot = AdaptivePlot(exprParser.testFun, exprState.minValue * stepX,
+        exprState.maxValue * stepX, maxW);
 
     adaptivePlot.computePlot();
 
     final points = adaptivePlot.plot.toList(growable: true);
+    final plotH = adaptivePlot.maxY - adaptivePlot.minY;
+    final stepY = maxH / plotH/2;
+    print("plot maxY = ${adaptivePlot.maxY} minY = ${adaptivePlot.minY} stepY = $stepY");
+
     var p1, p2;
     print("points.length = ${points.length}");
-    final range = calcExpression.getRange();
-
-
-    final maxVal = range[1];
+    //final range = calcExpression.getRange();
 
     for (var i = 0; i < points.length - 1; i++) {
       p1 = zeroOffset +
-          Offset(points[i].x.toDouble(),  -points[i].y.toDouble());
+          Offset(
+              points[i].x.toDouble(), -points[i].y.toDouble() * stepY);
       p2 = zeroOffset +
-          Offset(points[i + 1].x.toDouble(),  -points[i + 1].y.toDouble());
+          Offset(points[i + 1].x.toDouble(),
+              -points[i + 1].y.toDouble() * stepY);
 
       if (p2.dx > 0 && p1.dx < maxW && p1.dy < maxH && p2.dy < maxH) {
         canvas.drawLine(p1, p2, graphPaint);
