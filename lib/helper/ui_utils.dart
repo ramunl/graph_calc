@@ -12,5 +12,5 @@ const codeSqrt = '\u221A';
 
 getFontSize(context) {
   final Orientation orientation = MediaQuery.of(context).orientation;
-  return (orientation == Orientation.portrait) ? 24.0 : 20.0;
+  return (orientation == Orientation.portrait) ? 20.0 : 16.0;
 }
