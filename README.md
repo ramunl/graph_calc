@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-
-=======
-Sample flutter app to plot function
->>>>>>> develop
+Flutter app "Function plotting"
