@@ -14,7 +14,7 @@ import 'expression_entity.dart';
 /// Instead, the `getDirectory` method should be injected. This allows for
 /// testing.
 class FileStorage {
-  final Duration debugDelay = const Duration(milliseconds: 3000);
+  final Duration debugDelay = const Duration(milliseconds: 1000);
 
   final String tag;
   final Future<Directory> Function() getDirectory;

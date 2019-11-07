@@ -17,7 +17,7 @@ import 'expression_entity.dart';
 class WebClient {
   final Duration delay;
 
-  const WebClient([this.delay = const Duration(milliseconds: 3000)]);
+  const WebClient([this.delay = const Duration(milliseconds: 1000)]);
 
   /// Mock that "fetches" some Items from a "web service" after a short delay
   Future<List<ExpressionEntity>> fetchItems() async {
